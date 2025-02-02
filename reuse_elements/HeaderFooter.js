@@ -5,7 +5,7 @@ class SpecialHeader extends HTMLElement{
         <nav class="navbar navbar-expand-lg bg-body-tertiary fixed-top">
             <div class="container-fluid">
                 <div>
-                    <!-- <img src="AI-HUB.png" alt="AI-HUB" width="30px"> -->
+                    <!-- <img src="./reuse_elements/AI-HUB.png" alt="AI-HUB" width="30px"> -->
                     <a class="navbar-brand" href="#">AI-HUB</a>
                 </div>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -36,7 +36,7 @@ class Links extends HTMLElement{
 class SpecialFooter extends HTMLElement{
     connectedCallback(){
         this.innerHTML = `
-        <nav class="navbar fixed-bottom bg-body-tertiary">
+        <nav class="navbar navbar-expand-lg fixed-bottom bg-body-tertiary">
             <div class="container-fluid" id="footer">
                 <ul style="list-style: none;display:flex; justify-content: center;">
                     <div><li class="desc_item"><i class="fa-solid fa-building-columns"></i><a href="https://www.vvitguntur.com/">VVIT</a></li></div>

@@ -1,16 +1,6 @@
 body{
     background-color: rgb(240, 238, 238);
 }
-
-.footer_list{
-    display: flex;
-}
-
-.container-sm{
-    border: 1px solid gray;
-    border-radius: 1rem;
-} 
-
 #cards{
     display: flex;
     flex-wrap: wrap;
@@ -18,8 +8,10 @@ body{
     margin: 0rem 3rem 5rem 3rem;
     padding: 1.5rem;
 }
+.footer_list{
+    display: flex;
+}
 .card{
     margin-bottom: 1rem; 
     transition: 0.3s ease-in-out;
 }
-

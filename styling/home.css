@@ -25,10 +25,13 @@ img{
 }
 
 .info{
-    padding: 5rem 0rem 5rem 3rem;
+    padding: 5rem 3rem 5rem 3rem;
     flex: 1;
     background-color: rgb(240, 238, 238);
     overflow: scroll;
+}
+.footer_list{
+    display: none;
 }
 
 @media(max-width: 850px){
