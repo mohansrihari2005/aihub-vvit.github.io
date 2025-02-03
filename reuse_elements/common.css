@@ -19,6 +19,8 @@
 }
 
 #footer{
+    padding-top: 0.5rem;
+    height: 2.2rem;
     justify-content: center;
 }
 
