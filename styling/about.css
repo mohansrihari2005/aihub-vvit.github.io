@@ -1,16 +1,4 @@
-#logo{
-    position: relative;
-    bottom: 170px;
-    left: 40%;
-    border-radius: 100px;
-}
-
-#images{
-    height: 50%;
-}
-
-#cover{
-    position: relative;
-    bottom: 70px;
+img{
+    border-radius:50%;
 }
 
