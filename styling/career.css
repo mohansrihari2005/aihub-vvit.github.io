@@ -1,0 +1,14 @@
+body{
+    background-color: rgb(240, 238, 238);
+}
+.footer_list{
+    display: flex;
+}
+#buttons i{
+    margin-left: 2rem;
+    font-size: 1.5rem;
+}
+#buttons{
+    display: flex;
+    align-items: center;
+}
