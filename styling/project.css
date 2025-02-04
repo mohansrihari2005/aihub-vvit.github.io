@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 body{
     background-color: rgb(240, 238, 238);
 }
@@ -13,3 +14,20 @@ body{
 
 
 
+=======
+body{
+    background-color: rgb(240, 238, 238);
+}
+
+.footer_list{
+    display: flex;
+}
+
+.container-sm{
+    border: 1px solid gray;
+    border-radius: 1rem;
+} 
+
+
+
+>>>>>>> 7698ee7094713242c5d04a305eb81ee819a3a3fd

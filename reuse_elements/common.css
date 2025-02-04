@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 body{
     background-color: rgb(240, 238, 238);
 }
@@ -61,3 +62,68 @@ hr{
     margin-bottom: 1rem; 
     transition: 0.3s ease-in-out;
 }
+=======
+body{
+    background-color: rgb(240, 238, 238);
+}
+.navbar-brand{
+    font-size: 2rem;
+    font-weight: 700;
+    margin: 0rem 1.5rem 0rem 0.8rem;
+}
+.navbar{
+    display: flex;
+    justify-content: flex-end;
+}
+
+.navbar-nav a{
+    transition: 0.3s ease-in-out;
+    font-weight: 300;
+}
+
+.footer_list{
+    display: flex;
+    width: 100vh;
+}
+
+#footer{
+    padding-top: 0.5rem;
+    height: 2.2rem;
+    justify-content: center;
+}
+
+.desc_item a{
+    margin: 0px 10px;
+    line-height: 10px;
+    text-decoration: none;
+    font-size: 0.8rem;
+    color: rgb(65, 65, 65);
+    transition: 0.3s ease-in-out;
+}
+
+#page-title{
+    font-weight: 700;
+    margin: 5rem 3rem 1rem 3rem;
+}
+
+#section_heading{
+    margin: 2rem 0rem 1rem 4rem;
+}
+
+hr{
+    margin: 1rem;
+    width: 95%;
+}
+
+#cards{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    margin: 0rem 3rem 5rem 3rem;
+    padding: 1.5rem;
+}
+.card{
+    margin-bottom: 1rem; 
+    transition: 0.3s ease-in-out;
+}
+>>>>>>> 7698ee7094713242c5d04a305eb81ee819a3a3fd

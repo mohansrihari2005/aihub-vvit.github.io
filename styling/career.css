@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 body{
     background-color: rgb(240, 238, 238);
 }
@@ -11,4 +12,19 @@ body{
 #buttons{
     display: flex;
     align-items: center;
+=======
+body{
+    background-color: rgb(240, 238, 238);
+}
+.footer_list{
+    display: flex;
+}
+#buttons i{
+    margin-left: 2rem;
+    font-size: 1.5rem;
+}
+#buttons{
+    display: flex;
+    align-items: center;
+>>>>>>> 7698ee7094713242c5d04a305eb81ee819a3a3fd
 }
