@@ -2,7 +2,16 @@
     width : 10rem;
     position: relative;
     left: 3.6rem;
-    margin-top: 2rem;
+    margin-top: 1.7rem;
     border-radius: 50%;
-    box-shadow: 0px 0px 3px black;
+    padding: 4px;
+    border: 2px solid rgb(210, 87, 87);
+    /* box-shadow: 0px 0px 3px black; */
+}
+
+.card-body{
+    margin-top: 1rem;
+    background-color: rgb(210, 87, 87);
+    border-radius: inherit;
+    color: white;
 }
