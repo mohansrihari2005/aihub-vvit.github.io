@@ -43,9 +43,9 @@ class SpecialFooter extends HTMLElement{
             <div class="container-fluid" id="footer">
                 <ul style="list-style: none;display:flex; justify-content: center;">
                     <div><li class="desc_item"><i class="fa-solid fa-building-columns"></i><a href="https://www.vvitguntur.com/">VVIT</a></li></div>
-                    <div><li class="desc_item"><i class="fa-solid fa-globe"></i><a href="https://www.google.com/maps/place/Vasireddy+Venkatadri+Institute+of+Technology/data=!4m2!3m1!1s0x0:0x8c86e4f36490336b?sa=X&ved=1t:2428&ictx=111">Guntur</a></li></div>
-                    <div><li class="desc_item"><i class="fa-solid fa-envelope-open"></i><a href="mailto:">Mail</a></li></div>
-                    <div><li class="desc_item"><i class="fa-solid fa-code-branch"></i><a href="https://github.com/AIHUB-VVIT">Github</a></li></div>
+                    <div><li class="desc_item"><i class="fa-solid fa-location-dot"></i><a href="https://www.google.com/maps/place/Vasireddy+Venkatadri+Institute+of+Technology/data=!4m2!3m1!1s0x0:0x8c86e4f36490336b?sa=X&ved=1t:2428&ictx=111">Guntur</a></li></div>
+                    <div><li class="desc_item"><i class="fas fa-envelope"></i><a href="mailto:">Mail</a></li></div>
+                    <div><li class="desc_item"><i class="fa-brands fa-github"></i></i><a href="https://github.com/AIHUB-VVIT">Github</a></li></div>
                 </ul>
             </div>
         </nav>`
