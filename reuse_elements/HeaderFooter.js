@@ -5,7 +5,7 @@ class SpecialHeader extends HTMLElement{
         <nav class="navbar navbar-expand-lg bg-body-tertiary fixed-top">
             <div class="container-fluid">
                 <div style="display: flex; align-items: center">
-                    <img src="./images/AI-HUB.jpg" alt="AI-HUB" width="30px" style="border-radius: 50%;">
+                    <img src="./images/AI-HUB.jpg" alt="AI-HUB@VVIT" width="35px" style="border-radius: 60%;">
                     <a class="navbar-brand" href="#">AI-HUB@VVIT</a>
                 </div>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
