@@ -1,4 +1,9 @@
-img{
+.card > img{
+    width : 10rem;
+    position: relative;
+    left: 3.6rem;
+    margin-top: 2rem;
     border-radius: 50%;
+    box-shadow: 0px 0px 3px black;
 }
 
