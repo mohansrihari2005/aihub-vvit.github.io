@@ -40,18 +40,18 @@ body{
 
 .btn{
     margin-top: 1rem;
+    margin-left: 0.7rem;
 }
 
 #buttons{
-    padding: 1rem;
+    padding: 0rem;
     display: flex;
-    justify-content: space-around;
-    flex-direction: column;
+    flex-wrap: wrap;
 }
 
-@media(max-width: 450px){
+/* @media(max-width: 450px){
     #buttons{
         flex-direction: row;
         flex-wrap: wrap;;
     }
-}
+} */
