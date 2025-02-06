@@ -2,10 +2,6 @@ body{
     background-color: rgb(240, 238, 238);
 }
 
-.footer_list{
-    display: flex;
-}
-
 .container-sm{
     border: 1px solid gray;
     border-radius: 1rem;
@@ -44,4 +40,18 @@ body{
 
 .btn{
     margin-top: 1rem;
+}
+
+#buttons{
+    padding: 1rem;
+    display: flex;
+    justify-content: space-around;
+    flex-direction: column;
+}
+
+@media(max-width: 450px){
+    #buttons{
+        flex-direction: row;
+        flex-wrap: wrap;;
+    }
 }
