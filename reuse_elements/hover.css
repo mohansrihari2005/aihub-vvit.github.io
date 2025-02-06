@@ -7,6 +7,6 @@
     font-size: 0.9rem;
     color: rgb(0, 0, 0);
 }
-.card:hover{
+.card:hover, .project-card:hover{
     box-shadow: 0px 0px 5px black;
 }
