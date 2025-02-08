@@ -29,6 +29,7 @@ body{
 
 .card-img{
     padding: 0.3rem;
+    overflow: hidden;
     /* border: 2px solid black; */
     border-radius: 1rem;
 }
