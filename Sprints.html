@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="./images/ai.png" type="image/png">
+    <required-links></required-links>
+    <title>AI-HUB-Sprints</title>
+    <link rel="stylesheet" href="./styling/Sprints.css">
+</head>
+<body>
+    <special-header></special-header>
+    <section class="about">
+        <h2>About Sprints</h2>
+        <p>Sprints is a blog dedicated to exploring and explaining new technologies. Writers, including Bhargav Anugolu, contribute insights on various topics, especially in the field of Large Language Models (LLM) and emerging tech trends.</p>
+    </section>
+    <section class="write-blog">
+        <h2>Write Your Blog</h2>
+        <form id="blogForm">
+            <label for="title">Blog Title:</label>
+            <input type="text" id="title" name="title" required>
+            
+            <label for="content">Blog Content:</label>
+            <textarea id="content" name="content" rows="10" required></textarea>
+            
+            <button type="submit">Publish</button>
+        </form>
+    </section>
+    <section class="latest-articles">
+        <h2>Latest Articles</h2>
+        <div id="blogPosts"></div>
+    </section>
+    <footer>
+        <p>&copy; 2025 Sprints Blog. All rights reserved.</p>
+    </footer>
+    <script>
+        document.getElementById("blogForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+            
+            let title = document.getElementById("title").value;
+            let content = document.getElementById("content").value;
+            
+            let postDiv = document.createElement("div");
+            postDiv.classList.add("blog-post");
+            postDiv.innerHTML = `<h3>${title}</h3><p>${content}</p><hr>`;
+            
+            document.getElementById("blogPosts").prepend(postDiv);
+            
+            this.reset();
+        });
+    </script>
+    <special-footer></special-footer>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="./reuse_elements/HeaderFooter.js"></script>
+</body>
+</html>
