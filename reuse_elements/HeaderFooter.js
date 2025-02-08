@@ -16,6 +16,7 @@ class SpecialHeader extends HTMLElement{
                         <a class="nav-link" aria-current="page" href="index.html">Home</a>
                         <a class="nav-link" href="Projects.html">Projects</a>
                         <a class="nav-link" href="Career.html">Career Catalyts</a>
+                        <a class="nav-link" href="Sprints.html">Sprints</a>
                         <a class="nav-link" href="About.html">People</a>
                     </div>
                 </div>
