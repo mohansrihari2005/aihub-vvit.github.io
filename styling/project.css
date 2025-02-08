@@ -43,7 +43,24 @@ body{
     margin-top: 1rem;
     margin-left: 0.7rem;
 }
-
+.card-subtitle {
+    font-family: 'Raleway', sans-serif;
+    font-style: italic;
+    font-size: 18px;
+}
+.card-title {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-style: italic;
+    font-size: 1.8rem;
+    color: #333;
+}
+.card-text{
+        font-family: 'Raleway', sans-serif;
+        font-style: italic;
+        font-size: 1rem;
+       
+}
 #buttons{
     padding: 0rem;
     display: flex;
