@@ -29,7 +29,7 @@ body{
 
 .card-img{
     padding: 0.3rem;
-    /* border: 2px solid black; */
+    overflow: hidden;
     border-radius: 1rem;
 }
 
@@ -43,27 +43,33 @@ body{
     margin-left: 0.7rem;
 }
 .card-subtitle {
-    font-family: 'Raleway', sans-serif;
     font-style: italic;
     font-size: 18px;
 }
 .card-title {
-    font-family: 'Playfair Display', serif;
+    /* font-family: 'Playfair Display', serif; */
     font-weight: 700;
     font-style: italic;
-    font-size: 32px;
+    font-size: 1.4rem;
     color: #333;
 }
 .card-text{
-        font-family: 'Raleway', sans-serif;
-        font-style: italic;
-        font-size: 22px;
-       
+        font-size: 1rem;
 }
 #buttons{
     padding: 0rem;
     display: flex;
     flex-wrap: wrap;
+}
+#text-scroll{
+    height: 6rem;
+    overflow: scroll;
+    scroll-behavior: smooth;
+    &::-webkit-scrollbar {
+        display: none;
+    }
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;
 }
 
 /* @media(max-width: 450px){
