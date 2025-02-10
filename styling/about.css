@@ -56,7 +56,7 @@
 #cards > .card {
   /* flex: 1 1 calc(25% - 2rem);
   max-width: calc(25% - 2rem);  */
-  max-width: 200px;
+  max-width: 207px;
 }
 
 /* @media (max-width: 600px) {
