@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,6 +9,7 @@
     <required-links></required-links>
     <link rel="stylesheet" href="./styling/home.css">
 </head>
+
 <body>
     <special-header></special-header>
     <!-- Main content -->
@@ -17,19 +19,44 @@
             <h4 id="title">AIHUB@VVIT</h4>
             <p>We are the students <br>community of VVIT <br>dedicated to leverage AI</p>
             <ul style="list-style: none;text-align:left;">
-                <li class="desc_item"><i class="fa-solid fa-building-columns"></i><a href="https://www.vvitguntur.com/">VVIT</a></li>
-                <li class="desc_item"><i class="fa-solid fa-location-dot"></i><a href="https://www.google.com/maps/place/Vasireddy+Venkatadri+Institute+of+Technology/data=!4m2!3m1!1s0x0:0x8c86e4f36490336b?sa=X&ved=1t:2428&ictx=111">Location</a></li>
+                <li class="desc_item"><i class="fa-solid fa-building-columns"></i><a
+                        href="https://www.vvitguntur.com/">VVIT</a></li>
+                <li class="desc_item"><i class="fa-solid fa-location-dot"></i><a
+                        href="https://www.google.com/maps/place/Vasireddy+Venkatadri+Institute+of+Technology/data=!4m2!3m1!1s0x0:0x8c86e4f36490336b?sa=X&ved=1t:2428&ictx=111">Location</a>
+                </li>
                 <li class="desc_item"><i class="fas fa-envelope"></i><a href="mailto:">Mail</a></li>
-                <li class="desc_item"><i class="fa-brands fa-github"></i><a href="https://github.com/AIHUB-VVIT">Github</a></li>
+                <li class="desc_item"><i class="fa-brands fa-github"></i><a
+                        href="https://github.com/AIHUB-VVIT">Github</a></li>
             </ul>
         </div>
         <div class="info">
-            <p></p> <center>Welcome all</center> 
-            <br><center>This site is still under construction.</center></p>
+            <p></p>
+            <center>Welcome all</center>
+            <br>
+            <center>This site is still under construction.</center>
+            </p>
         </div>
     </div>
+    <div class="visitor-count" id="visitorCount">Visitors: 0</div>
     <special-footer class="footer_list"></special-footer>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
     <script src="./reuse_elements/HeaderFooter.js"></script>
+    <script>
+        // JavaScript to handle visitor count with immediate visibility
+        document.addEventListener('DOMContentLoaded', (event) => {
+            // Make sure the element is visible
+            const visitorCountElement = document.getElementById('visitorCount');
+            visitorCountElement.style.display = 'block';
+            visitorCountElement.style.visibility = 'visible';
+
+            let count = localStorage.getItem('visitorCount') || 0;
+            count++;
+            localStorage.setItem('visitorCount', count);
+            visitorCountElement.innerText = 'Visitors: ' + count;
+        });
+    </script>
 </body>
+
 </html>
