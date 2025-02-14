@@ -47,47 +47,47 @@
     </footer>
     <special-footer></special-footer>   
     <script>
-        async function loadMarkdownPosts() {
-            const postsContainer = document.getElementById("blogPosts");
-            const recentPostsContainer = document.getElementById("recentPosts");
-            postsContainer.innerHTML = ""; // Clear placeholder text
-
-            const postFiles = [
+   const postFiles = [
     "https://raw.githubusercontent.com/harsha4261/aihub-vvit.github.io/main/_sprints/2025-02-10-ai-trends.md",
     "https://raw.githubusercontent.com/harsha4261/aihub-vvit.github.io/main/_sprints/2025-02-14-first-sprint.md"
-];     // Add more Markdown files here
+];
 
-            const converter = new showdown.Converter();
+async function loadMarkdownPosts() {
+    const postsContainer = document.getElementById("blogPosts");
+    const recentPostsContainer = document.getElementById("recentPosts");
+    postsContainer.innerHTML = ""; 
 
-            for (let file of postFiles) {
-                try {
-                    let response = await fetch(file);
-                    if (!response.ok) throw new Error(`Failed to load ${file}`);
+    const converter = new showdown.Converter();
 
-                    let text = await response.text();
-                    let htmlContent = converter.makeHtml(text);
+    for (let file of postFiles) {
+        try {
+            let response = await fetch(file);
+            if (!response.ok) throw new Error(`Failed to load ${file}`);
 
-                    let postDiv = document.createElement("article");
-                    postDiv.classList.add("sprint-post");
-                    postDiv.innerHTML = htmlContent;
-                    postsContainer.appendChild(postDiv);
+            let text = await response.text();
+            let htmlContent = converter.makeHtml(text);
 
-                    // Extract title for recent posts list
-                    let tempDiv = document.createElement("div");
-                    tempDiv.innerHTML = htmlContent;
-                    let title = tempDiv.querySelector("h1, h2") ? tempDiv.querySelector("h1, h2").innerText : "Untitled Post";
+            let postDiv = document.createElement("article");
+            postDiv.classList.add("sprint-post");
+            postDiv.innerHTML = htmlContent;
+            postsContainer.appendChild(postDiv);
 
-                    let recentPostItem = document.createElement("li");
-                    recentPostItem.innerHTML = `<a href="#">${title}</a>`;
-                    recentPostsContainer.appendChild(recentPostItem);
+            let tempDiv = document.createElement("div");
+            tempDiv.innerHTML = htmlContent;
+            let title = tempDiv.querySelector("h1, h2") ? tempDiv.querySelector("h1, h2").innerText : "Untitled Post";
 
-                } catch (error) {
-                    console.error(error);
-                }
-            }
+            let recentPostItem = document.createElement("li");
+            recentPostItem.innerHTML = `<a href="#">${title}</a>`;
+            recentPostsContainer.appendChild(recentPostItem);
+
+        } catch (error) {
+            console.error(error);
         }
+    }
+}
 
-        loadMarkdownPosts();
+loadMarkdownPosts();
+
     </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <script src="./reuse_elements/HeaderFooter.js"></script>
