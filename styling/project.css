@@ -1,80 +1,18 @@
-body{
-    background-color: rgb(240, 238, 238);
-}
-
-.container-sm{
-    border: 1px solid gray;
-    border-radius: 1rem;
-} 
-
-.project-card{
-    border: 1px solid gray;
-    border-radius: 1rem;
-    margin-top: 1rem;
+.image-container {
     display: flex;
-    justify-content: space-around;
-    flex-wrap: wrap;
-    width: 100%;
-    background-color: white;
-    box-shadow: 0px 0px 10px black;  
-    transition: 0.3s ease-in-out;
+    justify-content: first baseline;
+    height: 100vh;
+    gap: 4.5rem;
 }
-
-.card-image, .card-img{
-    width: 14.3rem;
-    height: 100%;
-    border-radius: 1rem;
-    margin: 0px;
+.diamond-img {
+    width: 16.2rem; /* Adjust size */
+    height: 16rem; /* Make it square */
+    border: 0.65rem solid rgb(0, 0, 0); /* Add border */
+    clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%); /* Diamond shape */
+    transition: transform 0.3s ease-in , box-shadow 0.3s ease-in-out;
+    object-fit: fill; /* Ensures the image fits inside */
 }
-
-.card-img{
-    padding: 0.3rem;
-    overflow: hidden;
-    border-radius: 1rem;
+.diamond-img:hover {
+    transform: scale(1.1) rotate(0.5deg); /* Slight enlarge + rotate */
+    box-shadow: 0px 50.6rem 1rem rgba(0, 0, 0, 0.3); /* Add shadow */
 }
-
-.card-body{
-    flex: 1;
-    padding: 1rem;
-}
-
-.btn{
-    margin-top: 1rem;
-    margin-left: 0.7rem;
-}
-.card-subtitle {
-    font-style: italic;
-    font-size: 18px;
-}
-.card-title {
-    /* font-family: 'Playfair Display', serif; */
-    font-weight: 700;
-    font-style: italic;
-    font-size: 1.4rem;
-    color: #333;
-}
-.card-text{
-        font-size: 1rem;
-}
-#buttons{
-    padding: 0rem;
-    display: flex;
-    flex-wrap: wrap;
-}
-#text-scroll{
-    height: 6rem;
-    overflow: scroll;
-    scroll-behavior: smooth;
-    &::-webkit-scrollbar {
-        display: none;
-    }
-    -ms-overflow-style: none;  /* IE and Edge */
-    scrollbar-width: none;
-}
-
-/* @media(max-width: 450px){
-    #buttons{
-        flex-direction: row;
-        flex-wrap: wrap;;
-    }
-} */
