@@ -76,7 +76,7 @@ header {
 #blog-content {
     padding: 2%;
     max-width: 90%;
-    margin: auto;
+    margin: 2% auto;
     background: #fff;
     border-radius: 1%;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
