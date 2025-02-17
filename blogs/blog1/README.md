@@ -29,7 +29,7 @@ Before diving deep into job preparation, it's crucial to explore the right platf
 | 5   | **Business Analyst**          | TCS       | SQL, Excel, Power BI           | LinkedIn, TCS Careers, Naukri      | Application → Aptitude Test → Case Study 
 
 
-For a detailed dataset of job roles, skills required, and hiring steps, refer to the [see more](Job_Dataset.md).
+For a detailed dataset of job roles, skills required, and hiring steps, refer to the .
 
 ---
 
