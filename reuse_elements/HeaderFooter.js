@@ -19,6 +19,7 @@ class SpecialHeader extends HTMLElement{
                         <a class="nav-link" href="Sprints.html">Sprints</a>
                         <a class="nav-link" href="Apps.html">Apps</a>
                         <a class="nav-link" href="About.html">People</a>
+                        <a class="nav-link" href="blog.html">Blogs</a>
                     </div>
                 </div>
             </div>
