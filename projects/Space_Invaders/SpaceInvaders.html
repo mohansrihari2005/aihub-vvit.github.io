@@ -15,6 +15,7 @@
             flex-direction: column;
             align-items: center;
             min-height: 100vh;
+            overflow-y: hidden; /* Prevent vertical scrolling */
         }
         
         .game-container {
@@ -22,7 +23,7 @@
             flex-direction: column;
             align-items: center;
             width: 100%;
-            max-width: 600px;
+            max-width: 800px;
             padding: 20px;
         }
         
@@ -56,14 +57,22 @@
         
         #restartButton {
             display: none;
-            margin-top: 40px;
+            margin-top: 20px;
             font-size: 20px;
-            padding-botto:20px;
+            padding: 10px 20px;
             cursor: pointer;
             background-color: #4CAF50;
             border: none;
             color: white;
             border-radius: 5px;
+            position: absolute;
+            bottom: 50px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        #restartButton:hover {
+            background-color: #45a049;
         }
         
         h1 {
@@ -83,9 +92,9 @@
         </div>
         
         <canvas id="gameCanvas" width="600" height="700"></canvas>
-        
-        <button id="restartButton" onclick="restartGame()">Restart Game</button>
     </div>
+    
+    <button id="restartButton" onclick="restartGame()">Restart Game</button>
 
     <script>
         const canvas = document.getElementById("gameCanvas");
@@ -318,6 +327,13 @@
         function restartGame() {
             initializeGame();
         }
+
+        // Prevent space bar from scrolling the page
+        window.addEventListener('keydown', function(e) {
+            if(e.code === 'Space' && e.target === document.body) {
+                e.preventDefault();
+            }
+        });
 
         document.addEventListener("keydown", (event) => {
             if (event.key === "ArrowLeft") spaceship.move("left");
