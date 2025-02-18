@@ -76,10 +76,22 @@ header {
 #blog-content {
     padding: 2%;
     max-width: 90%;
-    margin: 2% auto;
+    margin: 2rem auto;
     background: #fff;
     border-radius: 1%;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
     line-height: 1.6;
     font-family: Arial, sans-serif;
+}
+
+table{
+    display: block;
+    overflow: scroll;
+}
+tr, td, th{
+    padding: 10px;
+    border: 1px solid black;
+}
+th{
+    font-weight: 600;
 }
