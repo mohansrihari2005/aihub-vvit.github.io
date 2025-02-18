@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Space Invaders</title>
     <style>
+        /* Page Layout */
         body {
-            text-align: center;
             background-image: url('./assets/startScreenBackground.png');
             background-size: cover;
             background-position: center;
@@ -14,61 +15,98 @@
             color: white;
             margin: 0;
             display: flex;
-            justify-content: center;
+            flex-direction: column;
             align-items: center;
+            justify-content: space-between;
             height: 100vh;
         }
 
+        /* Game Container */
         #gameContainer {
             display: flex;
             flex-direction: column;
             align-items: center;
         }
 
-        canvas { 
-            display: block;
-            width: 50%;
-            max-width: 600px;
-            height: auto;
+        /* Header (Title, Score, Level) */
+        #header {
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        h1 {
+            margin: 5px;
+            font-size: 32px;
         }
 
         #scoreBoard, #levelBoard {
             font-size: 24px;
-            margin: 10px;
+            margin: 5px;
         }
 
+        /* Game Canvas */
+        canvas {
+            display: block;
+            width: 50%;
+            max-width: 600px;
+            height: auto;
+            border: 2px solid white;
+            background-color: black;
+        }
+
+        /* Restart Button */
         #restartButton {
-            display: none;
-            margin-top: 20px;
+            margin-bottom: 20px;
             font-size: 20px;
-            padding: 10px;
+            padding: 10px 20px;
             cursor: pointer;
+            display: none;
         }
     </style>
 </head>
+
 <body>
-    <h1>Space Invaders</h1><div id="scoreBoard"><BR>Score: 0<BR></div><div id="levelBoard">Level: 1</div>
-    <canvas id="gameCanvas" width="500" height="600"></canvas>
+
+    <!-- Header Section -->
+    <div id="header">
+        <h1>Space Invaders</h1>
+        <div id="scoreBoard">Score: 0</div>
+        <div id="levelBoard">Level: 1</div>
+    </div>
+
+    <!-- Game Container -->
+    <div id="gameContainer">
+        <canvas id="gameCanvas" width="600" height="700"></canvas>
+    </div>
+
+    <!-- Restart Button -->
     <button id="restartButton" onclick="restartGame()">Restart Game</button>
 
     <script>
+        // Canvas & Context
         const canvas = document.getElementById("gameCanvas");
         const ctx = canvas.getContext("2d");
+
+        // UI Elements
         const scoreBoard = document.getElementById("scoreBoard");
         const levelBoard = document.getElementById("levelBoard");
         const restartButton = document.getElementById("restartButton");
+
+        // Game Variables
         const spaceshipSpeed = 8;
         const bulletSpeed = 5;
         const alienSpeed = 1;
         const cooldown = 500;
         const alienBulletSpeed = 3;
         const alienCooldown = 2000;
+
         let lastShotTime = 0;
         let lastAlienShotTime = 0;
         let gameOver = false;
         let score = 0;
         let level = 1;
 
+        // Load Images
         const spaceshipImg = new Image();
         spaceshipImg.src = './assets/spaceship.png';
 
@@ -82,9 +120,11 @@
         const bulletImg = new Image();
         bulletImg.src = './assets/bullet.png';
 
+        // Load Sounds
         const explosionSound = new Audio('./assets/img_explosion.wav');
         const laserSound = new Audio('./assets/explosion2.wav');
 
+        // Spaceship Class
         class Spaceship {
             constructor(x, y) {
                 this.x = x;
@@ -109,6 +149,7 @@
             }
         }
 
+        // Bullet Class
         class Bullet {
             constructor(x, y) {
                 this.x = x;
@@ -124,6 +165,7 @@
             }
         }
 
+        // Alien Class
         class Alien {
             constructor(x, y, img) {
                 this.x = x;
@@ -148,51 +190,16 @@
                     gameOver = true;
                 }
             }
-            shoot() {
-                let now = Date.now();
-                if (now - lastAlienShotTime > alienCooldown) {
-                    alienBullets.push(new AlienBullet(this.x + this.width / 2, this.y + this.height, "down"));
-                    lastAlienShotTime = now;
-                }
-            }
         }
 
-        class AlienBullet {
-            constructor(x, y, direction) {
-                this.x = x;
-                this.y = y;
-                this.width = 5;
-                this.height = 15;
-                this.direction = direction;
-            }
-            draw() {
-                ctx.drawImage(bulletImg, this.x, this.y, this.width, this.height);
-            }
-            update() {
-                switch (this.direction) {
-                    case "up":
-                        this.y -= alienBulletSpeed;
-                        break;
-                    case "down":
-                        this.y += alienBulletSpeed;
-                        break;
-                    case "left":
-                        this.x -= alienBulletSpeed;
-                        break;
-                    case "right":
-                        this.x += alienBulletSpeed;
-                        break;
-                }
-            }
-        }
+        // Game Objects
+        let spaceship, bullets, aliens;
 
-        let spaceship, bullets, aliens, alienBullets;
-
+        // Initialize Game
         function initializeGame() {
             spaceship = new Spaceship(canvas.width / 2 - 25, canvas.height - 100);
             bullets = [];
             aliens = [];
-            alienBullets = [];
             score = 0;
             level = 1;
             gameOver = false;
@@ -203,17 +210,19 @@
             gameLoop();
         }
 
+        // Create Aliens
         function createAliens() {
             aliens = [];
-            let rows = Math.min(5 + level, 8); // Increase rows with each level
+            let rows = Math.min(5 + level, 8);
             for (let row = 0; row < rows; row++) {
                 for (let col = 0; col < 5; col++) {
                     const img = alienImgs[Math.floor(Math.random() * alienImgs.length)];
-                    aliens.push(new Alien(100 + col * 80, 10 + row * 60, img)); // Adjusted y position to 10
+                    aliens.push(new Alien(100 + col * 80, 10 + row * 60, img));
                 }
             }
         }
 
+        // Update Score & Level
         function updateScore() {
             scoreBoard.innerText = `Score: ${score}`;
         }
@@ -222,6 +231,7 @@
             levelBoard.innerText = `Level: ${level}`;
         }
 
+        // Main Game Loop
         function gameLoop() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             if (gameOver) {
@@ -232,64 +242,32 @@
                 return;
             }
             spaceship.draw();
-            bullets.forEach((bullet, index) => {
-                bullet.update();
-                bullet.draw();
-                if (bullet.y < 0) bullets.splice(index, 1);
-            });
-            aliens.forEach((alien, aIndex) => {
-                alien.update();
-                alien.draw();
-                if (Math.random() < 0.01) { 
-                    alien.shoot();
-                }
-                bullets.forEach((bullet, bIndex) => {
-                    if (
-                        bullet.x < alien.x + alien.width &&
-                        bullet.x + bullet.width > alien.x &&
-                        bullet.y < alien.y + alien.height &&
-                        bullet.y + bullet.height > alien.y
-                    ) {
-                        aliens.splice(aIndex, 1);
-                        bullets.splice(bIndex, 1);
-                        explosionSound.play();
-                        score += 10;
-                        updateScore();
-                    }
-                });
-            });
-            alienBullets.forEach((bullet, index) => {
-                bullet.update();
-                bullet.draw();
-                if (bullet.y > canvas.height || bullet.y < 0 || bullet.x > canvas.width || bullet.x < 0) alienBullets.splice(index, 1);
-                if (
-                    bullet.x < spaceship.x + spaceship.width &&
-                    bullet.x + bullet.width > spaceship.x &&
-                    bullet.y < spaceship.y + spaceship.height &&
-                    bullet.y + bullet.height > spaceship.y
-                ) {
-                    gameOver = true;
-                }
-            });
+            bullets.forEach(bullet => { bullet.update(); bullet.draw(); });
+            aliens.forEach(alien => { alien.update(); alien.draw(); });
             if (aliens.length === 0) {
                 level++;
-                createAliens(); 
+                createAliens();
                 updateLevel();
             }
             requestAnimationFrame(gameLoop);
         }
 
+        // Restart Game
         function restartGame() {
             initializeGame();
         }
 
+        // Handle Key Press
         document.addEventListener("keydown", (event) => {
             if (event.key === "ArrowLeft") spaceship.move("left");
             if (event.key === "ArrowRight") spaceship.move("right");
             if (event.key === " ") spaceship.shoot();
         });
 
+        // Start Game
         initializeGame();
     </script>
+
 </body>
+
 </html>
