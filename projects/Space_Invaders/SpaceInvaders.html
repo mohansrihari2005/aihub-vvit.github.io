@@ -155,7 +155,7 @@
         class Spaceship {
             constructor(x, y) {
                 this.x = x;
-                this.y = y;
+                this.y = canvas.height - 70;
                 this.width = 50;
                 this.height = 50;
             }
@@ -276,7 +276,7 @@
             for (let row = 0; row < rows; row++) {
                 for (let col = 0; col < 5; col++) {
                     const img = alienImgs[Math.floor(Math.random() * alienImgs.length)];
-                    aliens.push(new Alien(100 + col * 80, 10 + row * 60, img)); // Adjusted y position to 10
+                    aliens.push(new Alien(100 + col * 60, 50 + row * 50, img)); // Adjusted y position to 10
                 }
             }
         }
