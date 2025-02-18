@@ -11,138 +11,221 @@
             height: 100%;
             width: 100%;
             overflow: hidden;
-            background-color: black;
+        }
+
+        body {
+            background-image: url('./assets/startScreenBackground.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            color: white;
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        body::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.3);
+            z-index: -1;
+        }
+
+        .game-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            max-width: 800px;
+            padding: 20px;
+            z-index: 1;
+        }
+
+        .score-level {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            margin-top: 10px;
         }
 
         canvas { 
             display: block;
-            background: #111;
+            margin: 0 auto;
+            width: 100%;
+            max-width: 600px;
+            height: auto;
+        }
+
+        #scoreBoard, #levelBoard {
+            font-size: 24px;
+            margin: 0;
+        }
+
+        #restartButton {
+            display: none;
+            margin-top: 20px;
+            font-size: 20px;
+            padding: 10px 20px;
+            cursor: pointer;
+            background-color: #4CAF50;
+            border: none;
+            color: white;
+            border-radius: 5px;
+            position: absolute;
+            bottom: 50px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 2;
+        }
+
+        #restartButton:hover {
+            background-color: #45a049;
         }
 
         /* Mobile Controls */
-        .mobile-controls {
+        .touch-controls {
             display: none;
-            position: absolute;
-            bottom: 10px;
+            position: fixed;
+            bottom: 20px;
             width: 100%;
             display: flex;
             justify-content: center;
-            gap: 10px;
+            gap: 20px;
+            z-index: 5;
         }
 
-        .mobile-controls button {
-            width: 80px;
-            height: 80px;
-            font-size: 20px;
-            background: gray;
-            border: none;
-            border-radius: 50%;
+        .touch-button {
+            width: 60px;
+            height: 60px;
+            background: rgba(255, 255, 255, 0.3);
             color: white;
-            font-weight: bold;
+            font-size: 24px;
+            text-align: center;
+            line-height: 60px;
+            border-radius: 50%;
+            user-select: none;
         }
 
+        .touch-button:active {
+            background: rgba(255, 255, 255, 0.6);
+        }
+
+        @media (max-width: 768px) {
+            .touch-controls {
+                display: flex;
+            }
+        }
     </style>
 </head>
 <body>
-    <canvas id="gameCanvas" width="600" height="700"></canvas>
+    <div class="game-container">
+        <div class="score-level">
+            <div id="scoreBoard">Score: 0</div>
+            <div id="levelBoard">Level: 1</div>
+        </div>
+        <canvas id="gameCanvas" width="600" height="700"></canvas>
+    </div>
+
+    <button id="restartButton" onclick="restartGame()">Restart Game</button>
 
     <!-- Mobile Touch Controls -->
-    <div id="controls" class="mobile-controls">
-        <button id="leftBtn">⬅</button>
-        <button id="shootBtn">🔫</button>
-        <button id="rightBtn">➡</button>
+    <div class="touch-controls">
+        <div class="touch-button" id="leftButton">◀</div>
+        <div class="touch-button" id="fireButton">🔥</div>
+        <div class="touch-button" id="rightButton">▶</div>
     </div>
 
     <script>
         const canvas = document.getElementById("gameCanvas");
         const ctx = canvas.getContext("2d");
+        const scoreBoard = document.getElementById("scoreBoard");
+        const levelBoard = document.getElementById("levelBoard");
+        const restartButton = document.getElementById("restartButton");
+
+        const spaceshipSpeed = 8;
+        const bulletSpeed = 5;
+        let lastShotTime = 0;
+        let gameOver = false;
+        let score = 0;
+        let level = 1;
+
+        const spaceshipImg = new Image();
+        spaceshipImg.src = './assets/spaceship.png';
 
         class Spaceship {
-            constructor() {
-                this.x = canvas.width / 2 - 25;
-                this.y = canvas.height - 120; // Adjusted height
-                this.width = 50;
-                this.height = 50;
-            }
-            draw() {
-                ctx.fillStyle = "white";
-                ctx.fillRect(this.x, this.y, this.width, this.height);
-            }
-            move(direction) {
-                if (direction === "left" && this.x > 0) this.x -= 20;
-                if (direction === "right" && this.x < canvas.width - this.width) this.x += 20;
-            }
-            shoot() {
-                bullets.push(new Bullet(this.x + this.width / 2, this.y));
-            }
-        }
-
-        class Bullet {
             constructor(x, y) {
                 this.x = x;
                 this.y = y;
-                this.width = 5;
-                this.height = 15;
+                this.width = 50;
+                this.height = 50;
             }
+
             draw() {
-                ctx.fillStyle = "red";
-                ctx.fillRect(this.x, this.y, this.width, this.height);
+                ctx.drawImage(spaceshipImg, this.x, this.y, this.width, this.height);
             }
-            update() {
-                this.y -= 5;
+
+            move(direction) {
+                if (direction === "left" && this.x > 0) this.x -= spaceshipSpeed;
+                if (direction === "right" && this.x < canvas.width - this.width) this.x += spaceshipSpeed;
+            }
+
+            shoot() {
+                let now = Date.now();
+                if (now - lastShotTime > 500) {
+                    bullets.push({ x: this.x + this.width / 2, y: this.y });
+                    lastShotTime = now;
+                }
             }
         }
 
-        let spaceship = new Spaceship();
+        let spaceship = new Spaceship(canvas.width / 2 - 25, canvas.height - 100);
         let bullets = [];
 
         function gameLoop() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             spaceship.draw();
+
             bullets.forEach((bullet, index) => {
-                bullet.update();
-                bullet.draw();
+                bullet.y -= bulletSpeed;
+                ctx.fillStyle = "red";
+                ctx.fillRect(bullet.x, bullet.y, 5, 10);
                 if (bullet.y < 0) bullets.splice(index, 1);
             });
+
             requestAnimationFrame(gameLoop);
         }
-        gameLoop();
 
-        // Detect Mobile Device
-        function isMobile() {
-            return ('ontouchstart' in window || navigator.maxTouchPoints > 0 || window.matchMedia("(pointer: coarse)").matches);
+        function restartGame() {
+            score = 0;
+            gameOver = false;
+            bullets = [];
+            spaceship.x = canvas.width / 2 - 25;
+            scoreBoard.innerText = `Score: ${score}`;
+            gameLoop();
         }
 
-        if (isMobile()) {
-            document.getElementById("controls").style.display = "flex";
-
-            document.getElementById("leftBtn").addEventListener("touchstart", (e) => {
-                e.preventDefault();
-                spaceship.move("left");
-            });
-
-            document.getElementById("rightBtn").addEventListener("touchstart", (e) => {
-                e.preventDefault();
-                spaceship.move("right");
-            });
-
-            document.getElementById("shootBtn").addEventListener("touchstart", (e) => {
-                e.preventDefault();
-                spaceship.shoot();
-            });
-        }
-
-        // Keyboard Controls (For PC)
         document.addEventListener("keydown", (event) => {
             if (event.key === "ArrowLeft") spaceship.move("left");
             if (event.key === "ArrowRight") spaceship.move("right");
             if (event.key === " ") spaceship.shoot();
         });
 
+        // Mobile Controls
+        const leftButton = document.getElementById("leftButton");
+        const rightButton = document.getElementById("rightButton");
+        const fireButton = document.getElementById("fireButton");
+
+        leftButton.addEventListener("touchstart", () => spaceship.move("left"));
+        rightButton.addEventListener("touchstart", () => spaceship.move("right"));
+        fireButton.addEventListener("touchstart", () => spaceship.shoot());
+
+        gameLoop();
     </script>
 </body>
 </html>
