@@ -5,24 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Space Invaders</title>
     <style>
-body {
-    text-align: center;
-    background-image: url('./assets/startScreenBackground.png');
-    background-size: 70%; /* Adjust this value as needed */
-    background-repeat: no-repeat;
-    background-position: center;
-    color: white;
-    margin: 45px;
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    align-items: center;
-}
+        body {
+            text-align: center;
+            background-image: url('./assets/startScreenBackground.png');
+            background-size:cover;
+            color: white;
+            margin: 45px;
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            align-items: center;
+        }
         canvas { 
             display: block;
             margin: 40px;
-            height:40%;
-            width:40%;
+            height:35%;
+            width:35%;
         }
         #scoreBoard, #levelBoard {
             font-size: 24px;
@@ -40,9 +38,8 @@ body {
     </style>
 </head>
 <body>
-   
     <h1>Space Invaders</h1><div id="scoreBoard">Score: 0</div><div id="levelBoard">Level: 1</div>
-    <canvas id="gameCanvas" width="600" height="700"><button id="restartButton" onclick="restartGame()">Restart Game</button></canvas>
+    <canvas id="gameCanvas" width="600" height="700"></canvas>
     <button id="restartButton" onclick="restartGame()">Restart Game</button>
 
     <script>
