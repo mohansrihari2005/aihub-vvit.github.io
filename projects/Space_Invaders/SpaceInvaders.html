@@ -11,6 +11,7 @@
             height: 100%;
             width: 100%;
             overflow: hidden;
+            font-size: 16px; /* Ensure base font size is defined */
         }
         
         body {
@@ -42,8 +43,8 @@
             flex-direction: column;
             align-items: center;
             width: 100%;
-            max-width: 800px;
-            padding: 20px;
+            max-width: 50rem; /* 800px / 16 */
+            padding: 1.25rem; /* 20px / 16 */
             z-index: 1;
         }
         
@@ -59,34 +60,34 @@
             display: flex;
             justify-content: space-between;
             width: 100%;
-            margin-top: 10px;
+            margin-top: 0.625rem; /* 10px / 16 */
         }
         
         canvas { 
             display: block;
             margin: 0 auto;
             width: 100%;
-            max-width: 600px;
+            max-width: 37.5rem; /* 600px / 16 */
             height: auto;
         }
         
         #scoreBoard, #levelBoard {
-            font-size: 1.5rem;
+            font-size: 1.5rem; /* 24px / 16 */
             margin: 0;
         }
         
         #restartButton {
             display: none;
-            margin-top: 1.25rem;
-            font-size: 1.25rem;
-            padding: 0.625rem 1.25rem;
+            margin-top: 1.25rem; /* 20px / 16 */
+            font-size: 1.25rem; /* 20px / 16 */
+            padding: 0.625rem 1.25rem; /* 10px / 16, 20px / 16 */
             cursor: pointer;
             background-color: #4CAF50;
             border: none;
             color: white;
-            border-radius: 0.313rem;
+            border-radius: 0.313rem; /* 5px / 16 */
             position: absolute;
-            bottom: 3.25rem;
+            bottom: 3.25rem; /* 52px / 16 */
             left: 50%;
             transform: translateX(-50%);
             z-index: 2;
@@ -97,9 +98,9 @@
         }
         
         h1 {
-            font-size: 2.25rem;
-            margin: 20px 0 10px 0;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+            font-size: 2.25rem; /* 36px / 16 */
+            margin: 1.25rem 0 0.625rem 0; /* 20px / 16, 10px / 16 */
+            text-shadow: 0.125rem 0.125rem 0.25rem rgba(0, 0, 0, 0.7); /* 2px / 16 */
         }
     </style>
 </head>
