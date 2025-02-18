@@ -13,7 +13,6 @@
             overflow: hidden;
             font-size: 16px; /* Ensure base font size is defined */
         }
-        
         body {
             background-image: url('./assets/startScreenBackground.png');
             background-size: cover;
@@ -25,8 +24,7 @@
             align-items: center;
             min-height: 100vh;
             position: relative;
-        }
-        
+        }        
         body::before {
             content: "";
             position: absolute;
@@ -36,71 +34,63 @@
             height: 100%;
             background-color: rgba(0, 0, 0, 0.3);
             z-index: -1;
-        }
-        
+        }    
         .game-container {
             display: flex;
             flex-direction: column;
             align-items: center;
             width: 100%;
-            max-width: 50rem; /* 800px / 16 */
-            padding: 1.25rem; /* 20px / 16 */
+            max-width: 50rem; 
+            padding: 1.25rem; 
             z-index: 1;
-        }
-        
+        }       
         .header {
             width: 100%;
             display: flex;
             flex-direction: column;
             align-items: center;
             margin-bottom: 1.5rem;
-        }
-        
+        }     
         .score-level {
             display: flex;
             justify-content: space-between;
             width: 100%;
-            margin-top: 0.625rem; /* 10px / 16 */
-        }
-        
+            margin-top: 0.625rem; 
+        }        
         canvas { 
             display: block;
             margin: 0 auto;
             width: 100%;
-            max-width: 37.5rem; /* 600px / 16 */
+            max-width: 37.5rem; 
             height: auto;
-        }
-        
+        }        
         #scoreBoard, #levelBoard {
-            font-size: 1.5rem; /* 24px / 16 */
+            font-size: 1.5rem; 
             margin: 0;
-        }
-        
+        }        
         #restartButton {
             display: none;
-            margin-top: 1.25rem; /* 20px / 16 */
-            font-size: 1.25rem; /* 20px / 16 */
-            padding: 0.625rem 1.25rem; /* 10px / 16, 20px / 16 */
+            margin-top: 1.25rem; 
+            font-size: 1.25rem; 
+            padding: 0.625rem 1.25rem; 
             cursor: pointer;
             background-color: #4CAF50;
             border: none;
             color: white;
-            border-radius: 0.313rem; /* 5px / 16 */
+            border-radius: 0.313rem; 
             position: absolute;
-            bottom: 3.25rem; /* 52px / 16 */
+            bottom: 3.25rem; 
             left: 50%;
             transform: translateX(-50%);
             z-index: 2;
-        }
-        
+        }        
         #restartButton:hover {
             background-color: #45a049;
-        }
-        
+        }        
         h1 {
-            font-size: 2.25rem; /* 36px / 16 */
-            margin: 1.25rem 0 0.625rem 0; /* 20px / 16, 10px / 16 */
-            text-shadow: 0.125rem 0.125rem 0.25rem rgba(0, 0, 0, 0.7); /* 2px / 16 */
+            font-size: 2.25rem;
+            margin: 1.25rem 0 0.625rem 0;
+            text-shadow: 0.125rem 0.125rem 0.25rem rgba(0, 0, 0, 0.7);
         }
     </style>
 </head>
@@ -133,8 +123,7 @@
         let gameOver = false;
         let score = 0;
         let level = 1;
-        let startX; // For touch movement
-
+        let startX;
         const spaceshipImg = new Image();
         spaceshipImg.src = './assets/spaceship.png';
         const alienImages = ['./assets/alien1.png', './assets/alien2.png', './assets/alien3.png', './assets/alien4.png', './assets/alien5.png'];
@@ -171,7 +160,6 @@
                 }
             }
         }
-
         class Bullet {
             constructor(x, y) {
                 this.x = x;
@@ -186,7 +174,6 @@
                 this.y -= bulletSpeed;
             }
         }
-
         class Alien {
             constructor(x, y, img) {
                 this.x = x;
@@ -219,7 +206,6 @@
                 }
             }
         }
-
         class AlienBullet {
             constructor(x, y, direction) {
                 this.x = x;
@@ -248,9 +234,7 @@
                 }
             }
         }
-
         let spaceship, bullets, aliens, alienBullets;
-
         function initializeGame() {
             spaceship = new Spaceship(canvas.width / 2 - 25, canvas.height - 150);
             bullets = [];
@@ -265,7 +249,6 @@
             updateLevel();
             gameLoop();
         }
-
         function createAliens() {
             aliens = [];
             let rows = Math.min(5 + level, 8);
@@ -276,15 +259,12 @@
                 }
             }
         }
-
         function updateScore() {
             scoreBoard.innerText = `Score: ${score}`;
         }
-
         function updateLevel() {
             levelBoard.innerText = `Level: ${level}`;
         }
-
         function gameLoop() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             if (gameOver) {
@@ -341,25 +321,19 @@
             }
             requestAnimationFrame(gameLoop);
         }
-
         function restartGame() {
             initializeGame();
         }
-
-        // Desktop controls
-        document.addEventListener("keydown", (event) => {
+       document.addEventListener("keydown", (event) => {
             if (event.key === "ArrowLeft") spaceship.move("left");
             if (event.key === "ArrowRight") spaceship.move("right");
             if (event.key === " ") spaceship.shoot();
         });
-
-        // Mobile controls
         canvas.addEventListener('touchstart', function(e) {
             startX = e.touches[0].clientX;
             spaceship.shoot(); // Shooting on touch start
             e.preventDefault();
         });
-
         canvas.addEventListener('touchmove', function(e) {
             if (startX) {
                 let touchX = e.touches[0].clientX;
@@ -374,19 +348,15 @@
             }
             e.preventDefault();
         });
-
         canvas.addEventListener('touchend', function(e) {
             startX = null;
             e.preventDefault();
         });
-
-        // Prevent default scrolling on mobile
         document.body.addEventListener('touchstart', function(e) {
             if (e.target === canvas) {
                 e.preventDefault();
             }
         }, {passive: false});
-
         initializeGame();
     </script>
 </body>
