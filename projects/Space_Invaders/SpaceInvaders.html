@@ -47,13 +47,9 @@
     </style>
 </head>
 <body>
-    <div id="gameContainer">
-        <h1>Space Invaders</h1>
-        <div id="scoreBoard">Score: 0</div>
-        <div id="levelBoard">Level: 1</div>
-        <canvas id="gameCanvas" width="600" height="700"></canvas>
-        <button id="restartButton" onclick="restartGame()">Restart Game</button>
-    </div>
+    <h1>Space Invaders</h1><div id="scoreBoard">Score: 0</div><div id="levelBoard">Level: 1</div>
+    <canvas id="gameCanvas" width="600" height="700"></canvas>
+    <button id="restartButton" onclick="restartGame()">Restart Game</button>
 
     <script>
         const canvas = document.getElementById("gameCanvas");
@@ -173,8 +169,19 @@
                 ctx.drawImage(bulletImg, this.x, this.y, this.width, this.height);
             }
             update() {
-                if (this.direction === "down") {
-                    this.y += alienBulletSpeed;
+                switch (this.direction) {
+                    case "up":
+                        this.y -= alienBulletSpeed;
+                        break;
+                    case "down":
+                        this.y += alienBulletSpeed;
+                        break;
+                    case "left":
+                        this.x -= alienBulletSpeed;
+                        break;
+                    case "right":
+                        this.x += alienBulletSpeed;
+                        break;
                 }
             }
         }
@@ -198,11 +205,11 @@
 
         function createAliens() {
             aliens = [];
-            let rows = Math.min(5 + level, 8);
+            let rows = Math.min(5 + level, 8); // Increase rows with each level
             for (let row = 0; row < rows; row++) {
                 for (let col = 0; col < 5; col++) {
                     const img = alienImgs[Math.floor(Math.random() * alienImgs.length)];
-                    aliens.push(new Alien(100 + col * 80, 10 + row * 60, img));
+                    aliens.push(new Alien(100 + col * 80, 10 + row * 60, img)); // Adjusted y position to 10
                 }
             }
         }
@@ -225,12 +232,48 @@
                 return;
             }
             spaceship.draw();
-            bullets.forEach(bullet => { bullet.update(); bullet.draw(); });
-            aliens.forEach(alien => { alien.update(); alien.draw(); });
-            alienBullets.forEach(bullet => { bullet.update(); bullet.draw(); });
+            bullets.forEach((bullet, index) => {
+                bullet.update();
+                bullet.draw();
+                if (bullet.y < 0) bullets.splice(index, 1);
+            });
+            aliens.forEach((alien, aIndex) => {
+                alien.update();
+                alien.draw();
+                if (Math.random() < 0.01) { 
+                    alien.shoot();
+                }
+                bullets.forEach((bullet, bIndex) => {
+                    if (
+                        bullet.x < alien.x + alien.width &&
+                        bullet.x + bullet.width > alien.x &&
+                        bullet.y < alien.y + alien.height &&
+                        bullet.y + bullet.height > alien.y
+                    ) {
+                        aliens.splice(aIndex, 1);
+                        bullets.splice(bIndex, 1);
+                        explosionSound.play();
+                        score += 10;
+                        updateScore();
+                    }
+                });
+            });
+            alienBullets.forEach((bullet, index) => {
+                bullet.update();
+                bullet.draw();
+                if (bullet.y > canvas.height || bullet.y < 0 || bullet.x > canvas.width || bullet.x < 0) alienBullets.splice(index, 1);
+                if (
+                    bullet.x < spaceship.x + spaceship.width &&
+                    bullet.x + bullet.width > spaceship.x &&
+                    bullet.y < spaceship.y + spaceship.height &&
+                    bullet.y + bullet.height > spaceship.y
+                ) {
+                    gameOver = true;
+                }
+            });
             if (aliens.length === 0) {
                 level++;
-                createAliens();
+                createAliens(); 
                 updateLevel();
             }
             requestAnimationFrame(gameLoop);
