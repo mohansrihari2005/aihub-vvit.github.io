@@ -6,41 +6,86 @@
     <title>Space Invaders</title>
     <style>
         body {
-            text-align: center;
             background-image: url('./assets/startScreenBackground.png');
-            background-size:cover;
+            background-size: cover;
             color: white;
-            margin: 45px;
+            margin: 0;
+            padding: 0;
             display: flex;
-            justify-content: center;
             flex-direction: column;
             align-items: center;
+            min-height: 100vh;
         }
+        
+        .game-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            max-width: 800px;
+            padding: 20px;
+        }
+        
+        .header {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .score-level {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            margin-top: 10px;
+        }
+        
         canvas { 
             display: block;
-            margin: 40px;
-            height:35%;
-            width:35%;
+            margin: 0 auto;
+            width: 100%;
+            max-width: 600px;
+            height: auto;
         }
+        
         #scoreBoard, #levelBoard {
             font-size: 24px;
-            margin: 0px;
-            align-self: flex-start;
-            padding-left: 50px;
+            margin: 0;
         }
+        
         #restartButton {
             display: none;
             margin-top: 20px;
             font-size: 20px;
-            padding: 10px;
+            padding: 10px 20px;
             cursor: pointer;
+            background-color: #4CAF50;
+            border: none;
+            color: white;
+            border-radius: 5px;
+        }
+        
+        h1 {
+            font-size: 36px;
+            margin: 20px 0 10px 0;
         }
     </style>
 </head>
 <body>
-    <h1>Space Invaders</h1><div id="scoreBoard">Score: 0</div><div id="levelBoard">Level: 1</div>
-    <canvas id="gameCanvas" width="600" height="700"></canvas>
-    <button id="restartButton" onclick="restartGame()">Restart Game</button>
+    <div class="game-container">
+        <div class="header">
+            <h1>Space Invaders</h1>
+            <div class="score-level">
+                <div id="scoreBoard">Score: 0</div>
+                <div id="levelBoard">Level: 1</div>
+            </div>
+        </div>
+        
+        <canvas id="gameCanvas" width="600" height="700"></canvas>
+        
+        <button id="restartButton" onclick="restartGame()">Restart Game</button>
+    </div>
 
     <script>
         const canvas = document.getElementById("gameCanvas");
