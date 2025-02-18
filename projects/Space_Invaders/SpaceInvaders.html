@@ -1,140 +1,220 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Space Invaders</title>
     <style>
-        /* General Page Layout */
         body {
             text-align: center;
-            background-color: black;
+            background-image: url('./assets/startScreenBackground.png');
+            background-size:cover;
             color: white;
-            font-family: Arial, sans-serif;
+            margin: 45px;
             display: flex;
+            justify-content: center;
             flex-direction: column;
             align-items: center;
-            justify-content: space-between;
-            height: 100vh;
-            margin: 0;
         }
-
-        /* Header Section */
-        #header {
-            width: 100%;
-            text-align: center;
-            padding: 10px;
+        canvas { 
+            display: block;
+            margin: 40px;
+            height:35%;
+            width:35%;
         }
-
-        h1 {
-            margin: 5px;
-            font-size: 32px;
-        }
-
         #scoreBoard, #levelBoard {
             font-size: 24px;
-            margin: 5px;
+            margin: 0px;
+            align-self: flex-start;
+            padding-left: 50px;
         }
-
-        /* Game Container */
-        #gameContainer {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            flex-grow: 1;
-            justify-content: center;
-            width: 100%;
-        }
-
-        canvas {
-            border: 2px solid white;
-            background-color: black;
-            max-width: 100%;
-            height: auto;
-        }
-
-        /* Restart Button */
         #restartButton {
-            margin-bottom: 20px;
-            font-size: 20px;
-            padding: 10px 20px;
-            cursor: pointer;
             display: none;
-        }
-
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            h1 {
-                font-size: 24px;
-            }
-
-            #scoreBoard, #levelBoard {
-                font-size: 18px;
-            }
-
-            canvas {
-                width: 90%;
-            }
-
-            #restartButton {
-                font-size: 18px;
-                padding: 8px 16px;
-            }
+            margin-top: 20px;
+            font-size: 20px;
+            padding: 10px;
+            cursor: pointer;
         }
     </style>
 </head>
-
 <body>
-
-    <div id="header">
-        <h1>Space Invaders</h1>
-        <div id="scoreBoard">Score: 0</div>
-        <div id="levelBoard">Level: 1</div>
-    </div>
-
-    <div id="gameContainer">
-        <canvas id="gameCanvas" width="600" height="700"></canvas>
-    </div>
-
+    <h1>Space Invaders</h1><div id="scoreBoard">Score: 0</div><div id="levelBoard">Level: 1</div>
+    <canvas id="gameCanvas" width="600" height="700"></canvas>
     <button id="restartButton" onclick="restartGame()">Restart Game</button>
 
     <script>
         const canvas = document.getElementById("gameCanvas");
         const ctx = canvas.getContext("2d");
-
         const scoreBoard = document.getElementById("scoreBoard");
         const levelBoard = document.getElementById("levelBoard");
         const restartButton = document.getElementById("restartButton");
-
-        let spaceship = { x: 275, y: 600, width: 50, height: 50 };
-        let bullets = [];
-        let aliens = [];
+        const spaceshipSpeed = 8;
+        const bulletSpeed = 5;
+        const alienSpeed = 1;
+        const cooldown = 500;
+        const alienBulletSpeed = 3;
+        const alienCooldown = 2000;
+        let lastShotTime = 0;
+        let lastAlienShotTime = 0;
+        let gameOver = false;
         let score = 0;
         let level = 1;
-        let gameOver = false;
-        let alienSpeed = 1;
 
-        function drawSpaceship() {
-            ctx.fillStyle = "blue";
-            ctx.fillRect(spaceship.x, spaceship.y, spaceship.width, spaceship.height);
+        const spaceshipImg = new Image();
+        spaceshipImg.src = './assets/spaceship.png';
+
+        const alienImages = ['./assets/alien1.png', './assets/alien2.png', './assets/alien3.png', './assets/alien4.png', './assets/alien5.png'];
+        const alienImgs = alienImages.map(src => {
+            const img = new Image();
+            img.src = src;
+            return img;
+        });
+
+        const bulletImg = new Image();
+        bulletImg.src = './assets/bullet.png';
+
+        const explosionSound = new Audio('./assets/img_explosion.wav');
+        const laserSound = new Audio('./assets/explosion2.wav');
+
+        class Spaceship {
+            constructor(x, y) {
+                this.x = x;
+                this.y = y;
+                this.width = 50;
+                this.height = 50;
+            }
+            draw() {
+                ctx.drawImage(spaceshipImg, this.x, this.y, this.width, this.height);
+            }
+            move(direction) {
+                if (direction === "left" && this.x > 0) this.x -= spaceshipSpeed;
+                if (direction === "right" && this.x < canvas.width - this.width) this.x += spaceshipSpeed;
+            }
+            shoot() {
+                let now = Date.now();
+                if (now - lastShotTime > cooldown) {
+                    bullets.push(new Bullet(this.x + this.width / 2, this.y));
+                    laserSound.play();
+                    lastShotTime = now;
+                }
+            }
         }
 
-        function drawBullets() {
-            ctx.fillStyle = "red";
-            bullets.forEach(bullet => {
-                ctx.fillRect(bullet.x, bullet.y, bullet.width, bullet.height);
-            });
+        class Bullet {
+            constructor(x, y) {
+                this.x = x;
+                this.y = y;
+                this.width = 5;
+                this.height = 15;
+            }
+            draw() {
+                ctx.drawImage(bulletImg, this.x, this.y, this.width, this.height);
+            }
+            update() {
+                this.y -= bulletSpeed;
+            }
         }
 
-        function drawAliens() {
-            ctx.fillStyle = "green";
-            aliens.forEach(alien => {
-                ctx.fillRect(alien.x, alien.y, alien.width, alien.height);
-            });
+        class Alien {
+            constructor(x, y, img) {
+                this.x = x;
+                this.y = y;
+                this.width = 40;
+                this.height = 40;
+                this.moveDirection = 1;
+                this.moveCounter = 0;
+                this.img = img;
+            }
+            draw() {
+                ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
+            }
+            update() {
+                this.x += this.moveDirection * alienSpeed;
+                this.moveCounter++;
+                if (this.moveCounter > 75) {
+                    this.moveDirection *= -1;
+                    this.moveCounter = 0;
+                }
+                if (this.y + this.height >= spaceship.y) {
+                    gameOver = true;
+                }
+            }
+            shoot() {
+                let now = Date.now();
+                if (now - lastAlienShotTime > alienCooldown) {
+                    alienBullets.push(new AlienBullet(this.x + this.width / 2, this.y + this.height, "down"));
+                    lastAlienShotTime = now;
+                }
+            }
         }
 
-        function updateGame() {
+        class AlienBullet {
+            constructor(x, y, direction) {
+                this.x = x;
+                this.y = y;
+                this.width = 5;
+                this.height = 15;
+                this.direction = direction;
+            }
+            draw() {
+                ctx.drawImage(bulletImg, this.x, this.y, this.width, this.height);
+            }
+            update() {
+                switch (this.direction) {
+                    case "up":
+                        this.y -= alienBulletSpeed;
+                        break;
+                    case "down":
+                        this.y += alienBulletSpeed;
+                        break;
+                    case "left":
+                        this.x -= alienBulletSpeed;
+                        break;
+                    case "right":
+                        this.x += alienBulletSpeed;
+                        break;
+                }
+            }
+        }
+
+        let spaceship, bullets, aliens, alienBullets;
+
+        function initializeGame() {
+            spaceship = new Spaceship(canvas.width / 2 - 25, canvas.height - 100);
+            bullets = [];
+            aliens = [];
+            alienBullets = [];
+            score = 0;
+            level = 1;
+            gameOver = false;
+            restartButton.style.display = "none";
+            createAliens();
+            updateScore();
+            updateLevel();
+            gameLoop();
+        }
+
+        function createAliens() {
+            aliens = [];
+            let rows = Math.min(5 + level, 8); // Increase rows with each level
+            for (let row = 0; row < rows; row++) {
+                for (let col = 0; col < 5; col++) {
+                    const img = alienImgs[Math.floor(Math.random() * alienImgs.length)];
+                    aliens.push(new Alien(100 + col * 80, 10 + row * 60, img)); // Adjusted y position to 10
+                }
+            }
+        }
+
+        function updateScore() {
+            scoreBoard.innerText = `Score: ${score}`;
+        }
+
+        function updateLevel() {
+            levelBoard.innerText = `Level: ${level}`;
+        }
+
+        function gameLoop() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
             if (gameOver) {
                 ctx.fillStyle = "white";
                 ctx.font = "40px Arial";
@@ -142,75 +222,65 @@
                 restartButton.style.display = "block";
                 return;
             }
-
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            drawSpaceship();
-            drawBullets();
-            drawAliens();
-
+            spaceship.draw();
             bullets.forEach((bullet, index) => {
-                bullet.y -= 5;
+                bullet.update();
+                bullet.draw();
                 if (bullet.y < 0) bullets.splice(index, 1);
             });
-
-            aliens.forEach((alien, alienIndex) => {
-                alien.y += alienSpeed;
-                if (alien.y > canvas.height - 100) gameOver = true;
-
-                bullets.forEach((bullet, bulletIndex) => {
-                    if (bullet.x < alien.x + alien.width &&
+            aliens.forEach((alien, aIndex) => {
+                alien.update();
+                alien.draw();
+                if (Math.random() < 0.01) { 
+                    alien.shoot();
+                }
+                bullets.forEach((bullet, bIndex) => {
+                    if (
+                        bullet.x < alien.x + alien.width &&
                         bullet.x + bullet.width > alien.x &&
                         bullet.y < alien.y + alien.height &&
-                        bullet.y + bullet.height > alien.y) {
-                        aliens.splice(alienIndex, 1);
-                        bullets.splice(bulletIndex, 1);
+                        bullet.y + bullet.height > alien.y
+                    ) {
+                        aliens.splice(aIndex, 1);
+                        bullets.splice(bIndex, 1);
+                        explosionSound.play();
                         score += 10;
-                        scoreBoard.innerText = `Score: ${score}`;
+                        updateScore();
                     }
                 });
             });
-
+            alienBullets.forEach((bullet, index) => {
+                bullet.update();
+                bullet.draw();
+                if (bullet.y > canvas.height || bullet.y < 0 || bullet.x > canvas.width || bullet.x < 0) alienBullets.splice(index, 1);
+                if (
+                    bullet.x < spaceship.x + spaceship.width &&
+                    bullet.x + bullet.width > spaceship.x &&
+                    bullet.y < spaceship.y + spaceship.height &&
+                    bullet.y + bullet.height > spaceship.y
+                ) {
+                    gameOver = true;
+                }
+            });
             if (aliens.length === 0) {
                 level++;
-                levelBoard.innerText = `Level: ${level}`;
-                createAliens();
+                createAliens(); 
+                updateLevel();
             }
-
-            requestAnimationFrame(updateGame);
-        }
-
-        function createAliens() {
-            aliens = [];
-            for (let row = 0; row < 5; row++) {
-                for (let col = 0; col < 5; col++) {
-                    aliens.push({ x: 50 + col * 80, y: 50 + row * 60, width: 40, height: 40 });
-                }
-            }
+            requestAnimationFrame(gameLoop);
         }
 
         function restartGame() {
-            score = 0;
-            level = 1;
-            gameOver = false;
-            spaceship.x = 275;
-            bullets = [];
-            createAliens();
-            scoreBoard.innerText = "Score: 0";
-            levelBoard.innerText = "Level: 1";
-            restartButton.style.display = "none";
-            updateGame();
+            initializeGame();
         }
 
         document.addEventListener("keydown", (event) => {
-            if (event.key === "ArrowLeft" && spaceship.x > 0) spaceship.x -= 10;
-            if (event.key === "ArrowRight" && spaceship.x < canvas.width - spaceship.width) spaceship.x += 10;
-            if (event.key === " ") bullets.push({ x: spaceship.x + 22, y: spaceship.y, width: 5, height: 15 });
+            if (event.key === "ArrowLeft") spaceship.move("left");
+            if (event.key === "ArrowRight") spaceship.move("right");
+            if (event.key === " ") spaceship.shoot();
         });
 
-        createAliens();
-        updateGame();
+        initializeGame();
     </script>
-
 </body>
-
 </html>
