@@ -243,16 +243,18 @@
         });
 
         // Touch Controls (Only for Mobile)
-        function isMobile() {
-            return /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-        }
+// Function to detect mobile devices
+function isMobile() {
+    return ('ontouchstart' in window || navigator.maxTouchPoints > 0 || window.matchMedia("(pointer: coarse)").matches);
+}
 
-        if (isMobile()) {
-            controls.style.display = "flex";  // Show touch controls only on mobile
-            document.getElementById("leftBtn").addEventListener("touchstart", () => spaceship.move("left"));
-            document.getElementById("rightBtn").addEventListener("touchstart", () => spaceship.move("right"));
-            document.getElementById("shootBtn").addEventListener("touchstart", () => spaceship.shoot());
-        }
+// Show touch controls only for mobile users
+if (isMobile()) {
+    controls.style.display = "flex";  // Enable touch buttons
+    document.getElementById("leftBtn").addEventListener("touchstart", () => spaceship.move("left"));
+    document.getElementById("rightBtn").addEventListener("touchstart", () => spaceship.move("right"));
+    document.getElementById("shootBtn").addEventListener("touchstart", () => spaceship.shoot());
+}
 
         initializeGame();
     </script>
