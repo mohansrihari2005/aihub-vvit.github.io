@@ -132,6 +132,8 @@
         let gameOver = false;
         let score = 0;
         let level = 1;
+        let startX; // For touch movement
+
         const spaceshipImg = new Image();
         spaceshipImg.src = './assets/spaceship.png';
         const alienImages = ['./assets/alien1.png', './assets/alien2.png', './assets/alien3.png', './assets/alien4.png', './assets/alien5.png'];
@@ -144,6 +146,7 @@
         bulletImg.src = './assets/bullet.png';
         const explosionSound = new Audio('./assets/img_explosion.wav');
         const laserSound = new Audio('./assets/explosion2.wav');
+
         class Spaceship {
             constructor(x, y) {
                 this.x = x;
@@ -167,6 +170,7 @@
                 }
             }
         }
+
         class Bullet {
             constructor(x, y) {
                 this.x = x;
@@ -181,6 +185,7 @@
                 this.y -= bulletSpeed;
             }
         }
+
         class Alien {
             constructor(x, y, img) {
                 this.x = x;
@@ -213,6 +218,7 @@
                 }
             }
         }
+
         class AlienBullet {
             constructor(x, y, direction) {
                 this.x = x;
@@ -241,7 +247,9 @@
                 }
             }
         }
+
         let spaceship, bullets, aliens, alienBullets;
+
         function initializeGame() {
             spaceship = new Spaceship(canvas.width / 2 - 25, canvas.height - 150);
             bullets = [];
@@ -256,22 +264,26 @@
             updateLevel();
             gameLoop();
         }
+
         function createAliens() {
             aliens = [];
-            let rows = Math.min(5 + level, 8); // Increase rows with each level
+            let rows = Math.min(5 + level, 8);
             for (let row = 0; row < rows; row++) {
                 for (let col = 0; col < 5; col++) {
                     const img = alienImgs[Math.floor(Math.random() * alienImgs.length)];
-                    aliens.push(new Alien(100 + col * 80, 10 + row * 60, img)); // Adjusted y position to 10
+                    aliens.push(new Alien(100 + col * 80, 10 + row * 60, img));
                 }
             }
         }
+
         function updateScore() {
             scoreBoard.innerText = `Score: ${score}`;
         }
+
         function updateLevel() {
             levelBoard.innerText = `Level: ${level}`;
         }
+
         function gameLoop() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             if (gameOver) {
@@ -328,19 +340,52 @@
             }
             requestAnimationFrame(gameLoop);
         }
+
         function restartGame() {
             initializeGame();
         }
-        window.addEventListener('keydown', function(e) {
-            if(e.code === 'Space' && e.target === document.body) {
-                e.preventDefault();
-            }
-        });
+
+        // Desktop controls
         document.addEventListener("keydown", (event) => {
             if (event.key === "ArrowLeft") spaceship.move("left");
             if (event.key === "ArrowRight") spaceship.move("right");
             if (event.key === " ") spaceship.shoot();
         });
+
+        // Mobile controls
+        canvas.addEventListener('touchstart', function(e) {
+            startX = e.touches[0].clientX;
+            spaceship.shoot(); // Shooting on touch start
+            e.preventDefault();
+        });
+
+        canvas.addEventListener('touchmove', function(e) {
+            if (startX) {
+                let touchX = e.touches[0].clientX;
+                let moveDistance = touchX - startX;
+                
+                if (moveDistance < 0) {
+                    spaceship.move("left");
+                } else if (moveDistance > 0) {
+                    spaceship.move("right");
+                }
+                startX = touchX;
+            }
+            e.preventDefault();
+        });
+
+        canvas.addEventListener('touchend', function(e) {
+            startX = null;
+            e.preventDefault();
+        });
+
+        // Prevent default scrolling on mobile
+        document.body.addEventListener('touchstart', function(e) {
+            if (e.target === canvas) {
+                e.preventDefault();
+            }
+        }, {passive: false});
+
         initializeGame();
     </script>
 </body>
