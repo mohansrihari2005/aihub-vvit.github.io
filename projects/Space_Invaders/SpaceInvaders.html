@@ -5,45 +5,107 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Space Invaders</title>
     <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            width: 100%;
+            overflow: hidden;
+            font-size: 16px; /* Ensure base font size is defined */
+        }
         body {
-            text-align: center;
             background-image: url('./assets/startScreenBackground.png');
             background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
             color: white;
-            margin: 0;
             display: flex;
-            justify-content: center;
             flex-direction: column;
             align-items: center;
-            overflow: auto;
-            padding-top: 30px;
-            padding-bottom: 30px;
-            border-right-width: 30px;
-        }
+            min-height: 100vh;
+            position: relative;
+        }        
+        body::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.3);
+            z-index: -1;
+        }    
+        .game-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            max-width: 50rem; 
+            padding: 1.25rem; 
+            z-index: 1;
+        }       
+        .header {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }     
+        .score-level {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            margin-top: 0.625rem; 
+        }        
         canvas { 
             display: block;
-            margin: 0;
-        }
+            margin: 0 auto;
+            width: 100%;
+            max-width: 37.5rem; 
+            height: auto;
+        }        
         #scoreBoard, #levelBoard {
-            font-size: 24px;
-            margin: 0px;
-            align-self: flex-start;
-            padding-left: 50px;
-        }
+            font-size: 1.5rem; 
+            margin: 0;
+        }        
         #restartButton {
             display: none;
-            margin-top: 20px;
-            font-size: 20px;
-            padding: 10px;
+            margin-top: 1.25rem; 
+            font-size: 1.25rem; 
+            padding: 0.625rem 1.25rem; 
             cursor: pointer;
+            background-color: #4CAF50;
+            border: none;
+            color: white;
+            border-radius: 0.313rem; 
+            position: absolute;
+            bottom: 3.25rem; 
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 2;
+        }        
+        #restartButton:hover {
+            background-color: #45a049;
+        }        
+        h1 {
+            font-size: 2.25rem;
+            margin: 1.25rem 0 0.625rem 0;
+            text-shadow: 0.125rem 0.125rem 0.25rem rgba(0, 0, 0, 0.7);
         }
     </style>
 </head>
 <body>
-    <h1>Space Invaders</h1><div id="scoreBoard">Score: 0</div><div id="levelBoard">Level: 1</div>
-    <canvas id="gameCanvas" width="600" height="700"></canvas>
+    <div class="game-container">
+        <div class="header">
+            <h1>Space Invaders</h1>
+            <div class="score-level">
+                <div id="scoreBoard">Score: 0</div>
+                <div id="levelBoard">Level: 1</div>
+            </div>
+        </div>
+        <canvas id="gameCanvas" width="600" height="700"></canvas>
+    </div>
     <button id="restartButton" onclick="restartGame()">Restart Game</button>
-
     <script>
         const canvas = document.getElementById("gameCanvas");
         const ctx = canvas.getContext("2d");
@@ -61,20 +123,17 @@
         let gameOver = false;
         let score = 0;
         let level = 1;
-
+        let startX;
         const spaceshipImg = new Image();
         spaceshipImg.src = './assets/spaceship.png';
-
         const alienImages = ['./assets/alien1.png', './assets/alien2.png', './assets/alien3.png', './assets/alien4.png', './assets/alien5.png'];
         const alienImgs = alienImages.map(src => {
             const img = new Image();
             img.src = src;
             return img;
         });
-
         const bulletImg = new Image();
         bulletImg.src = './assets/bullet.png';
-
         const explosionSound = new Audio('./assets/img_explosion.wav');
         const laserSound = new Audio('./assets/explosion2.wav');
 
@@ -101,7 +160,6 @@
                 }
             }
         }
-
         class Bullet {
             constructor(x, y) {
                 this.x = x;
@@ -116,7 +174,6 @@
                 this.y -= bulletSpeed;
             }
         }
-
         class Alien {
             constructor(x, y, img) {
                 this.x = x;
@@ -149,7 +206,6 @@
                 }
             }
         }
-
         class AlienBullet {
             constructor(x, y, direction) {
                 this.x = x;
@@ -178,11 +234,9 @@
                 }
             }
         }
-
         let spaceship, bullets, aliens, alienBullets;
-
         function initializeGame() {
-            spaceship = new Spaceship(canvas.width / 2 - 25, canvas.height - 100);
+            spaceship = new Spaceship(canvas.width / 2 - 25, canvas.height - 150);
             bullets = [];
             aliens = [];
             alienBullets = [];
@@ -195,26 +249,22 @@
             updateLevel();
             gameLoop();
         }
-
         function createAliens() {
             aliens = [];
-            let rows = Math.min(5 + level, 8); // Increase rows with each level
+            let rows = Math.min(5 + level, 8);
             for (let row = 0; row < rows; row++) {
                 for (let col = 0; col < 5; col++) {
                     const img = alienImgs[Math.floor(Math.random() * alienImgs.length)];
-                    aliens.push(new Alien(100 + col * 80, 10 + row * 60, img)); // Adjusted y position to 10
+                    aliens.push(new Alien(100 + col * 80, 10 + row * 60, img));
                 }
             }
         }
-
         function updateScore() {
             scoreBoard.innerText = `Score: ${score}`;
         }
-
         function updateLevel() {
             levelBoard.innerText = `Level: ${level}`;
         }
-
         function gameLoop() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             if (gameOver) {
@@ -271,17 +321,42 @@
             }
             requestAnimationFrame(gameLoop);
         }
-
         function restartGame() {
             initializeGame();
         }
-
-        document.addEventListener("keydown", (event) => {
+       document.addEventListener("keydown", (event) => {
             if (event.key === "ArrowLeft") spaceship.move("left");
             if (event.key === "ArrowRight") spaceship.move("right");
             if (event.key === " ") spaceship.shoot();
         });
-
+        canvas.addEventListener('touchstart', function(e) {
+            startX = e.touches[0].clientX;
+            spaceship.shoot(); // Shooting on touch start
+            e.preventDefault();
+        });
+        canvas.addEventListener('touchmove', function(e) {
+            if (startX) {
+                let touchX = e.touches[0].clientX;
+                let moveDistance = touchX - startX;
+                
+                if (moveDistance < 0) {
+                    spaceship.move("left");
+                } else if (moveDistance > 0) {
+                    spaceship.move("right");
+                }
+                startX = touchX;
+            }
+            e.preventDefault();
+        });
+        canvas.addEventListener('touchend', function(e) {
+            startX = null;
+            e.preventDefault();
+        });
+        document.body.addEventListener('touchstart', function(e) {
+            if (e.target === canvas) {
+                e.preventDefault();
+            }
+        }, {passive: false});
         initializeGame();
     </script>
 </body>
