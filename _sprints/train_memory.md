@@ -1,6 +1,5 @@
----
 title: 'Visualize and understand GPU memory in PyTorch'
-thumbnail: /blog/assets/train_memory/thumbnail.png
+thumbnail: train_memory/thumbnail.png
 authors:
 - user: qgallouedec
 ---
