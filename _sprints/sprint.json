@@ -1,6 +1,6 @@
 [
     {
         "title": "Visualize and understand GPU memory in PyTorch",
-        "path": "_sprints/train_memory.md"
+        "path": "./_sprints/train_memory.md"
     }
 ]
