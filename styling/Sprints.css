@@ -1,38 +1,29 @@
-/* General Styles */
 body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
     background-color: #f5f5f5;
 }
-
-/* Header */
 header {
     background-color: #333;
     color: white;
     text-align: center;
     padding: 20px;
 }
-
-/* Navigation Bar */
 nav {
     background-color: #444;
     color: white;
     padding: 10px;
     text-align: center;
 }
-
 nav a {
     color: white;
     text-decoration: none;
     margin: 0 15px;
 }
-
 nav a:hover {
     text-decoration: underline;
 }
-
-/* Main Layout */
 main {
     display: grid;
     grid-template-columns: 3fr 1fr;
@@ -42,15 +33,11 @@ main {
     margin: auto;
     padding: 20px;
 }
-
-/* Blog Container */
 #blog-container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 20px;
 }
-
-/* Blog Card */
 .blog-card {
     background: white;
     border-radius: 10px;
@@ -59,32 +46,23 @@ main {
     text-align: center;
     transition: transform 0.3s ease-in-out;
 }
-
 .blog-card:hover {
     transform: scale(1.05);
 }
-
-/* Blog Thumbnail */
 .blog-card img {
     max-width: 100%;
     height: auto;
     border-radius: 10px;
 }
-
-/* Blog Title */
 .blog-card h2 {
     font-size: 1.5rem;
     color: #333;
 }
-
-/* Summary */
 .blog-card p {
     color: #666;
     font-size: 1rem;
     margin: 10px 0;
 }
-
-/* Read More Link */
 .blog-card a {
     display: inline-block;
     padding: 8px 15px;
@@ -98,8 +76,6 @@ main {
 .blog-card a:hover {
     background: #0056b3;
 }
-
-/* Blog Content */
 #blog-content {
     padding: 2%;
     max-width: 90%;
@@ -111,7 +87,6 @@ main {
     font-family: Arial, sans-serif;
 }
 
-/* Sidebar (Aside) */
 aside {
     display: flex;
     flex-direction: column;
@@ -122,13 +97,10 @@ aside {
     height: fit-content;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
-
-/* About Widget - Move to the top */
 .widget:first-child {
     order: -1; /* Moves "About" to the top */
 }
 
-/* Table Styles */
 table {
     display: block;
     overflow: scroll;
@@ -143,7 +115,6 @@ th {
     font-weight: 600;
 }
 
-/* Footer */
 footer {
     text-align: center;
     padding: 25px;
@@ -151,8 +122,6 @@ footer {
     color: rgb(19, 2, 2);
     margin-top: 20px;
 }
-
-/* Responsive Design */
 @media (max-width: 768px) {
     main {
         grid-template-columns: 1fr;
@@ -166,7 +135,6 @@ footer {
         padding: 20px;
     }
 }
-
 h1 {
     font-size: 2.5em;
     color: #2c3e50;
@@ -174,23 +142,4 @@ h1 {
 }
 .post-content {
     margin-bottom: 20px;
-}
-
-/* Additional CSS for card layout */
-#cards {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between; /* Distribute cards evenly */
-}
-
-#cards > .card {
-    flex: 1 1 calc(25% - 2rem); /* Each row has exactly 4 cards */
-    max-width: calc(25% - 2rem); /* Prevents shrinking beyond 4 cards per row */
-}
-
-@media (max-width: 768px) {
-    #cards > .card {
-        flex: 1 1 calc(50% - 1rem); /* On smaller screens, show 2 cards per row */
-        max-width: calc(50% - 1rem);
-    }
 }
