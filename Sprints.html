@@ -47,7 +47,7 @@
     <script>
          async function fetchBlogs() {
                 try {
-                    const response = await fetch('./_sprints/sprints.json');  // Ensure correct path
+                    const response = await fetch('./blogs/blogs1.json');  // Ensure correct path
                     const blogs = await response.json();         // Parse JSON
                     const container = document.getElementById('blog-container');
             
