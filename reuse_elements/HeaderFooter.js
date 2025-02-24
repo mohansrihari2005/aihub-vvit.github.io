@@ -15,11 +15,11 @@ class SpecialHeader extends HTMLElement{
                     <div class="navbar-nav">
                         <a class="nav-link" aria-current="page" href="index.html">Home</a>
                         <a class="nav-link" href="Projects.html">Projects</a>
-                        <a class="nav-link" href="Career.html">Career Catalyts</a>
-                        <a class="nav-link" href="Sprints.html">Sprints</a>
-                        <a class="nav-link" href="Apps.html">Apps</a>
-                        <a class="nav-link" href="About.html">People</a>
                         <a class="nav-link" href="blog.html">Blogs</a>
+                        <a class="nav-link" href="#">Team Meatup</a>
+                        <a class="nav-link" href="Apps.html">Apps</a>
+                        <a class="nav-link" href="Career.html">Career Catalyts</a>
+                        <a class="nav-link" href="About.html">People</a>
                     </div>
                 </div>
             </div>
