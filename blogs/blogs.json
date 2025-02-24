@@ -5,12 +5,18 @@
     },
     
     {
-        "title": "🔥 Unlock Your Dream Job: The Ultimate Pre-Job Resources Guide!",
+   
+        "title": "🔥Unlock Your Dream Job: The Ultimate Pre-Job Resources Guide!",
         "path": "blogs/blog1/README.md"
     },
 
     {
-        "title": "🔥 my second blog",
+        "title": "🔥Kickstart Your Future: Top 2025 Internships & Jobs Unveiled!",
+
         "path": "blogs/blog2/README.md"
+    },
+    {
+        "title": "🔥 Master Your Edge :  Top 2025 Courses to Shine bright along!",
+        "path": "blogs/blog3/README.md"
     }
 ]
