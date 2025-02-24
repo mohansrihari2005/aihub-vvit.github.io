@@ -1,5 +1,10 @@
 [
     {
+        "title": "Visualize and understand GPU memory in PyTorch",
+        "path": "blogs/train_memory.md"
+    },
+    
+    {
         "title": "🔥 Unlock Your Dream Job: The Ultimate Pre-Job Resources Guide!",
         "path": "blogs/blog1/README.md"
     },
@@ -7,9 +12,5 @@
     {
         "title": "🔥 my second blog",
         "path": "blogs/blog2/README.md"
-    },
-    {
-        "title": "Visualize and understand GPU memory in PyTorch",
-        "path": "_sprints/train_memory.md"
     }
 ]
