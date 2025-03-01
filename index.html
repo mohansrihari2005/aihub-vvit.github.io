@@ -30,12 +30,53 @@
             </ul>
         </div>
         <div class="info">
-            <p></p>
-            <center>Welcome all</center>
+            <img src="./images/index1.png" alt="Decorative Design" class="image">
+            <div style="text-align: center;">
+               <p></p>
+            <h5>Inspiration is not tangible unless you</h5>
             <br>
-            <center>This site is still under construction.</center>
-            </p>
-        </div>
+            <h5><b><span id="typed-text"></span></b></h5>
+            </div>
+
+<script>
+  const words = ["Embrace The Uncertainty", "Focus on the process", "Practice the mindfulness","Cultivate the gratitude","Reframe the failure"];
+  let i = 0; 
+  let j = 0; 
+  let isDeleting = false;
+  const typingSpeed = 100; 
+  const deletingSpeed = 50; 
+  const pauseTime = 1000; 
+
+  function typeEffect() {
+    const typedText = document.getElementById("typed-text");
+    let currentWord = words[i];
+
+    if (isDeleting) {
+      j--;
+    } else {
+      j++;
+    }
+
+    typedText.innerHTML = currentWord.substring(0, j) + "|"; 
+
+    let nextSpeed = isDeleting ? deletingSpeed : typingSpeed;
+
+    if (!isDeleting && j === currentWord.length) {
+      isDeleting = true;
+      nextSpeed = pauseTime;
+    } else if (isDeleting && j === 0) {
+      isDeleting = false;
+      i = (i + 1) % words.length; 
+      nextSpeed = typingSpeed;
+    }
+
+    setTimeout(typeEffect, nextSpeed);
+  }
+
+  document.addEventListener("DOMContentLoaded", () => setTimeout(typeEffect, 300)); 
+</script>
+
+        <img src="./images/index2.png" alt="Decorative Design" class="image">
     </div>
     <div class="visitor-count" id="visitorCount">Visitors: 0</div>
     <special-footer class="footer_list"></special-footer>
