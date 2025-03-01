@@ -1,8 +1,3 @@
-img {
-    display: inline;
-    border-radius: 50%;
-}
-
 .main_content {
     height: 100vh;
     display: flex;
@@ -56,6 +51,11 @@ body {
     padding: 6rem 3.02rem;
 }
 
+.description img {
+    display: inline;
+    border-radius: 50%;
+}
+
 .desc_item a {
     margin: 0px 10px;
     line-height: 30px;
@@ -70,6 +70,13 @@ body {
     flex: 1;
     background-color: rgb(240, 238, 238);
     overflow: scroll;
+}
+
+.info .image {
+    align-items: center;
+    padding-left: 100px;
+    width: 90%;
+    height: auto;
 }
 
 .footer_list {
