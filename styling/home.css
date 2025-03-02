@@ -73,10 +73,11 @@ body {
 }
 
 .info .image {
-    align-items: center;
-    padding-left: 300px;
-    width:  70%;
-    height: auto;
+        display: block;
+        margin: auto;
+        width: 40ch; 
+        max-width: 100%; 
+        height: auto;
 }
 
 .footer_list {
@@ -111,8 +112,8 @@ body {
     }
 
     .info .image {
-        padding-top: 40px;
-        padding: auto; 
-        width: 100%;
+        width: 100%;  
+        max-width: 100%;  
+        height: auto;
     }
 }
