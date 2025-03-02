@@ -23,11 +23,11 @@ class SpecialHeader extends HTMLElement {
                             <ul class="dropdown-menu" aria-labelledby="projectsDropdown">
                                 <li><a class="dropdown-item" href="./Projects.html">Ongoing Projects</a></li>
                                 <li class="dropdown-submenu">
-                                    <a class="dropdown-item dropdown-toggle submenu-toggle" href="#" id="completedProjectsDropdown" aria-expanded="false">
+                                    <button class="dropdown-item btn-submenu" type="button">
                                         Completed Projects
                                         <i class="fas fa-chevron-right submenu-arrow"></i>
-                                    </a>
-                                    <ul class="dropdown-menu submenu" aria-labelledby="completedProjectsDropdown">
+                                    </button>
+                                    <ul class="dropdown-menu submenu">
                                         <li><a class="dropdown-item" href="./Game.html">Games</a></li>
                                         <li><a class="dropdown-item" href="Projects.html#ml">Machine Learning</a></li>
                                         <li><a class="dropdown-item" href="Projects.html#dl">Deep Learning</a></li>
@@ -52,11 +52,11 @@ class SpecialHeader extends HTMLElement {
                             <ul class="dropdown-menu" aria-labelledby="careerDropdown">
                                 <li><a class="dropdown-item" href="./Career.html">Job Guide</a></li>
                                 <li class="dropdown-submenu">
-                                    <a class="dropdown-item dropdown-toggle submenu-toggle" href="#" id="lifeSkillsDropdown" aria-expanded="false">
+                                    <button class="dropdown-item btn-submenu" type="button">
                                         Life Skills
                                         <i class="fas fa-chevron-right submenu-arrow"></i>
-                                    </a>
-                                    <ul class="dropdown-menu submenu" aria-labelledby="lifeSkillsDropdown">
+                                    </button>
+                                    <ul class="dropdown-menu submenu">
                                         <li><a class="dropdown-item" href="#">Quantitative Aptitude</a></li>
                                         <li><a class="dropdown-item" href="#">Reasoning Ability</a></li>
                                         <li><a class="dropdown-item" href="#">Verbal Ability</a></li>
@@ -83,6 +83,7 @@ class SpecialHeader extends HTMLElement {
                 left: 100%;
                 margin-top: -1px;
                 display: none;
+                z-index: 1001;
             }
             
             .submenu-arrow {
@@ -90,14 +91,21 @@ class SpecialHeader extends HTMLElement {
                 margin-top: 4px;
             }
             
-            /* Submenu toggle should have pointer cursor to indicate it's clickable */
-            .submenu-toggle {
+            .btn-submenu {
+                width: 100%;
+                text-align: left;
+                background: none;
+                border: none;
+                padding: 0.25rem 1rem;
                 cursor: pointer;
             }
             
-            /* Add CSS to indicate active dropdown items */
-            .dropdown-submenu.show > .dropdown-toggle {
+            .btn-submenu:hover, .btn-submenu:focus {
                 background-color: #f8f9fa;
+            }
+            
+            .dropdown-submenu.show > .submenu {
+                display: block;
             }
             
             @media (max-width: 991px) {
@@ -107,7 +115,6 @@ class SpecialHeader extends HTMLElement {
                     margin-right: 15px;
                     margin-top: 0;
                     left: 0;
-                    display: none;
                 }
                 
                 .dropdown-submenu .dropdown-item {
@@ -123,7 +130,7 @@ class Links extends HTMLElement {
         this.innerHTML = `
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=domain" />
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -196,89 +203,50 @@ customElements.define('special-footer', SpecialFooter);
 
 // Initialize Bootstrap dropdowns and handle nested dropdowns
 document.addEventListener('DOMContentLoaded', function() {
-    // Initialize Bootstrap dropdowns for top-level items
+    // Initialize all dropdowns for main nav items
     var dropdownElementList = [].slice.call(document.querySelectorAll('.nav-link.dropdown-toggle'));
     dropdownElementList.map(function(dropdownToggleEl) {
         return new bootstrap.Dropdown(dropdownToggleEl);
     });
     
-    // Setup robust submenu handlers using event delegation
+    // Handle submenu toggles with simple class toggling
     document.addEventListener('click', function(event) {
-        // Check if the click was on a submenu toggle
-        if (event.target.classList.contains('submenu-toggle') || 
-            event.target.parentElement.classList.contains('submenu-toggle')) {
-            
-            event.preventDefault();
+        var target = event.target.closest('.btn-submenu');
+        if (target) {
             event.stopPropagation();
             
-            // Find the dropdown submenu container
-            var submenuToggle = event.target.closest('.submenu-toggle');
-            var submenu = submenuToggle.nextElementSibling;
-            var submenuContainer = submenuToggle.closest('.dropdown-submenu');
+            var submenu = target.closest('.dropdown-submenu');
             
-            // Toggle the submenu visibility
-            if (submenu.style.display === 'block') {
-                submenu.style.display = 'none';
-                submenuContainer.classList.remove('show');
-            } else {
-                // Close any other open submenus
-                document.querySelectorAll('.dropdown-submenu').forEach(function(item) {
-                    if (item !== submenuContainer) {
-                        item.classList.remove('show');
-                        var submenuToClose = item.querySelector('.submenu');
-                        if (submenuToClose) {
-                            submenuToClose.style.display = 'none';
-                        }
-                    }
-                });
-                
-                // Open this submenu
-                submenu.style.display = 'block';
-                submenuContainer.classList.add('show');
-            }
+            // Close all other open submenus first
+            document.querySelectorAll('.dropdown-submenu.show').forEach(function(el) {
+                if (el !== submenu) {
+                    el.classList.remove('show');
+                }
+            });
+            
+            // Toggle the current submenu
+            submenu.classList.toggle('show');
         }
     });
     
-    // Add additional touch event handlers for mobile devices
-    document.querySelectorAll('.submenu-toggle').forEach(function(toggle) {
-        // Add touchstart event to handle touch on mobile first
-        toggle.addEventListener('touchstart', function(e) {
-            e.preventDefault(); // Prevent default behavior
-            e.stopPropagation(); // Prevent parent clicks
-            
-            // The actual action will be handled by the click event
-        }, {passive: false});
-    });
-    
-    // Handle submenu hover on desktop
-    var dropdownSubmenus = document.querySelectorAll('.dropdown-submenu');
-    dropdownSubmenus.forEach(function(submenu) {
-        // For desktop mouse hover behavior
-        if (window.matchMedia('(min-width: 992px)').matches) {
+    // Add desktop hover behavior if on desktop
+    if (window.matchMedia('(min-width: 992px)').matches) {
+        document.querySelectorAll('.dropdown-submenu').forEach(function(submenu) {
             submenu.addEventListener('mouseenter', function() {
-                var dropdownMenu = this.querySelector('.submenu');
-                if (dropdownMenu) {
-                    dropdownMenu.style.display = 'block';
-                }
+                this.classList.add('show');
             });
             
             submenu.addEventListener('mouseleave', function() {
-                var dropdownMenu = this.querySelector('.submenu');
-                if (dropdownMenu) {
-                    dropdownMenu.style.display = 'none';
-                }
+                this.classList.remove('show');
             });
-        }
-    });
+        });
+    }
     
-    // Close menus when clicking outside
-    document.addEventListener('click', function(e) {
-        if (!e.target.closest('.dropdown-submenu')) {
-            document.querySelectorAll('.dropdown-submenu .submenu').forEach(function(menu) {
-                menu.style.display = 'none';
-            });
-            document.querySelectorAll('.dropdown-submenu').forEach(function(item) {
-                item.classList.remove('show');
+    // Close submenus when clicking outside
+    document.addEventListener('click', function(event) {
+        if (!event.target.closest('.dropdown-submenu')) {
+            document.querySelectorAll('.dropdown-submenu.show').forEach(function(el) {
+                el.classList.remove('show');
             });
         }
     });
