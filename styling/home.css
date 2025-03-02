@@ -110,7 +110,7 @@ body {
     }
 
     .info .image {
-        padding-left: 0; /* Remove left padding for mobile */
+        padding-left: 20px; /* Remove left padding for mobile */
         width: 100%; /* Ensure image takes full width on mobile */
     }
 }
