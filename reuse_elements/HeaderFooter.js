@@ -76,7 +76,7 @@ class SpecialHeader extends HTMLElement{
                 </div>
             </div>
         </nav>`
-        <script>
+        `<script>
             document.addEventListener('DOMContentLoaded', function() {
                 const projectsLink = document.getElementById('projectsDropdown');
                 const completedLink = document.getElementById('completedDropdown');
