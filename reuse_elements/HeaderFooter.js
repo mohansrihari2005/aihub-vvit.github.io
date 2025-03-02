@@ -23,7 +23,7 @@ class SpecialHeader extends HTMLElement {
                             <ul class="dropdown-menu" aria-labelledby="projectsDropdown">
                                 <li><a class="dropdown-item" href="./Projects.html">Ongoing Projects</a></li>
                                 <li class="dropdown-submenu">
-                                    <a class="dropdown-item dropdown-toggle" href="#" id="completedProjectsDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <a class="dropdown-item dropdown-toggle" href="#" id="completedProjectsDropdown" aria-expanded="false">
                                         Completed Projects
                                         <i class="fas fa-chevron-right submenu-arrow"></i>
                                     </a>
@@ -52,7 +52,7 @@ class SpecialHeader extends HTMLElement {
                             <ul class="dropdown-menu" aria-labelledby="careerDropdown">
                                 <li><a class="dropdown-item" href="./Career.html">Job Guide</a></li>
                                 <li class="dropdown-submenu">
-                                    <a class="dropdown-item dropdown-toggle" href="#" id="lifeSkillsDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <a class="dropdown-item dropdown-toggle" href="#" id="lifeSkillsDropdown" aria-expanded="false">
                                         Life Skills
                                         <i class="fas fa-chevron-right submenu-arrow"></i>
                                     </a>
@@ -83,10 +83,6 @@ class SpecialHeader extends HTMLElement {
                 left: 100%;
                 margin-top: -1px;
                 display: none;
-            }
-            
-            .dropdown-submenu:hover .submenu {
-                display: block;
             }
             
             .submenu-arrow {
@@ -190,28 +186,72 @@ customElements.define('special-footer', SpecialFooter);
 
 // Initialize Bootstrap dropdowns and handle nested dropdowns
 document.addEventListener('DOMContentLoaded', function() {
-    // Initialize all dropdowns
-    var dropdownElementList = [].slice.call(document.querySelectorAll('.dropdown-toggle'));
+    // Initialize all dropdowns for main nav items
+    var dropdownElementList = [].slice.call(document.querySelectorAll('.nav-link.dropdown-toggle'));
     dropdownElementList.map(function(dropdownToggleEl) {
         return new bootstrap.Dropdown(dropdownToggleEl);
     });
     
-    // Handle submenu clicks on mobile
+    // Handle dropdown submenus for both desktop and mobile
     var dropdownSubmenus = document.querySelectorAll('.dropdown-submenu');
     dropdownSubmenus.forEach(function(submenu) {
         var dropdownToggle = submenu.querySelector('.dropdown-toggle');
         var dropdownMenu = submenu.querySelector('.submenu');
         
-        dropdownToggle.addEventListener('click', function(e) {
-            if (window.innerWidth < 992) {
-                e.preventDefault();
-                e.stopPropagation();
-                if (dropdownMenu.style.display === 'block') {
-                    dropdownMenu.style.display = 'none';
-                } else {
-                    dropdownMenu.style.display = 'block';
-                }
+        // Add a mouseenter event for desktop hover effect
+        submenu.addEventListener('mouseenter', function() {
+            if (window.innerWidth >= 992) {
+                dropdownMenu.style.display = 'block';
             }
         });
+        
+        // Add a mouseleave event to hide on mouse out for desktop
+        submenu.addEventListener('mouseleave', function() {
+            if (window.innerWidth >= 992) {
+                dropdownMenu.style.display = 'none';
+            }
+        });
+        
+        // Add click handler for both mobile touch and desktop click
+        dropdownToggle.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            
+            // Toggle submenu visibility
+            if (dropdownMenu.style.display === 'block') {
+                dropdownMenu.style.display = 'none';
+            } else {
+                dropdownMenu.style.display = 'block';
+            }
+        });
+        
+        // Add touch event handlers specifically for mobile
+        dropdownToggle.addEventListener('touchend', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            
+            // Toggle submenu visibility
+            if (dropdownMenu.style.display === 'block') {
+                dropdownMenu.style.display = 'none';
+            } else {
+                // Close all other open submenus first
+                document.querySelectorAll('.dropdown-submenu .submenu').forEach(function(menu) {
+                    if (menu !== dropdownMenu) {
+                        menu.style.display = 'none';
+                    }
+                });
+                
+                dropdownMenu.style.display = 'block';
+            }
+        });
+    });
+    
+    // Close any open dropdown when clicking outside
+    document.addEventListener('click', function(e) {
+        if (!e.target.closest('.dropdown-submenu')) {
+            document.querySelectorAll('.dropdown-submenu .submenu').forEach(function(menu) {
+                menu.style.display = 'none';
+            });
+        }
     });
 });
