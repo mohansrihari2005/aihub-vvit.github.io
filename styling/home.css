@@ -86,7 +86,7 @@ body {
 @media(max-width: 850px) {
 
     .description {
-        display: none !important; /* Hide description on mobile */
+        display: none !important;
     }
 
     .footer_list {
@@ -94,24 +94,24 @@ body {
     }
 
     .main_content {
-        height: auto; /* Adjust height for mobile */
-        display: block; /* Adjust display for mobile */
-        overflow: visible; /* Adjust overflow for mobile */
+        height: auto; 
+        display: block; 
+        overflow: visible; 
     }
 
     .footer_list {
         display: flex;
-        flex-direction: column; /* Stack footer items vertically */
-        align-items: center; /* Center footer items */
+        flex-direction: column; 
+        align-items: center; 
     }
 
     .info {
-        padding: 2rem 1rem; /* Adjust padding for mobile */
-        text-align: center; /* Center content on mobile */
+        padding: 2rem 1rem; 
+        text-align: center; 
     }
 
     .info .image {
-        padding-top: 40px; /* Remove left padding for mobile */
-        width: 100%;/* Ensure image takes full width on mobile */
+        padding-top: 40px; 
+        width: 100%;
     }
 }
