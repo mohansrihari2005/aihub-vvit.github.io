@@ -111,7 +111,7 @@ body {
     }
 
     .info .image {
-        padding-top: 30px; /* Remove left padding for mobile */
-        width: 100%; /* Ensure image takes full width on mobile */
+        padding-top: 40px; /* Remove left padding for mobile */
+        width: 100%;/* Ensure image takes full width on mobile */
     }
 }
