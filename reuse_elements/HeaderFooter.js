@@ -1,5 +1,5 @@
-class SpecialHeader extends HTMLElement{
-    connectedCallback(){
+class SpecialHeader extends HTMLElement {
+    connectedCallback() {
         this.innerHTML = `
         <!-- Navigation bar -->
         <nav class="navbar navbar-expand-lg bg-body-tertiary fixed-top">
@@ -13,23 +13,21 @@ class SpecialHeader extends HTMLElement{
                 </button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav">
-                        
-                    
                         <li class="nav-item">
                             <a class="nav-link" aria-current="page" href="index.html">Home</a>
                         </li>
                         <li class="nav-item dropdown">
-                            <a class="nav-link" href="Projects.html" id="projectsDropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="projectsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 Projects
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="projectsDropdown">
                                 <li><a class="dropdown-item" href="./Projects.html">Ongoing Projects</a></li>
                                 <li class="dropdown-submenu">
-                                    <a class="dropdown-item" href="./Projects.html" id="completedDropdown">
+                                    <a class="dropdown-item dropdown-toggle" href="#" id="completedProjectsDropdown" data-bs-toggle="dropdown" aria-expanded="false">
                                         Completed Projects
                                         <i class="fas fa-chevron-right submenu-arrow"></i>
                                     </a>
-                                    <ul class="dropdown-menu dropdown-submenu" aria-labelledby="completedDropdown">
+                                    <ul class="dropdown-menu submenu" aria-labelledby="completedProjectsDropdown">
                                         <li><a class="dropdown-item" href="./Game.html">Games</a></li>
                                         <li><a class="dropdown-item" href="Projects.html#ml">Machine Learning</a></li>
                                         <li><a class="dropdown-item" href="Projects.html#dl">Deep Learning</a></li>
@@ -48,73 +46,69 @@ class SpecialHeader extends HTMLElement{
                             <a class="nav-link" href="Apps.html">Apps</a>
                         </li>
                         <li class="nav-item dropdown">
-                            <a class="nav-link" href="./Career.html" id="projectsDropdown">
-                                Career Catalyts
+                            <a class="nav-link dropdown-toggle" href="#" id="careerDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Career Catalysts
                             </a>
-                            <ul class="dropdown-menu" aria-labelledby="projectsDropdown">
+                            <ul class="dropdown-menu" aria-labelledby="careerDropdown">
                                 <li><a class="dropdown-item" href="./Career.html">Job Guide</a></li>
                                 <li class="dropdown-submenu">
-                                    <a class="dropdown-item" href="./Career.html" id="completedDropdown">
+                                    <a class="dropdown-item dropdown-toggle" href="#" id="lifeSkillsDropdown" data-bs-toggle="dropdown" aria-expanded="false">
                                         Life Skills
                                         <i class="fas fa-chevron-right submenu-arrow"></i>
                                     </a>
-                                    <ul class="dropdown-menu dropdown-submenu" aria-labelledby="completedDropdown">
+                                    <ul class="dropdown-menu submenu" aria-labelledby="lifeSkillsDropdown">
                                         <li><a class="dropdown-item" href="#">Quantitative Aptitude</a></li>
                                         <li><a class="dropdown-item" href="#">Reasoning Ability</a></li>
                                         <li><a class="dropdown-item" href="#">Verbal Ability</a></li>
                                     </ul>
                                 </li>
-                                <li><a class="dropdown-item" href="./Carrer.html">Web Dev</a></li>
+                                <li><a class="dropdown-item" href="./Career.html">Web Dev</a></li>
                             </ul>
                         </li>
                         
                         <li class="nav-item">
                             <a class="nav-link" href="About.html">People</a>
                         </li>
-                        
                     </ul>
                 </div>
             </div>
-        </nav>`
-        `<script>
-            document.addEventListener('DOMContentLoaded', function() {
-                const projectsLink = document.getElementById('projectsDropdown');
-                const completedLink = document.getElementById('completedDropdown');
-                
-                function toggleDropdown(e, dropdownMenu) {
-                    if (window.innerWidth <= 991) {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        
-                        const isVisible = dropdownMenu.classList.contains('show');
-                        const allMenus = document.querySelectorAll('.dropdown-menu');
-                        allMenus.forEach(menu => menu.classList.remove('show'));
-                        
-                        if (!isVisible) {
-                            dropdownMenu.classList.add('show');
-                            if (dropdownMenu.closest('.dropdown-submenu')) {
-                                dropdownMenu.closest('.dropdown-menu').classList.add('show');
-                            }
-                        }
-                    }
+        </nav>
+        <style>
+            .dropdown-submenu {
+                position: relative;
+            }
+            
+            .dropdown-submenu .submenu {
+                top: 0;
+                left: 100%;
+                margin-top: -1px;
+                display: none;
+            }
+            
+            .dropdown-submenu:hover .submenu {
+                display: block;
+            }
+            
+            .submenu-arrow {
+                float: right;
+                margin-top: 4px;
+            }
+            
+            @media (max-width: 991px) {
+                .dropdown-submenu .submenu {
+                    position: static;
+                    margin-left: 15px;
+                    margin-right: 15px;
+                    margin-top: 0;
+                    left: 0;
+                    display: none;
                 }
                 
-                projectsLink.addEventListener('click', function(e) {
-                    toggleDropdown(e, this.nextElementSibling);
-                });
-                
-                completedLink.addEventListener('click', function(e) {
-                    toggleDropdown(e, this.nextElementSibling);
-                });
-                
-                document.addEventListener('click', function(e) {
-                    if (!e.target.closest('.dropdown')) {
-                        const allMenus = document.querySelectorAll('.dropdown-menu');
-                        allMenus.forEach(menu => menu.classList.remove('show'));
-                    }
-                });
-            });
-        </script>`
+                .dropdown-submenu .dropdown-item {
+                    padding-left: 20px;
+                }
+            }
+        </style>`
     }
 }
 
@@ -193,3 +187,31 @@ document.head.insertAdjacentHTML('beforeend', commonStyles);
 customElements.define('special-header', SpecialHeader);
 customElements.define('required-links', Links);
 customElements.define('special-footer', SpecialFooter);
+
+// Initialize Bootstrap dropdowns and handle nested dropdowns
+document.addEventListener('DOMContentLoaded', function() {
+    // Initialize all dropdowns
+    var dropdownElementList = [].slice.call(document.querySelectorAll('.dropdown-toggle'));
+    dropdownElementList.map(function(dropdownToggleEl) {
+        return new bootstrap.Dropdown(dropdownToggleEl);
+    });
+    
+    // Handle submenu clicks on mobile
+    var dropdownSubmenus = document.querySelectorAll('.dropdown-submenu');
+    dropdownSubmenus.forEach(function(submenu) {
+        var dropdownToggle = submenu.querySelector('.dropdown-toggle');
+        var dropdownMenu = submenu.querySelector('.submenu');
+        
+        dropdownToggle.addEventListener('click', function(e) {
+            if (window.innerWidth < 992) {
+                e.preventDefault();
+                e.stopPropagation();
+                if (dropdownMenu.style.display === 'block') {
+                    dropdownMenu.style.display = 'none';
+                } else {
+                    dropdownMenu.style.display = 'block';
+                }
+            }
+        });
+    });
+});
