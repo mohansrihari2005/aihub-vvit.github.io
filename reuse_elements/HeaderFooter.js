@@ -148,8 +148,6 @@ class SpecialFooter extends HTMLElement {
         </nav>`
     }
 }
-
-// Stylesheet for common elements
 const commonStyles = `
 <style>
     .desc_item {
@@ -175,7 +173,6 @@ const commonStyles = `
         justify-content: center;
         padding: 10px 0;
     }
-    
     @media (max-width: 768px) {
         .desc_item {
             margin: 0 10px;
