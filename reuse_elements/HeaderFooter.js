@@ -37,6 +37,7 @@ class SpecialHeader extends HTMLElement {
                                 </li>
                             </ul>
                         </li>
+                        
                         <li class="nav-item">
                             <a class="nav-link" href="blog.html">Blogs</a>
                         </li>
@@ -148,6 +149,8 @@ class SpecialFooter extends HTMLElement {
         </nav>`
     }
 }
+
+// Stylesheet for common elements
 const commonStyles = `
 <style>
     .desc_item {
@@ -173,6 +176,7 @@ const commonStyles = `
         justify-content: center;
         padding: 10px 0;
     }
+    
     @media (max-width: 768px) {
         .desc_item {
             margin: 0 10px;
@@ -181,7 +185,11 @@ const commonStyles = `
     }
 </style>
 `;
+
+// Add the common styles to the document
 document.head.insertAdjacentHTML('beforeend', commonStyles);
+
+// Define custom elements
 customElements.define('special-header', SpecialHeader);
 customElements.define('required-links', Links);
 customElements.define('special-footer', SpecialFooter);
