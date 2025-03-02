@@ -85,7 +85,7 @@ body {
 
 @media(max-width: 850px) {
     .description {
-        display: none;
+        display: none; /* Hide description on mobile */
     }
 
     .footer_list {
@@ -96,13 +96,6 @@ body {
         height: auto; /* Adjust height for mobile */
         display: block; /* Adjust display for mobile */
         overflow: visible; /* Adjust overflow for mobile */
-    }
-
-    .description {
-        display: block; /* Ensure description is visible on mobile */
-        text-align: center; /* Center text for better readability */
-        padding: 2rem 1rem; /* Adjust padding for mobile */
-        height: auto; /* Ensure full visibility on mobile */
     }
 
     .footer_list {
