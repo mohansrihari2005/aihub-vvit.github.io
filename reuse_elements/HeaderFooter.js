@@ -1,5 +1,5 @@
-class SpecialHeader extends HTMLElement {
-    connectedCallback() {
+class SpecialHeader extends HTMLElement{
+    connectedCallback(){
         this.innerHTML = `
         <!-- Navigation bar -->
         <nav class="navbar navbar-expand-lg bg-body-tertiary fixed-top">
@@ -75,7 +75,7 @@ class SpecialHeader extends HTMLElement {
                     </ul>
                 </div>
             </div>
-        </nav>
+        </nav>`
         <script>
             document.addEventListener('DOMContentLoaded', function() {
                 const projectsLink = document.getElementById('projectsDropdown');
