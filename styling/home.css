@@ -74,7 +74,8 @@ body {
 
 .info .image {
     align-items: center;
-    width: 100%;
+    padding-left: 90px;
+    width: 90%;
     height: auto;
 }
 
@@ -110,7 +111,8 @@ body {
     }
 
     .info .image {
-        padding-top: 40px; 
+        padding-top: 40px;
+        padding: auto; 
         width: 100%;
     }
 }
