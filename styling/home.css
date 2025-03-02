@@ -107,10 +107,11 @@ body {
 
     .info {
         padding: 2rem 1rem; /* Adjust padding for mobile */
+        text-align: center; /* Center content on mobile */
     }
 
     .info .image {
-        padding-left: 20px; /* Remove left padding for mobile */
+        padding-top: 30px; /* Remove left padding for mobile */
         width: 100%; /* Ensure image takes full width on mobile */
     }
 }
