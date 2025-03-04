@@ -5,7 +5,7 @@ class SpecialHeader extends HTMLElement {
         <nav class="navbar navbar-expand-lg bg-body-tertiary fixed-top">
             <div class="container-fluid">
                 <div style="display: flex; align-items: center">
-                    <img src="images/AI-HUB.jpg" alt="AI-HUB@VVIT" width="35px" style="border-radius: 60%;">
+                    <img src="./images/AI-HUB.jpg" alt="AI-HUB@VVIT" width="35px" style="border-radius: 60%;">
                     <a class="navbar-brand" href="#">AI-HUB@VVIT</a>
                 </div>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -144,6 +144,8 @@ class Links extends HTMLElement {
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="./reuse_elements/common.css">
+        <link rel="stylesheet" href="./reuse_elements/hover.css">
         `
     }
 }
@@ -203,112 +205,103 @@ customElements.define('special-footer', SpecialFooter);
 
 // Dropdown handling script
 document.addEventListener('DOMContentLoaded', function() {
-    // Track the last touched dropdown to prevent immediate re-opening
-    let lastTouchedDropdown = null;
-
-    // Function to check if we're in mobile view
-    function isMobileView() {
-        return window.innerWidth < 992;
+    // Function to handle dropdown toggling
+    function setupDropdownToggle(dropdownToggle) {
+        // Remove existing event listeners to prevent multiple bindings
+        dropdownToggle.removeEventListener('click', dropdownClickHandler);
+        
+        // Add click event listener
+        dropdownToggle.addEventListener('click', dropdownClickHandler);
     }
 
-    // Close all dropdowns and submenus
-    function closeAllDropdowns() {
+    // Dropdown click handler
+    function dropdownClickHandler(e) {
+        // Prevent default link behavior
+        e.preventDefault();
+        e.stopPropagation();
+
+        // Close other open dropdowns
+        document.querySelectorAll('.dropdown-toggle').forEach(function(otherToggle) {
+            if (otherToggle !== this) {
+                let otherDropdownMenu = otherToggle.closest('.dropdown').querySelector('.dropdown-menu');
+                otherDropdownMenu.classList.remove('show');
+                otherToggle.setAttribute('aria-expanded', 'false');
+            }
+        }.bind(this));
+
+        // Toggle current dropdown
+        let dropdownMenu = this.closest('.dropdown').querySelector('.dropdown-menu');
+        let isCurrentlyShown = dropdownMenu.classList.contains('show');
+
+        // Close all dropdowns first
         document.querySelectorAll('.dropdown-menu').forEach(function(menu) {
             menu.classList.remove('show');
         });
         document.querySelectorAll('.dropdown-toggle').forEach(function(toggle) {
             toggle.setAttribute('aria-expanded', 'false');
         });
-        document.querySelectorAll('.dropdown-submenu .submenu').forEach(function(menu) {
-            menu.style.display = 'none';
-        });
-    }
 
-    // Main dropdown toggle handler
-    function mainDropdownHandler(e) {
-        // Only handle on mobile
-        if (isMobileView()) {
-            e.preventDefault();
-            e.stopPropagation();
-
-            // Close all dropdowns first
-            closeAllDropdowns();
-
-            // If not the same dropdown as last time, open it
-            if (this !== lastTouchedDropdown) {
-                let dropdownMenu = this.closest('.dropdown').querySelector('.dropdown-menu');
-                dropdownMenu.classList.add('show');
-                this.setAttribute('aria-expanded', 'true');
-                lastTouchedDropdown = this;
-            } else {
-                // If same dropdown, reset last touched
-                lastTouchedDropdown = null;
-            }
-        }
-    }
-
-    // Submenu dropdown handler
-    function submenuDropdownHandler(e) {
-        if (isMobileView()) {
-            e.preventDefault();
-            e.stopPropagation();
-
-            // Toggle the submenu visibility
-            let submenuToggle = this;
-            let submenuMenu = submenuToggle.closest('.dropdown-submenu').querySelector('.submenu');
-            
-            // Close all other submenus first
-            document.querySelectorAll('.dropdown-submenu .submenu').forEach(function(menu) {
-                if (menu !== submenuMenu) {
-                    menu.style.display = 'none';
-                }
-            });
-
-            // Toggle current submenu
-            submenuMenu.style.display = 
-                submenuMenu.style.display === 'block' ? 'none' : 'block';
+        // If it wasn't shown, show it
+        if (!isCurrentlyShown) {
+            dropdownMenu.classList.add('show');
+            this.setAttribute('aria-expanded', 'true');
         }
     }
 
     // Setup main dropdowns
-    var mainDropdownToggles = document.querySelectorAll('.navbar .dropdown-toggle:not(.dropdown-submenu .dropdown-toggle)');
-    mainDropdownToggles.forEach(function(toggle) {
-        toggle.addEventListener('click', mainDropdownHandler);
-    });
+    var mainDropdownToggles = document.querySelectorAll('.navbar .dropdown-toggle');
+    mainDropdownToggles.forEach(setupDropdownToggle);
 
-    // Setup submenu dropdowns
-    var submenuDropdownToggles = document.querySelectorAll('.dropdown-submenu .dropdown-toggle');
-    submenuDropdownToggles.forEach(function(toggle) {
-        toggle.addEventListener('click', submenuDropdownHandler);
-    });
-
-    // Desktop hover effects
-    if (!isMobileView()) {
-        var dropdownSubmenus = document.querySelectorAll('.dropdown-submenu');
-        dropdownSubmenus.forEach(function(submenu) {
-            submenu.addEventListener('mouseenter', function() {
-                var dropdownMenu = submenu.querySelector('.submenu');
+    // Handle submenu dropdowns
+    var dropdownSubmenus = document.querySelectorAll('.dropdown-submenu');
+    dropdownSubmenus.forEach(function(submenu) {
+        var dropdownToggle = submenu.querySelector('.dropdown-toggle');
+        var dropdownMenu = submenu.querySelector('.submenu');
+        
+        // Desktop hover effect
+        submenu.addEventListener('mouseenter', function() {
+            if (window.innerWidth >= 992) {
                 dropdownMenu.style.display = 'block';
+            }
+        });
+        
+        submenu.addEventListener('mouseleave', function() {
+            if (window.innerWidth >= 992) {
+                dropdownMenu.style.display = 'none';
+            }
+        });
+        
+        // Mobile touch handling
+        dropdownToggle.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            
+            // Close all other open submenus first
+            document.querySelectorAll('.dropdown-submenu .submenu').forEach(function(menu) {
+                if (menu !== dropdownMenu) {
+                    menu.style.display = 'none';
+                }
             });
             
-            submenu.addEventListener('mouseleave', function() {
-                var dropdownMenu = submenu.querySelector('.submenu');
-                dropdownMenu.style.display = 'none';
-            });
+            // Toggle submenu visibility
+            dropdownMenu.style.display = dropdownMenu.style.display === 'block' ? 'none' : 'block';
         });
-    }
+    });
 
     // Close dropdowns when clicking outside
     document.addEventListener('click', function(e) {
+        // Check if click is outside dropdowns
         if (!e.target.closest('.navbar-nav')) {
-            closeAllDropdowns();
-            lastTouchedDropdown = null;
+            // Close all dropdowns
+            document.querySelectorAll('.dropdown-menu').forEach(function(menu) {
+                menu.classList.remove('show');
+            });
+            document.querySelectorAll('.dropdown-toggle').forEach(function(toggle) {
+                toggle.setAttribute('aria-expanded', 'false');
+            });
+            document.querySelectorAll('.dropdown-submenu .submenu').forEach(function(menu) {
+                menu.style.display = 'none';
+            });
         }
-    });
-
-    // Handle resize to reset dropdowns
-    window.addEventListener('resize', function() {
-        closeAllDropdowns();
-        lastTouchedDropdown = null;
     });
 });
