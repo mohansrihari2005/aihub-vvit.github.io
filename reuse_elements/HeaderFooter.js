@@ -73,7 +73,26 @@ class SpecialHeader extends HTMLElement {
                 </div>
             </div>
         </nav>
+        
         <style>
+            /* Dropdown Styling */
+            @media (min-width: 992px) {
+                .navbar .dropdown:hover .dropdown-menu {
+                    display: block;
+                }
+            }
+
+            @media (max-width: 991px) {
+                .navbar .dropdown-menu {
+                    position: static;
+                    display: none;
+                }
+
+                .navbar .dropdown-menu.show {
+                    display: block;
+                }
+            }
+
             .dropdown-submenu {
                 position: relative;
             }
@@ -182,15 +201,56 @@ customElements.define('special-header', SpecialHeader);
 customElements.define('required-links', Links);
 customElements.define('special-footer', SpecialFooter);
 
-// Initialize Bootstrap dropdowns and handle nested dropdowns
+// Dropdown handling script
 document.addEventListener('DOMContentLoaded', function() {
-    // Initialize all dropdowns for main nav items
-    var dropdownElementList = [].slice.call(document.querySelectorAll('.nav-link.dropdown-toggle'));
-    dropdownElementList.map(function(dropdownToggleEl) {
-        return new bootstrap.Dropdown(dropdownToggleEl);
-    });
-    
-    // Handle dropdown submenus for both desktop and mobile
+    // Function to handle dropdown toggling
+    function setupDropdownToggle(dropdownToggle) {
+        // Remove existing event listeners to prevent multiple bindings
+        dropdownToggle.removeEventListener('click', dropdownClickHandler);
+        
+        // Add click event listener
+        dropdownToggle.addEventListener('click', dropdownClickHandler);
+    }
+
+    // Dropdown click handler
+    function dropdownClickHandler(e) {
+        // Prevent default link behavior
+        e.preventDefault();
+        e.stopPropagation();
+
+        // Close other open dropdowns
+        document.querySelectorAll('.dropdown-toggle').forEach(function(otherToggle) {
+            if (otherToggle !== this) {
+                let otherDropdownMenu = otherToggle.closest('.dropdown').querySelector('.dropdown-menu');
+                otherDropdownMenu.classList.remove('show');
+                otherToggle.setAttribute('aria-expanded', 'false');
+            }
+        }.bind(this));
+
+        // Toggle current dropdown
+        let dropdownMenu = this.closest('.dropdown').querySelector('.dropdown-menu');
+        let isCurrentlyShown = dropdownMenu.classList.contains('show');
+
+        // Close all dropdowns first
+        document.querySelectorAll('.dropdown-menu').forEach(function(menu) {
+            menu.classList.remove('show');
+        });
+        document.querySelectorAll('.dropdown-toggle').forEach(function(toggle) {
+            toggle.setAttribute('aria-expanded', 'false');
+        });
+
+        // If it wasn't shown, show it
+        if (!isCurrentlyShown) {
+            dropdownMenu.classList.add('show');
+            this.setAttribute('aria-expanded', 'true');
+        }
+    }
+
+    // Setup main dropdowns
+    var mainDropdownToggles = document.querySelectorAll('.navbar .dropdown-toggle');
+    mainDropdownToggles.forEach(setupDropdownToggle);
+
+    // Handle submenu dropdowns
     var dropdownSubmenus = document.querySelectorAll('.dropdown-submenu');
     dropdownSubmenus.forEach(function(submenu) {
         var dropdownToggle = submenu.querySelector('.dropdown-toggle');
@@ -225,10 +285,18 @@ document.addEventListener('DOMContentLoaded', function() {
             dropdownMenu.style.display = dropdownMenu.style.display === 'block' ? 'none' : 'block';
         });
     });
-    
-    // Close any open dropdown when clicking outside
+
+    // Close dropdowns when clicking outside
     document.addEventListener('click', function(e) {
-        if (!e.target.closest('.dropdown-submenu')) {
+        // Check if click is outside dropdowns
+        if (!e.target.closest('.navbar-nav')) {
+            // Close all dropdowns
+            document.querySelectorAll('.dropdown-menu').forEach(function(menu) {
+                menu.classList.remove('show');
+            });
+            document.querySelectorAll('.dropdown-toggle').forEach(function(toggle) {
+                toggle.setAttribute('aria-expanded', 'false');
+            });
             document.querySelectorAll('.dropdown-submenu .submenu').forEach(function(menu) {
                 menu.style.display = 'none';
             });
