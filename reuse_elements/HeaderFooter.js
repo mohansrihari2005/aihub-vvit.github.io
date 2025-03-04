@@ -271,18 +271,14 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Mobile touch handling
         dropdownToggle.addEventListener('click', function(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            
-            // Close all other open submenus first
-            document.querySelectorAll('.dropdown-submenu .submenu').forEach(function(menu) {
-                if (menu !== dropdownMenu) {
-                    menu.style.display = 'none';
-                }
-            });
-            
-            // Toggle submenu visibility
-            dropdownMenu.style.display = dropdownMenu.style.display === 'block' ? 'none' : 'block';
+            // On mobile, prevent submenu display
+            if (window.innerWidth < 992) {
+                e.preventDefault();
+                e.stopPropagation();
+                
+                // Toggle the direct visibility of the submenu
+                dropdownMenu.style.display = dropdownMenu.style.display === 'block' ? 'none' : 'block';
+            }
         });
     });
 
