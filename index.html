@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-
+    
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,21 +14,6 @@
     <special-header></special-header>
     <!-- Main content -->
     <div class="main_content">
-        <div class="description">
-            <img src="./images/AI-HUB.jpg" alt="" width="130px"><br><br>
-            <h4 id="title">AIHUB@VVIT</h4>
-            <p>We are the students <br>community of VVIT <br>dedicated to leverage AI</p>
-            <ul style="list-style: none;text-align:left;">
-                <li class="desc_item"><i class="fa-solid fa-building-columns"></i><a
-                        href="https://www.vvitguntur.com/">VVIT</a></li>
-                <li class="desc_item"><i class="fa-solid fa-location-dot"></i><a
-                        href="https://www.google.com/maps/place/Vasireddy+Venkatadri+Institute+of+Technology/data=!4m2!3m1!1s0x0:0x8c86e4f36490336b?sa=X&ved=1t:2428&ictx=111">Location</a>
-                </li>
-                <li class="desc_item"><i class="fas fa-envelope"></i><a href="mailto:aihub@vvit.net">Mail</a></li>
-                <li class="desc_item"><i class="fa-brands fa-github"></i><a
-                        href="https://github.com/AIHUB-VVIT">Github</a></li>
-            </ul>
-        </div>
         <div class="info">
             <p></p>
             <br>
@@ -41,45 +26,36 @@
             <br>
             <center><h6><b><span id="typed-text"></span></b></h6></center>
             </div>
-
-<script>
-  const words = ["Embrace The Uncertainty", "Focus on the process", "Practice the mindfulness","Cultivate the gratitude","Reframe the failure"];
-  let i = 0; 
-  let j = 0; 
-  let isDeleting = false;
-  const typingSpeed = 100; 
-  const deletingSpeed = 50; 
-  const pauseTime = 1000; 
-
-  function typeEffect() {
-    const typedText = document.getElementById("typed-text");
-    let currentWord = words[i];
-
-    if (isDeleting) {
-      j--;
-    } else {
-      j++;
-    }
-
-    typedText.innerHTML = currentWord.substring(0, j) + "|"; 
-
-    let nextSpeed = isDeleting ? deletingSpeed : typingSpeed;
-
-    if (!isDeleting && j === currentWord.length) {
-      isDeleting = true;
-      nextSpeed = pauseTime;
-    } else if (isDeleting && j === 0) {
-      isDeleting = false;
-      i = (i + 1) % words.length; 
-      nextSpeed = typingSpeed;
-    }
-
-    setTimeout(typeEffect, nextSpeed);
-  }
-
-  document.addEventListener("DOMContentLoaded", () => setTimeout(typeEffect, 300)); 
-</script>
-
+            <script>
+              const words = ["Embrace The Uncertainty", "Focus on the process", "Practice the mindfulness","Cultivate the gratitude","Reframe the failure"];
+              let i = 0; 
+              let j = 0; 
+              let isDeleting = false;
+              const typingSpeed = 100; 
+              const deletingSpeed = 50; 
+              const pauseTime = 1000; 
+              function typeEffect() {
+                const typedText = document.getElementById("typed-text");
+                let currentWord = words[i];
+                  if (isDeleting) {
+                  j--;
+                  } else {
+                      j++;
+                  }
+             typedText.innerHTML = currentWord.substring(0, j) + "|"; 
+             let nextSpeed = isDeleting ? deletingSpeed : typingSpeed;
+             if (!isDeleting && j === currentWord.length) {
+                  isDeleting = true;
+                  nextSpeed = pauseTime;
+             } else if (isDeleting && j === 0) {
+                  isDeleting = false;
+                  i = (i + 1) % words.length; 
+                  nextSpeed = typingSpeed;
+            }
+             setTimeout(typeEffect, nextSpeed);
+              }
+             document.addEventListener("DOMContentLoaded", () => setTimeout(typeEffect, 300)); 
+            </script>
         <img src="./images/index2.png" alt="Decorative Design" class="image">
         <br>
         <center>This site is still under construction.</center>
@@ -105,12 +81,5 @@
             visitorCountElement.innerText = 'Visitors: ' + count;
         });
     </script>
-    <style>
-        @media (max-width: 768px) {
-            .description {
-                display: none;
-            }
-        }
-    </style>
 </body>
 </html>
