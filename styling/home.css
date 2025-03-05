@@ -44,27 +44,6 @@ body {
     position: relative;
 }
 
-.description {
-    text-align: center;
-    background-color: rgb(255, 248, 248);
-    height: 100vh;
-    padding: 6rem 3.02rem;
-}
-
-.description img {
-    display: inline;
-    border-radius: 50%;
-}
-
-.desc_item a {
-    margin: 0px 10px;
-    line-height: 30px;
-    text-decoration: none;
-    font-size: 0.8rem;
-    color: rgb(65, 65, 65);
-    transition: 0.3s ease-in-out;
-}
-
 .info {
     padding: 5rem 3rem 5rem 3rem;
     flex: 1;
@@ -80,30 +59,12 @@ body {
         height: auto;
 }
 
-.footer_list {
-    display: none;
-}
-
 @media(max-width: 850px) {
-
-    .description {
-        display: none !important;
-    }
-
-    .footer_list {
-        display: flex;
-    }
-
+    
     .main_content {
         height: auto; 
         display: block; 
         overflow: visible; 
-    }
-
-    .footer_list {
-        display: flex;
-        flex-direction: column; 
-        align-items: center; 
     }
 
     .info {
