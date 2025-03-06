@@ -23,7 +23,7 @@ class SpecialHeader extends HTMLElement {
                             <ul class="dropdown-menu" aria-labelledby="projectsDropdown">
                                 <li><a class="dropdown-item" href="Projects.html">Ongoing Projects</a></li>
                                 <li class="dropdown-submenu">
-                                    <a class="dropdown-item dropdown-toggle" href="#" id="completedProjectsDropdown" aria-expanded="false">
+                                    <a class="dropdown-item dropdown-toggle" href="Projects.html" id="completedProjectsDropdown" aria-expanded="false">
                                         Completed Projects
                                         <i class="fas fa-chevron-right submenu-arrow"></i>
                                     </a>
@@ -52,7 +52,7 @@ class SpecialHeader extends HTMLElement {
                             <ul class="dropdown-menu" aria-labelledby="careerDropdown">
                                 <li><a class="dropdown-item" href="Career.html">Job Guide</a></li>
                                 <li class="dropdown-submenu">
-                                    <a class="dropdown-item dropdown-toggle" href="#" id="lifeSkillsDropdown" aria-expanded="false">
+                                    <a class="dropdown-item dropdown-toggle" href="Career.html" id="lifeSkillsDropdown" aria-expanded="false">
                                         Life Skills
                                         <i class="fas fa-chevron-right submenu-arrow"></i>
                                     </a>
