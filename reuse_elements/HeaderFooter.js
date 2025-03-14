@@ -193,7 +193,10 @@ class SpecialFooter extends HTMLElement {
                 justify-content: center;
                 padding: 10px 0;
                 position: relative;
-                z-index: 2;
+                z-index: 10;
+                background-color: rgba(248, 249, 250, 0.85);
+                backdrop-filter: blur(5px);
+                -webkit-backdrop-filter: blur(5px);
             }
             
             .bg-circle-container {
@@ -203,7 +206,7 @@ class SpecialFooter extends HTMLElement {
                 width: 100%;
                 height: 100%;
                 pointer-events: none;
-                z-index: 1;
+                z-index: -1;
                 overflow: hidden;
             }
             
@@ -211,14 +214,14 @@ class SpecialFooter extends HTMLElement {
                 position: absolute;
                 bottom: -35%;
                 right: -15%;
-                width: 65vw;
-                height: 65vw;
+                width: 75vw;
+                height: 70vw;
                 border-radius: 50%;
                 background-image: url('./images/ch.jpg');
                 background-size: cover;
                 background-position: center;
                 opacity: 0.15;
-                z-index: 1;
+                z-index: -1;
                 animation: pulse 20s infinite alternate;
                 box-shadow: 0 0 30px rgba(255, 255, 255, 0.15), inset 0 0 60px rgba(0, 0, 0, 0.1);
                 transition: all 0.8s ease;
@@ -298,6 +301,12 @@ class SpecialFooter extends HTMLElement {
                 filter: saturate(1.5) brightness(1.1);
             }
             
+            /* Ensure content overlays background */
+            .card, .container, .project-card, .app-card, .blog-card {
+                position: relative;
+                z-index: 5;
+            }
+            
             /* Mobile optimization */
             @media (max-width: 768px) {
                 .desc_item {
@@ -306,24 +315,30 @@ class SpecialFooter extends HTMLElement {
                 }
                 
                 .bg-circle {
-                    width: 150vw;
-                    height: 150vw;
-                    bottom: -90%;
+                    width: 120vw;
+                    height: 120vw;
+                    bottom: -60%;
                     right: -25%;
-                    opacity: 0.12;
+                    opacity: 0.09;
                     animation: mobile-pulse 15s infinite alternate;
                 }
                 
                 .bg-circle.secondary {
-                    width: 100vw;
-                    height: 100vw;
-                    bottom: -60%;
-                    right: -40%;
-                    opacity: 0.08;
+                    width: 80vw;
+                    height: 80vw;
+                    bottom: -40%;
+                    right: -20%;
+                    opacity: 0.06;
                 }
                 
                 .bg-circle.tertiary {
-                    display: none; /* Hide tertiary circle on mobile for better performance */
+                    width: 60vw;
+                    height: 60vw;
+                    bottom: -30%;
+                    right: 5%;
+                    opacity: 0.04;
+                    animation: none;
+                    background: radial-gradient(circle at center, rgba(100,150,255,0.1), rgba(20,80,200,0.02));
                 }
                 
                 @keyframes mobile-pulse {
@@ -331,7 +346,19 @@ class SpecialFooter extends HTMLElement {
                         transform: scale(1);
                     }
                     100% {
-                        transform: scale(1.03);
+                        transform: scale(1.02);
+                    }
+                }
+                
+                /* Ensure footer is visible on mobile */
+                #footer {
+                    padding: 8px 0;
+                }
+                
+                /* Fix for mobile browsers that don't support backdrop-filter */
+                @supports not (backdrop-filter: blur(5px)) {
+                    #footer {
+                        background-color: rgba(248, 249, 250, 0.95);
                     }
                 }
             }
@@ -342,6 +369,15 @@ class SpecialFooter extends HTMLElement {
             document.addEventListener('DOMContentLoaded', function() {
                 const circles = document.querySelectorAll('.bg-circle');
                 let lastScrollTop = 0;
+                
+                // Fix z-index for content elements to ensure they overlay the background
+                const contentElements = document.querySelectorAll('.card, .container, .row, section');
+                contentElements.forEach(element => {
+                    if (getComputedStyle(element).position === 'static') {
+                        element.style.position = 'relative';
+                    }
+                    element.style.zIndex = '5';
+                });
                 
                 // Mouse movement effect
                 document.addEventListener('mousemove', function(e) {
