@@ -23,7 +23,7 @@ class SpecialHeader extends HTMLElement {
                             <ul class="dropdown-menu" aria-labelledby="projectsDropdown">
                                 <li><a class="dropdown-item" href="Projects.html">Ongoing Projects</a></li>
                                 <li class="dropdown-submenu">
-                                    <a class="dropdown-item dropdown-toggle" href="Projects.html" id="completedProjectsDropdown" aria-expanded="false">
+                                    <a class="dropdown-item dropdown-toggle" href="#" id="completedProjectsDropdown" aria-expanded="false">
                                         Completed Projects
                                         <i class="fas fa-chevron-right submenu-arrow"></i>
                                     </a>
@@ -52,7 +52,7 @@ class SpecialHeader extends HTMLElement {
                             <ul class="dropdown-menu" aria-labelledby="careerDropdown">
                                 <li><a class="dropdown-item" href="Career.html">Job Guide</a></li>
                                 <li class="dropdown-submenu">
-                                    <a class="dropdown-item dropdown-toggle" href="Career.html" id="lifeSkillsDropdown" aria-expanded="false">
+                                    <a class="dropdown-item dropdown-toggle" href="#" id="lifeSkillsDropdown" aria-expanded="false">
                                         Life Skills
                                         <i class="fas fa-chevron-right submenu-arrow"></i>
                                     </a>
@@ -153,6 +153,11 @@ class Links extends HTMLElement {
 class SpecialFooter extends HTMLElement {
     connectedCallback() {
         this.innerHTML = `
+        <div class="bg-circle-container">
+            <div class="bg-circle"></div>
+            <div class="bg-circle secondary"></div>
+            <div class="bg-circle tertiary"></div>
+        </div>
         <nav class="navbar navbar-expand-lg fixed-bottom bg-body-tertiary">
             <div class="container-fluid" id="footer">
                 <ul style="list-style: none;display:flex; justify-content: center;">
@@ -177,6 +182,7 @@ class SpecialFooter extends HTMLElement {
             .desc_item a {
                 text-decoration: none;
                 color: inherit;
+                transition: color 0.3s ease;
             }
             
             .desc_item a:hover {
@@ -186,15 +192,215 @@ class SpecialFooter extends HTMLElement {
             #footer {
                 justify-content: center;
                 padding: 10px 0;
+                position: relative;
+                z-index: 2;
             }
             
-            @media (max-width: 768px) {
-                .desc_item {
-                    margin: 0 10px;
-                    font-size: 0.9em;
+            .bg-circle-container {
+                position: fixed;
+                bottom: 0;
+                right: 0;
+                width: 100%;
+                height: 100%;
+                pointer-events: none;
+                z-index: 1;
+                overflow: hidden;
+            }
+            
+            .bg-circle {
+                position: absolute;
+                bottom: -35%;
+                right: -15%;
+                width: 65vw;
+                height: 65vw;
+                border-radius: 50%;
+                background-image: url('./images/ch.jpg');
+                background-size: cover;
+                background-position: center;
+                opacity: 0.15;
+                z-index: 1;
+                animation: pulse 20s infinite alternate;
+                box-shadow: 0 0 30px rgba(255, 255, 255, 0.15), inset 0 0 60px rgba(0, 0, 0, 0.1);
+                transition: all 0.8s ease;
+                filter: saturate(1.2);
+            }
+            
+            .bg-circle.secondary {
+                bottom: -30%;
+                right: -25%;
+                width: 55vw;
+                height: 55vw;
+                background-image: url('#.jpg');
+                opacity: 0.1;
+                animation: pulse-reverse 25s infinite alternate;
+                animation-delay: 3s;
+                mix-blend-mode: screen;
+                filter: hue-rotate(15deg);
+            }
+            
+            .bg-circle.tertiary {
+                bottom: -40%;
+                right: 10%;
+                width: 40vw;
+                height: 40vw;
+                background: radial-gradient(circle at center, rgba(100,150,255,0.2), rgba(20,80,200,0.05));
+                opacity: 0.1;
+                animation: float 30s infinite alternate;
+                animation-delay: 5s;
+                mix-blend-mode: overlay;
+                backdrop-filter: blur(2px);
+                border: 1px solid rgba(255,255,255,0.05);
+            }
+            
+            @keyframes pulse {
+                0% {
+                    transform: scale(1) rotate(0deg);
+                    box-shadow: 0 0 30px rgba(255, 255, 255, 0.1), inset 0 0 60px rgba(0, 0, 0, 0.1);
+                }
+                50% {
+                    box-shadow: 0 0 40px rgba(255, 255, 255, 0.15), inset 0 0 70px rgba(0, 0, 0, 0.1);
+                }
+                100% {
+                    transform: scale(1.08) rotate(3deg);
+                    box-shadow: 0 0 50px rgba(255, 255, 255, 0.2), inset 0 0 80px rgba(0, 0, 0, 0.1);
                 }
             }
-        </style>`
+            
+            @keyframes pulse-reverse {
+                0% {
+                    transform: scale(1.05) rotate(-2deg);
+                    opacity: 0.08;
+                }
+                100% {
+                    transform: scale(0.95) rotate(1deg);
+                    opacity: 0.12;
+                }
+            }
+            
+            @keyframes float {
+                0% {
+                    transform: translateY(0) scale(1);
+                    opacity: 0.08;
+                }
+                50% {
+                    transform: translateY(-10px) scale(1.05);
+                    opacity: 0.12;
+                }
+                100% {
+                    transform: translateY(5px) scale(0.95);
+                    opacity: 0.1;
+                }
+            }
+            
+            /* Interactive states */
+            .navbar.fixed-bottom:hover ~ .bg-circle-container .bg-circle {
+                opacity: 0.25;
+                filter: saturate(1.5) brightness(1.1);
+            }
+            
+            /* Mobile optimization */
+            @media (max-width: 768px) {
+                .desc_item {
+                    margin: 0 8px;
+                    font-size: 0.9em;
+                }
+                
+                .bg-circle {
+                    width: 150vw;
+                    height: 150vw;
+                    bottom: -90%;
+                    right: -25%;
+                    opacity: 0.12;
+                    animation: mobile-pulse 15s infinite alternate;
+                }
+                
+                .bg-circle.secondary {
+                    width: 100vw;
+                    height: 100vw;
+                    bottom: -60%;
+                    right: -40%;
+                    opacity: 0.08;
+                }
+                
+                .bg-circle.tertiary {
+                    display: none; /* Hide tertiary circle on mobile for better performance */
+                }
+                
+                @keyframes mobile-pulse {
+                    0% {
+                        transform: scale(1);
+                    }
+                    100% {
+                        transform: scale(1.03);
+                    }
+                }
+            }
+        </style>
+        
+        <script>
+            // Enhanced interactive background
+            document.addEventListener('DOMContentLoaded', function() {
+                const circles = document.querySelectorAll('.bg-circle');
+                let lastScrollTop = 0;
+                
+                // Mouse movement effect
+                document.addEventListener('mousemove', function(e) {
+                    if (window.innerWidth > 992) {  // Only on larger screens
+                        const mouseX = e.clientX / window.innerWidth;
+                        const mouseY = e.clientY / window.innerHeight;
+                        
+                        circles.forEach((circle, index) => {
+                            const factor = index === 0 ? 1 : (index === 1 ? -0.5 : 0.3);
+                            const xMove = (mouseX - 0.5) * 8 * factor;
+                            const yMove = (mouseY - 0.5) * 8 * factor;
+                            
+                            // Apply transform while preserving existing animations
+                            circle.style.transform = \`translate(\${xMove}px, \${yMove}px)\`;
+                        });
+                    }
+                });
+                
+                // Scroll effect
+                window.addEventListener('scroll', function() {
+                    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+                    const scrollDirection = scrollTop > lastScrollTop ? 'down' : 'up';
+                    const scrollSpeed = Math.abs(scrollTop - lastScrollTop) / 10;
+                    
+                    if (scrollSpeed > 0.5) {  // Only apply for significant scroll amounts
+                        circles.forEach((circle, index) => {
+                            const factor = index === 0 ? 0.2 : (index === 1 ? -0.1 : 0.15);
+                            const direction = scrollDirection === 'down' ? 1 : -1;
+                            const currentOpacity = parseFloat(window.getComputedStyle(circle).getPropertyValue('opacity'));
+                            
+                            // Subtle opacity change based on scroll
+                            const newOpacity = Math.max(0.08, Math.min(0.2, currentOpacity + (direction * factor * 0.01)));
+                            circle.style.opacity = newOpacity;
+                        });
+                    }
+                    
+                    lastScrollTop = scrollTop <= 0 ? 0 : scrollTop; // For Mobile or negative scrolling
+                });
+                
+                // Touch interaction for mobile
+                document.addEventListener('touchmove', function(e) {
+                    if (window.innerWidth <= 992 && e.touches.length > 0) {
+                        const touch = e.touches[0];
+                        const touchX = touch.clientX / window.innerWidth;
+                        const touchY = touch.clientY / window.innerHeight;
+                        
+                        circles.forEach((circle, index) => {
+                            if (index < 2) { // Only apply to first two circles for performance
+                                const factor = index === 0 ? 0.5 : -0.3;
+                                const xMove = (touchX - 0.5) * 5 * factor;
+                                const yMove = (touchY - 0.5) * 5 * factor;
+                                
+                                circle.style.transform = \`translate(\${xMove}px, \${yMove}px)\`;
+                            }
+                        });
+                    }
+                });
+            });
+        </script>`
     }
 }
 
