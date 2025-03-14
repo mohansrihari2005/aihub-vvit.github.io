@@ -222,25 +222,10 @@ class SpecialFooter extends HTMLElement {
                 background-position: center;
                 opacity: 0.15;
                 z-index: -1;
-                animation: pulse 20s infinite alternate;
                 box-shadow: 0 0 30px rgba(255, 255, 255, 0.15), inset 0 0 60px rgba(0, 0, 0, 0.1);
-                transition: all 0.8s ease;
+                
                 filter: saturate(1.2);
             }
-            
-            .bg-circle.secondary {
-                bottom: -30%;
-                right: -25%;
-                width: 55vw;
-                height: 55vw;
-                background-image: url('#.jpg');
-                opacity: 0.1;
-                animation: pulse-reverse 25s infinite alternate;
-                animation-delay: 3s;
-                mix-blend-mode: screen;
-                filter: hue-rotate(15deg);
-            }
-            
             .bg-circle.tertiary {
                 bottom: -40%;
                 right: 10%;
@@ -249,7 +234,7 @@ class SpecialFooter extends HTMLElement {
                 background: radial-gradient(circle at center, rgba(100,150,255,0.2), rgba(20,80,200,0.05));
                 opacity: 0.1;
                 animation: float 30s infinite alternate;
-                animation-delay: 5s;
+                
                 mix-blend-mode: overlay;
                 backdrop-filter: blur(2px);
                 border: 1px solid rgba(255,255,255,0.05);
