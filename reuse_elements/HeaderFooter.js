@@ -214,8 +214,8 @@ class SpecialFooter extends HTMLElement {
                 position: absolute;
                 bottom: -35%;
                 right: -15%;
-                width: 55vw;
-                height: 50vw;
+                width: 43vw;
+                height: 47vw;
                 border-radius: 50%;
                 background-image: url('./images/ch.jpg');
                 background-size: cover;
