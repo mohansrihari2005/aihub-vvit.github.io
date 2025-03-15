@@ -149,7 +149,6 @@ class Links extends HTMLElement {
         `
     }
 }
-
 class SpecialFooter extends HTMLElement {
     connectedCallback() {
         this.innerHTML = `
@@ -228,8 +227,6 @@ class SpecialFooter extends HTMLElement {
                 transform: none;
             }
             
-            /* Animation keyframes removed */
-            
             /* Interactive states */
             .navbar.fixed-bottom:hover ~ .bg-circle-container .bg-circle {
                 opacity: 0.25;
@@ -252,14 +249,13 @@ class SpecialFooter extends HTMLElement {
                 .bg-circle {
                     width: 100vw;
                     height: 100vw;
-                    bottom: -40%;
-                    right: -30%;
-                    opacity: 0.09;
-                    /* Mobile animation removed */
+                    bottom: -20%;  /* Changed from -40% */
+                    right: -20%;   /* Changed from -30% */
+                    opacity: 0.15; /* Changed from 0.09 */
+                    display: block !important; /* Force display */
+                    visibility: visible !important; /* Ensure visibility */
                     transform: none;
                 }
-                
-                /* Mobile keyframes removed */
                 
                 /* Ensure footer is visible on mobile */
                 #footer {
@@ -313,16 +309,45 @@ class SpecialFooter extends HTMLElement {
                 \`;
                 document.head.appendChild(globalStyle);
                 
-                // Preload the background image
-                const preloadImg = new Image();
-                preloadImg.src = './images/ch.jpg';
+                // Image loading verification
+                const bgImage = new Image();
+                bgImage.onload = function() {
+                    console.log('Background image loaded successfully');
+                    document.querySelectorAll('.bg-circle').forEach(circle => {
+                        circle.style.backgroundImage = \`url('./images/ch.jpg')\`;
+                        circle.style.display = 'block';
+                        // Force higher opacity on mobile
+                        if (window.innerWidth <= 768) {
+                            circle.style.opacity = '0.15';
+                            circle.style.visibility = 'visible';
+                        }
+                    });
+                };
+                bgImage.onerror = function() {
+                    console.error('Background image failed to load');
+                    // Fallback to a color if image fails
+                    document.querySelectorAll('.bg-circle').forEach(circle => {
+                        circle.style.backgroundColor = 'rgba(0, 0, 128, 0.1)';
+                        circle.style.backgroundImage = 'none';
+                        circle.style.display = 'block';
+                        circle.style.visibility = 'visible';
+                    });
+                };
+                bgImage.src = './images/ch.jpg';
                 
-                // Make sure all circles have no animation
+                // Make sure all circles have no animation but are visible
                 const bgCircles = document.querySelectorAll('.bg-circle');
                 bgCircles.forEach(circle => {
                     circle.style.animation = 'none';
                     circle.style.transform = 'none';
                     circle.style.transition = 'none';
+                    circle.style.display = 'block';
+                    
+                    // Force visibility especially on mobile
+                    if (window.innerWidth <= 768) {
+                        circle.style.opacity = '0.15';
+                        circle.style.visibility = 'visible';
+                    }
                 });
             });
         </script>`
