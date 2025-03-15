@@ -223,6 +223,7 @@ class SpecialFooter extends HTMLElement {
                 z-index: -1;
                 box-shadow: 0 0 30px rgba(255, 255, 255, 0.15), inset 0 0 60px rgba(0, 0, 0, 0.1);
                 filter: saturate(1.2);
+                /* Animation removed */
                 transform: none;
             }
             
@@ -246,14 +247,14 @@ class SpecialFooter extends HTMLElement {
                 }
                 
                 .bg-circle {
-                    width: 70vw;  /* Reduced size */
-                    height: 70vw;  /* Reduced size */
-                    bottom: -20%;
-                    right: -20%;
-                    opacity: 0.15;
-                    /* Ensure just one circle appears */
-                    display: block !important;
-                    visibility: visible !important;
+                    width: 100vw;
+                    height: 100vw;
+                    bottom: -20%;  /* Changed from -40% */
+                    right: -20%;   /* Changed from -30% */
+                    opacity: 0.15; /* Changed from 0.09 */
+                    display: block !important; /* Force display */
+                    visibility: visible !important; /* Ensure visibility */
+                    transform: none;
                 }
                 
                 /* Ensure footer is visible on mobile */
@@ -302,13 +303,8 @@ class SpecialFooter extends HTMLElement {
                     /* Force no animation on background circles */
                     .bg-circle {
                         animation: none !important;
-                        transition: opacity 0.3s ease !important;
+                        transition: none !important;
                         transform: none !important;
-                    }
-                    
-                    /* Remove any duplicate circles that might be created dynamically */
-                    .bg-circle-container .bg-circle:not(:first-child) {
-                        display: none !important;
                     }
                 \`;
                 document.head.appendChild(globalStyle);
@@ -317,55 +313,41 @@ class SpecialFooter extends HTMLElement {
                 const bgImage = new Image();
                 bgImage.onload = function() {
                     console.log('Background image loaded successfully');
-                    // Get only the first circle in each container
-                    const bgCircles = document.querySelectorAll('.bg-circle-container .bg-circle');
-                    
-                    // Make sure there's only one circle visible per container
-                    bgCircles.forEach((circle, index) => {
-                        // Only apply styles to the first circle in each container
-                        if (index === 0 || !circle.parentElement.querySelector('.bg-circle:first-child') === circle) {
-                            circle.style.backgroundImage = \`url('./images/ch.jpg')\`;
-                            circle.style.display = 'block';
+                    document.querySelectorAll('.bg-circle').forEach(circle => {
+                        circle.style.backgroundImage = \`url('./images/ch.jpg')\`;
+                        circle.style.display = 'block';
+                        // Force higher opacity on mobile
+                        if (window.innerWidth <= 768) {
+                            circle.style.opacity = '0.15';
                             circle.style.visibility = 'visible';
-                            // Force higher opacity on mobile
-                            if (window.innerWidth <= 768) {
-                                circle.style.opacity = '0.15';
-                            }
-                        } else {
-                            // Hide any additional circles
-                            circle.style.display = 'none';
-                            circle.style.visibility = 'hidden';
                         }
                     });
                 };
                 bgImage.onerror = function() {
                     console.error('Background image failed to load');
                     // Fallback to a color if image fails
-                    document.querySelectorAll('.bg-circle').forEach((circle, index) => {
-                        // Only show the first circle in each container
-                        if (index === 0 || !circle.parentElement.querySelector('.bg-circle:first-child') === circle) {
-                            circle.style.backgroundColor = 'rgba(0, 0, 128, 0.1)';
-                            circle.style.backgroundImage = 'none';
-                            circle.style.display = 'block';
-                            circle.style.visibility = 'visible';
-                        } else {
-                            circle.style.display = 'none';
-                            circle.style.visibility = 'hidden';
-                        }
+                    document.querySelectorAll('.bg-circle').forEach(circle => {
+                        circle.style.backgroundColor = 'rgba(0, 0, 128, 0.1)';
+                        circle.style.backgroundImage = 'none';
+                        circle.style.display = 'block';
+                        circle.style.visibility = 'visible';
                     });
                 };
                 bgImage.src = './images/ch.jpg';
                 
-                // Remove any duplicate circles that might have been created
-                const containers = document.querySelectorAll('.bg-circle-container');
-                containers.forEach(container => {
-                    const circles = container.querySelectorAll('.bg-circle');
-                    // Keep only the first circle in each container
-                    circles.forEach((circle, index) => {
-                        if (index > 0) {
-                            circle.remove();
-                        }
-                    });
+                // Make sure all circles have no animation but are visible
+                const bgCircles = document.querySelectorAll('.bg-circle');
+                bgCircles.forEach(circle => {
+                    circle.style.animation = 'none';
+                    circle.style.transform = 'none';
+                    circle.style.transition = 'none';
+                    circle.style.display = 'block';
+                    
+                    // Force visibility especially on mobile
+                    if (window.innerWidth <= 768) {
+                        circle.style.opacity = '0.15';
+                        circle.style.visibility = 'visible';
+                    }
                 });
             });
         </script>`
