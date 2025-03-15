@@ -22,6 +22,13 @@ body {
     position: relative; /* Important for z-index */
     z-index: 5; /* Above background */
 }
+.info .image {
+    display: block;
+    margin: auto;
+    width: 40ch; 
+    max-width: 100%; 
+    height: auto;
+}
 
 .image {
     max-width: 100%;
@@ -30,20 +37,28 @@ body {
     margin: 0 auto;
     position: relative; /* For proper stacking context */
 }
-
-.visitor-count {
-    position: fixed;
-    bottom: 60px;
-    right: 20px;
-    background-color: rgba(255, 255, 255, 0.7);
-    padding: 5px 10px;
-    border-radius: 5px;
-    font-size: 12px;
-    z-index: 10; /* Above background but below header/footer */
-}
-
 /* Override any problematic styles */
 .footer_list {
     position: relative;
     z-index: 10;
+}
+
+@media(max-width: 850px) {
+    
+    .main_content {
+        height: auto; 
+        display: block; 
+        overflow: visible; 
+    }
+
+    .info {
+        padding: 2rem 1rem; 
+        text-align: center; 
+    }
+
+    .info .image {
+        width: 100%;  
+        max-width: 100%;  
+        height: auto;
+    }
 }
