@@ -206,15 +206,32 @@ class SpecialFooter extends HTMLElement {
                 height: 100%;
                 pointer-events: none;
                 z-index: -1;
-                overflow: hidden;
+                overflow: visible;
+            }
+            
+            /* Use a pseudo-element as a fallback for mobile devices */
+            .bg-circle-container:after {
+                content: '';
+                position: fixed;
+                bottom: -100px;
+                right: -50px;
+                width: 300px;
+                height: 300px;
+                border-radius: 50%;
+                background-image: url('./images/ch.jpg');
+                background-size: cover;
+                background-position: center;
+                opacity: 0.15;
+                z-index: -1;
+                display: none; /* Hidden by default, shown only on mobile */
             }
             
             .bg-circle {
-                position: absolute;
-                bottom: -21.45%;
-                right: -12%;
-                width: 41.5vw;
-                height: 45vw;
+                position: fixed;
+                bottom: -100px;
+                right: -50px;
+                width: 300px;
+                height: 300px;
                 border-radius: 50%;
                 background-image: url('./images/ch.jpg');
                 background-size: cover;
@@ -223,8 +240,8 @@ class SpecialFooter extends HTMLElement {
                 z-index: -1;
                 box-shadow: 0 0 30px rgba(255, 255, 255, 0.15), inset 0 0 60px rgba(0, 0, 0, 0.1);
                 filter: saturate(1.2);
-                /* Animation removed */
-                transform: none;
+                display: block !important;
+                visibility: visible !important;
             }
             
             /* Interactive states */
@@ -246,16 +263,15 @@ class SpecialFooter extends HTMLElement {
                     font-size: 0.9em;
                 }
                 
+                /* Show the fallback image on mobile */
+                .bg-circle-container:after {
+                    display: block;
+                }
+                
+                /* Ensure the primary circle is visible on mobile */
                 .bg-circle {
-                    /* Keep the same position values as desktop */
-                    bottom: -21.45%;
-                    right: -12%;
-                    width: 41.5vw;
-                    height: 45vw;
-                    opacity: 0.15;
                     display: block !important;
                     visibility: visible !important;
-                    transform: none;
                 }
                 
                 /* Ensure footer is visible on mobile */
@@ -307,8 +323,43 @@ class SpecialFooter extends HTMLElement {
                         transition: none !important;
                         transform: none !important;
                     }
+                    
+                    /* Force mobile image display */
+                    @media (max-width: 768px) {
+                        .bg-circle {
+                            display: block !important;
+                            visibility: visible !important;
+                        }
+                        
+                        .bg-circle-container:after {
+                            display: block !important;
+                            visibility: visible !important;
+                        }
+                    }
                 \`;
                 document.head.appendChild(globalStyle);
+                
+                // Create a direct DOM element for the background on mobile
+                if (window.innerWidth <= 768) {
+                    const mobileBgImage = document.createElement('div');
+                    mobileBgImage.className = 'mobile-bg-circle';
+                    mobileBgImage.style.cssText = \`
+                        position: fixed;
+                        bottom: -100px;
+                        right: -50px;
+                        width: 300px;
+                        height: 300px;
+                        border-radius: 50%;
+                        background-image: url('./images/ch.jpg');
+                        background-size: cover;
+                        background-position: center;
+                        opacity: 0.15;
+                        z-index: -1;
+                        display: block !important;
+                        visibility: visible !important;
+                    \`;
+                    document.body.appendChild(mobileBgImage);
+                }
                 
                 // Image loading verification
                 const bgImage = new Image();
@@ -317,12 +368,6 @@ class SpecialFooter extends HTMLElement {
                     document.querySelectorAll('.bg-circle').forEach(circle => {
                         circle.style.backgroundImage = \`url('./images/ch.jpg')\`;
                         circle.style.display = 'block';
-                        // Force consistent position on all devices
-                        circle.style.bottom = '-21.45%';
-                        circle.style.right = '-12%';
-                        circle.style.width = '41.5vw';
-                        circle.style.height = '45vw';
-                        circle.style.opacity = '0.15';
                         circle.style.visibility = 'visible';
                     });
                 };
@@ -334,43 +379,18 @@ class SpecialFooter extends HTMLElement {
                         circle.style.backgroundImage = 'none';
                         circle.style.display = 'block';
                         circle.style.visibility = 'visible';
-                        // Force consistent position on all devices
-                        circle.style.bottom = '-21.45%';
-                        circle.style.right = '-12%';
-                        circle.style.width = '41.5vw';
-                        circle.style.height = '45vw';
-                        circle.style.opacity = '0.15';
                     });
                 };
                 bgImage.src = './images/ch.jpg';
                 
-                // Make sure all circles have no animation but are visible
+                // Make sure all circles are visible
                 const bgCircles = document.querySelectorAll('.bg-circle');
                 bgCircles.forEach(circle => {
                     circle.style.animation = 'none';
                     circle.style.transform = 'none';
                     circle.style.transition = 'none';
-                    circle.style.display = 'block';
-                    
-                    // Force consistent position regardless of device size
-                    circle.style.bottom = '-21.45%';
-                    circle.style.right = '-12%';
-                    circle.style.width = '41.5vw';
-                    circle.style.height = '45vw';
-                    circle.style.opacity = '0.15';
-                    circle.style.visibility = 'visible';
-                });
-                
-                // Handle window resize events to maintain consistent position
-                window.addEventListener('resize', function() {
-                    bgCircles.forEach(circle => {
-                        circle.style.bottom = '-21.45%';
-                        circle.style.right = '-12%';
-                        circle.style.width = '41.5vw';
-                        circle.style.height = '45vw';
-                        circle.style.opacity = '0.15';
-                        circle.style.visibility = 'visible';
-                    });
+                    circle.style.display = 'block !important';
+                    circle.style.visibility = 'visible !important';
                 });
             });
         </script>`
