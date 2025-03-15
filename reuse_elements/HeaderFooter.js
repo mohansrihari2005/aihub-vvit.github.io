@@ -250,7 +250,7 @@ class SpecialFooter extends HTMLElement {
                     width: 100vw;
                     height: 100vw;
                     bottom: -11.15%;  /* Changed from -40% */
-                    right: -26.89%;   /* Changed from -30% */
+                    right: -26.977%;   /* Changed from -30% */
                     opacity: 0.15; /* Changed from 0.09 */
                     display: block !important; /* Force display */
                     visibility: visible !important; /* Ensure visibility */
