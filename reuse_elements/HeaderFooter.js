@@ -247,13 +247,14 @@ class SpecialFooter extends HTMLElement {
                 }
                 
                 .bg-circle {
-                    width: 100vw;
-                    height: 100vw;
-                    bottom: -20%;  /* Changed from -40% */
-                    right: -20%;   /* Changed from -30% */
-                    opacity: 0.15; /* Changed from 0.09 */
-                    display: block !important; /* Force display */
-                    visibility: visible !important; /* Ensure visibility */
+                    /* Keep the same position values as desktop */
+                    bottom: -21.45%;
+                    right: -12%;
+                    width: 41.5vw;
+                    height: 45vw;
+                    opacity: 0.15;
+                    display: block !important;
+                    visibility: visible !important;
                     transform: none;
                 }
                 
@@ -316,11 +317,13 @@ class SpecialFooter extends HTMLElement {
                     document.querySelectorAll('.bg-circle').forEach(circle => {
                         circle.style.backgroundImage = \`url('./images/ch.jpg')\`;
                         circle.style.display = 'block';
-                        // Force higher opacity on mobile
-                        if (window.innerWidth <= 768) {
-                            circle.style.opacity = '0.15';
-                            circle.style.visibility = 'visible';
-                        }
+                        // Force consistent position on all devices
+                        circle.style.bottom = '-21.45%';
+                        circle.style.right = '-12%';
+                        circle.style.width = '41.5vw';
+                        circle.style.height = '45vw';
+                        circle.style.opacity = '0.15';
+                        circle.style.visibility = 'visible';
                     });
                 };
                 bgImage.onerror = function() {
@@ -331,6 +334,12 @@ class SpecialFooter extends HTMLElement {
                         circle.style.backgroundImage = 'none';
                         circle.style.display = 'block';
                         circle.style.visibility = 'visible';
+                        // Force consistent position on all devices
+                        circle.style.bottom = '-21.45%';
+                        circle.style.right = '-12%';
+                        circle.style.width = '41.5vw';
+                        circle.style.height = '45vw';
+                        circle.style.opacity = '0.15';
                     });
                 };
                 bgImage.src = './images/ch.jpg';
@@ -343,11 +352,25 @@ class SpecialFooter extends HTMLElement {
                     circle.style.transition = 'none';
                     circle.style.display = 'block';
                     
-                    // Force visibility especially on mobile
-                    if (window.innerWidth <= 768) {
+                    // Force consistent position regardless of device size
+                    circle.style.bottom = '-21.45%';
+                    circle.style.right = '-12%';
+                    circle.style.width = '41.5vw';
+                    circle.style.height = '45vw';
+                    circle.style.opacity = '0.15';
+                    circle.style.visibility = 'visible';
+                });
+                
+                // Handle window resize events to maintain consistent position
+                window.addEventListener('resize', function() {
+                    bgCircles.forEach(circle => {
+                        circle.style.bottom = '-21.45%';
+                        circle.style.right = '-12%';
+                        circle.style.width = '41.5vw';
+                        circle.style.height = '45vw';
                         circle.style.opacity = '0.15';
                         circle.style.visibility = 'visible';
-                    }
+                    });
                 });
             });
         </script>`
