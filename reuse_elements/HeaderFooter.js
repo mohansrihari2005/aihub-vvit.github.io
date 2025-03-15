@@ -249,8 +249,8 @@ class SpecialFooter extends HTMLElement {
                 .bg-circle {
                     width: 100vw;
                     height: 100vw;
-                    bottom: -15%;  /* Changed from -40% */
-                    right: -23%;      /* Changed from -30% */
+                    bottom: -11.5%;  /* Changed from -40% */
+                    right: -26%;      /* Changed from -30% */
                     opacity: 0.15; /* Changed from 0.09 */
                     display: block !important; /* Force display */
                     visibility: visible !important; /* Ensure visibility */
