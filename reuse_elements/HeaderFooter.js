@@ -40,7 +40,7 @@ class SpecialHeader extends HTMLElement {
                             <a class="nav-link" href="blog.html">Blogs</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="Meetups.html">Meetups</a>
+                            <a class="nav-link" href="Meetups.html">Events</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="Apps.html">Apps</a>
