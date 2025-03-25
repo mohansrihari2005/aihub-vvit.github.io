@@ -190,7 +190,7 @@ class SpecialFooter extends HTMLElement {
             
             #footer {
                 justify-content: center;
-                padding: 10px 0;
+                padding-top: 12.5px;
                 position: relative;
                 z-index: 10;
                 background-color: rgba(248, 249, 250, 0.85);
