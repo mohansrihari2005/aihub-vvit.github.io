@@ -74,8 +74,7 @@ body {
 @media(max-width: 850px) {
     
     .main_content {
-        height: auto; 
-        display: block; 
+        height: auto;  
         overflow: visible; 
     }
 
@@ -110,11 +109,5 @@ body {
     }
     to {
         transform: rotate(360deg);
-    }
-}
-/* Mobile Optimization */
-@media (max-width: 768px) {
-    .main_content {
-        padding: 60px 15px;
     }
 }
