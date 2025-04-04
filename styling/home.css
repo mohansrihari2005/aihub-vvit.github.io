@@ -1,26 +1,23 @@
-/* Make sure these styles don't conflict with the background */
 body {
     font-family: 'Lora', serif;
     margin: 0;
     padding: 0;
-    position: relative; /* Important for z-index stacking */
+    position: relative;
     min-height: 100vh;
 }
 
 .main_content {
-    padding-top: 70px; /* Space for fixed header */
-    padding-bottom: 70px; /* Space for fixed footer */
+    padding-top: 70px; 
+    padding-bottom: 70px;
     position: relative;
-    z-index: 5; /* Make sure content is above background */
+    z-index: 5; 
 }
-
-/* Maintain existing styles */
 .info {
     max-width: 800px;
     margin: 0 auto;
     padding: 20px;
-    position: relative; /* Important for z-index */
-    z-index: 5; /* Above background */
+    position: relative;
+    z-index: 5; 
 }
 .info .image {
     display: block;
@@ -31,13 +28,44 @@ body {
 }
 
 .image {
-    max-width: 100%;
+    max-width: 50%; 
     height: auto;
     display: block;
     margin: 0 auto;
-    position: relative; /* For proper stacking context */
+    position: relative; 
 }
-/* Override any problematic styles */
+.welcome-text {
+    text-align: center;
+    font-weight: bold;
+    margin-top: 20px; 
+}
+.container {
+    width: 400px; 
+    height: 80px;
+    position: relative;
+    margin: 0 auto; 
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+}
+
+.outer {
+    width: 350px; 
+    height: 350px;
+    position: absolute;
+    animation: rotate 60s linear infinite;
+    opacity: 0.2;
+}
+
+.inner {
+    position: absolute;
+    top: 50%; 
+    left: 50%; 
+    transform: translate(-50%, -50%); 
+    width: 120px; 
+    height: 120px;
+    opacity: 0.2;
+}
 .footer_list {
     position: relative;
     z-index: 10;
@@ -60,5 +88,33 @@ body {
         width: 100%;  
         max-width: 100%;  
         height: auto;
+    }
+}
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f0f0f0;
+    margin: 0;
+}
+
+.main_content {
+    text-align: center;
+    z-index: 5;
+}
+@keyframes rotate {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+/* Mobile Optimization */
+@media (max-width: 768px) {
+    .main_content {
+        padding: 60px 15px;
     }
 }
