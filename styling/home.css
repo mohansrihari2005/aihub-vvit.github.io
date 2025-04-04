@@ -79,6 +79,26 @@ body {
     position: relative;
     z-index: 10;
 }
+
+/* Fix for the shaking issue caused by dynamic text */
+#typed-text {
+    display: inline-block;
+    height: 1.5em;
+    line-height: 1.5em;
+    width: 100%; /* Or a fixed pixel value */
+    white-space: nowrap;
+    overflow: hidden;
+    text-align: center;
+}
+
+.main_content {
+    padding-top: 70px;
+    padding-bottom: 70px;
+    min-height: calc(100vh - 140px);
+    text-align: center;
+    overflow: hidden;
+}
+
 @media(max-width: 850px) {
     
     .main_content {
@@ -93,7 +113,7 @@ body {
     }
 
     .info .image {
-        width: 40ch;
+        width: 100%;  
         max-width: 100%;  
         height: auto;
     }
