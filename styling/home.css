@@ -89,6 +89,20 @@ body {
         height: auto;
     }
 }
+/* Media query for smaller screens */
+@media (max-width: 768px) {
+    .container {
+        width: 100%; /* Adjust container width for smaller screens */
+    }
+
+    .outer {
+        max-width: 250px; /* Reduce size for smaller screens */
+    }
+
+    .inner {
+        max-width: 80px; /* Reduce size for smaller screens */
+    }
+}
 body {
     display: flex;
     flex-direction: column;
