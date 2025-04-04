@@ -93,7 +93,7 @@ body {
     }
 
     .info .image {
-        width: 100%;  
+        width: 40ch;
         max-width: 100%;  
         height: auto;
     }
