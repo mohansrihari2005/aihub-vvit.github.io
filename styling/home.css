@@ -1,16 +1,19 @@
 /* Make sure these styles don't conflict with the background */
 body {
     font-family: 'Lora', serif;
-    margin: 0;
-    padding: 0;
-    position: relative; /* Important for z-index stacking */
-    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f0f0f0;
+        margin: 0;
 }
 
 .main_content {
     padding-top: 70px; /* Space for fixed header */
     padding-bottom: 70px; /* Space for fixed footer */
-    position: relative;
+    text-align: center;
     z-index: 5; /* Make sure content is above background */
 }
 
@@ -31,16 +34,69 @@ body {
 }
 
 .image {
-    max-width: 100%;
+    max-width: 50%; /* Reduce the size to 50% of its original width */
     height: auto;
     display: block;
     margin: 0 auto;
     position: relative; /* For proper stacking context */
 }
+.welcome-text {
+    text-align: center;
+    font-weight: bold;
+    margin-top: 20px; /* Add some spacing from the top */
+}
+
+/* Center the inner and outer circles */
+.container {
+    width: 400px; /* Container size */
+    height: 80px;
+    position: relative;
+    margin: 0 auto; /* Center horizontally */
+    display: flex;
+    justify-content: center;
+    align-items: center; /* Center both horizontally and vertically */
+}
+
+.outer {
+    width: 350px; /* Outer circle size */
+    height: 350px;
+    position: absolute;
+    animation: rotate 60s linear infinite;
+    opacity: 0.2;
+}
+
+.inner {
+    position: absolute;
+    top: 50%; /* Center vertically */
+    left: 50%; /* Center horizontally */
+    transform: translate(-50%, -50%); /* Adjust for the circle's size */
+    width: 120px; /* Inner circle size */
+    height: 120px;
+    opacity: 0.2;
+}
 /* Override any problematic styles */
 .footer_list {
     position: relative;
     z-index: 10;
+}
+
+/* Fix for the shaking issue caused by dynamic text */
+#typed-text {
+    display: inline-block;
+    height: 1.5em;
+    line-height: 1.5em;
+    width: 100%; /* Or a fixed pixel value */
+    white-space: nowrap;
+    overflow: hidden;
+    text-align: center;
+}
+
+.main_content {
+    padding-top: 70px;
+    padding-bottom: 70px;
+    min-height: calc(100vh - 140px);
+    text-align: center;
+    overflow: hidden;
 }
 
 @media(max-width: 850px) {
@@ -60,5 +116,40 @@ body {
         width: 100%;  
         max-width: 100%;  
         height: auto;
+    }
+    .container {
+        width: 400px; /* Container size */
+        height: 80px;
+        position: relative;
+        margin: 0 auto; /* Center horizontally */
+        display: flex;
+        justify-content: center;
+        align-items: center; /* Center both horizontally and vertically */
+    }
+    
+    .outer {
+        width: 350px; /* Outer circle size */
+        height: 350px;
+        position: absolute;
+        animation: rotate 60s linear infinite;
+        opacity: 0.2;
+    }
+    
+    .inner {
+        position: absolute;
+        top: 50%; /* Center vertically */
+        left: 50%; /* Center horizontally */
+        transform: translate(-50%, -50%); /* Adjust for the circle's size */
+        width: 120px; /* Inner circle size */
+        height: 120px;
+        opacity: 0.2;
+    }
+}
+@keyframes rotate {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
     }
 }
