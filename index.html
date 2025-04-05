@@ -15,50 +15,43 @@
         <div class="welcome-text">
             <h5>Welcome all</h5>
         </div>
+        <div class="container">
+            <img src="./images/vvit1.png" class="outer" alt="Rotating Outer Image">
+            <img src="./images/circular_cen.png" class="inner" alt="Static Inner Image">
         <div class="slider-container">
             <div class="slider" role="region" aria-label="Featured Content Slider">
                 <div class="slides" role="list">
-                        <div id="slides__1" class="slide" role="listitem" aria-label="Slide 1">
+                    <div id="slides__1" class="slide" role="listitem" aria-label="Slide 1">
                         <span class="slide__text">
                             <img src="./images/index1.png" alt="Decorative Design" class="image">
                             <h6>Inspiration is not tangible unless you</h6>
-                            <div class="container">
-                                <img src="./images/vvit1.png" class="outer" alt="Rotating Outer Image">
-                                <img src="./images/circular_cen.png" class="inner" alt="Static Inner Image">
-                            </div>
+                            <br>
+                            <br>
                             <h6><span id="typed-text"></span></h6>
                             <img src="./images/index2.png" alt="Decorative Design" class="image">
                         </span>
                     </div>
                     <div id="slides__2" class="slide" role="listitem" aria-label="Slide 2">
-    <span class="slide__text">
-        <div class="container">
-            <img src="./images/vvit1.png" class="outer" alt="Rotating Outer Image">
-            <img src="./images/circular_cen.png" class="inner" alt="Static Inner Image">
-            <h5 class="wheel-text">High Performance Computing Facilities</h5>
-        </div>
-    </span>
-</div>
-
-<div id="slides__3" class="slide" role="listitem" aria-label="Slide 3">
-    <span class="slide__text">
-        <div class="container">
-            <img src="./images/vvit1.png" class="outer" alt="Rotating Outer Image">
-            <img src="./images/circular_cen.png" class="inner" alt="Static Inner Image">
-            <h5 class="wheel-text">NVIDIA Jetson Edge Computing Facility</h5>
-        </div>
-    </span>
-</div>
-
-<div id="slides__4" class="slide" role="listitem" aria-label="Slide 4">
-    <span class="slide__text">
-        <div class="container">
-            <img src="./images/vvit1.png" class="outer" alt="Rotating Outer Image">
-            <img src="./images/circular_cen.png" class="inner" alt="Static Inner Image">
-            <h5 class="wheel-text">AI Research & Development</h5>
-        </div>
-    </span>
-</div>
+                        <span class="slide__text">
+                            <div class="container">
+                                <h5 class="wheel-text">High Performance Computing Facilities</h5>
+                            </div>
+                        </span>
+                    </div>
+                    <div id="slides__3" class="slide" role="listitem" aria-label="Slide 3">
+                        <span class="slide__text">
+                            <div class="container">
+                                <h5 class="wheel-text">NVIDIA Jetson Edge Computing Facility</h5>
+                            </div>
+                        </span>
+                    </div>
+                    <div id="slides__4" class="slide" role="listitem" aria-label="Slide 4">
+                        <span class="slide__text">
+                            <div class="container">
+                                <h5 class="wheel-text">AI Research & Development</h5>
+                            </div>
+                        </span>
+                    </div>
                 </div>
                 <div class="slider__nav">
                     <a class="slider__navlink" href="#slides__1" aria-label="Go to Slide 1"></a>
@@ -68,7 +61,10 @@
                 </div>
             </div>
         </div>
+        </div>
         <div>
+            <br>
+            <br>
             <p><b>"</b> We are the student community of <br> VVIT dedicated to leveraging AI <b>"</b></p>
             <p>This site is still under construction.</p>
         </div>
@@ -84,8 +80,7 @@
             let currentWord = words[i];
 
             j = isDeleting ? j - 1 : j + 1;
-            typedText.innerHTML = `<h6>${currentWord.substring(0, j)}</h6>`; // Wrap the text in <b> for bold
-
+            typedText.innerHTML = `<h6>${currentWord.substring(0, j)}</h6>`;
             let nextSpeed = isDeleting ? deletingSpeed : typingSpeed;
 
             if (!isDeleting && j === currentWord.length) {
@@ -127,10 +122,9 @@
                 updateActiveNavLink();
             }
 
-            // Add mouseover event to navigation dots
             navLinks.forEach((link, index) => {
                 link.addEventListener("mouseover", () => {
-                    moveToSlide(index); // Move to the corresponding slide on hover
+                    moveToSlide(index);
                 });
             });
             updateActiveNavLink();
