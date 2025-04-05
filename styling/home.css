@@ -210,6 +210,7 @@ main {
         font-size: 1.5rem;
     }
     .container {
+        padding: 30px;
         width: 250px;
         height: 350px;
     }
@@ -231,5 +232,8 @@ main {
 
     .image {
         max-width: 40%;
+    }
+    .slider__nav {
+        bottom: -1%;
     }
 }
