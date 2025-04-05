@@ -194,10 +194,6 @@ main {
 }
 
 @media (max-width: 850px) {
-    main {
-        padding: 50px 0;
-    }
-
     .slider {
         height: 300px;
     }
@@ -214,12 +210,10 @@ main {
         width: 250px;
         height: 350px;
     }
-
     .outer {
         width: 350px;
         height: 350px;
     }
-
     .inner {
         width: 120px;
         height: 120px;
@@ -229,11 +223,7 @@ main {
         font-size: 1rem;
         width: 90%;
     }
-
     .image {
         max-width: 40%;
-    }
-    .slider__nav {
-        bottom: -5%;
     }
 }
