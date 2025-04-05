@@ -1,155 +1,178 @@
-/* Make sure these styles don't conflict with the background */
 body {
-    font-family: 'Lora', serif;
+    font-family: 'Lora',serif;
+    margin: 0;
     display: flex;
     flex-direction: column;
+    min-height: 100vh;
+}
+
+main {
+    padding: 70px 0;
+    flex: 1;
+    text-align: center;
+}
+
+.welcome-text {
+    font-weight: bold;
+    margin-top: 20px;
+}
+
+.slider {
+    width: 100%;
+    max-width: 600px;
+    height: 400px;
+    margin: 20px auto;
+    border-radius: 20px;
+    overflow: hidden;
+    position: relative;
+}
+
+/* Prevent scrollbars in the slider */
+.slides {
+    display: flex;
+    overflow: hidden; /* Hide both horizontal and vertical scrollbars */
+    scroll-snap-type: x mandatory; /* Enable snapping to slides */
+    -webkit-overflow-scrolling: touch; /* Enable smooth scrolling on touch devices */
+    width: 100%; /* Ensure it fits within the container */
+    height: 100%; /* Ensure it fits within the container */
+}
+
+.slide {
+    flex-shrink: 0;
+    width: 100%; /* Ensure each slide takes up the full width */
+    height: 100%; /* Ensure each slide takes up the full height */
+    display: grid;
     justify-content: center;
     align-items: center;
-    height: 100vh;
-    background-color: #f0f0f0;
-        margin: 0;
+    scroll-snap-align: center; /* Snap to the center of the slide */
 }
 
-.main_content {
-    padding-top: 70px; /* Space for fixed header */
-    padding-bottom: 70px; /* Space for fixed footer */
-    text-align: center;
-    z-index: 5; /* Make sure content is above background */
-}
-
-/* Maintain existing styles */
-.info {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
-    position: relative; /* Important for z-index */
-    z-index: 5; /* Above background */
-}
-.info .image {
-    display: block;
-    margin: auto;
-    width: 40ch; 
-    max-width: 100%; 
-    height: auto;
+.slide__text {
+    font-size: 2.5rem;
+    font-weight: bold;
+    font-family: sans-serif;
+    color: #333;
 }
 
 .image {
-    max-width: 50%; /* Reduce the size to 50% of its original width */
+    max-width: 50%;
     height: auto;
     display: block;
     margin: 0 auto;
-    position: relative; /* For proper stacking context */
-}
-.welcome-text {
-    text-align: center;
-    font-weight: bold;
-    margin-top: 20px; /* Add some spacing from the top */
 }
 
-/* Center the inner and outer circles */
 .container {
-    width: 400px; /* Container size */
+    width: 400px;
     height: 80px;
     position: relative;
-    margin: 0 auto; /* Center horizontally */
+    margin: 0 auto;
     display: flex;
     justify-content: center;
-    align-items: center; /* Center both horizontally and vertically */
+    align-items: center;
 }
 
 .outer {
-    width: 350px; /* Outer circle size */
+    width: 350px;
     height: 350px;
     position: absolute;
     animation: rotate 60s linear infinite;
     opacity: 0.2;
 }
 
+.outer:hover {
+    animation-play-state: paused;
+}
+
 .inner {
     position: absolute;
-    top: 50%; /* Center vertically */
-    left: 50%; /* Center horizontally */
-    transform: translate(-50%, -50%); /* Adjust for the circle's size */
-    width: 120px; /* Inner circle size */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 120px;
     height: 120px;
     opacity: 0.2;
 }
-/* Override any problematic styles */
-.footer_list {
-    position: relative;
-    z-index: 10;
+
+@keyframes rotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
 }
 
-/* Fix for the shaking issue caused by dynamic text */
+.slider__nav {
+    position: absolute;
+    bottom: 2%; /* Move the dots further down */
+    left: 50%;
+    transform: translateX(-50%);
+    width: 200px;
+    text-align: center;
+}
+
+.slider__navlink {
+    display: inline-block;
+    height: 15px;
+    width: 15px;
+    border-radius: 50%;
+    border: solid rgb(212, 175, 55);
+    opacity: 0.5;
+    margin: 0 10px;
+    transition: all 0.3s ease;
+}
+
+.slider__navlink:hover {
+    border: solid rgb(212, 175, 55);
+    opacity: 1;
+    transform: scale(1.2);
+}
+
 #typed-text {
     display: inline-block;
     height: 1.5em;
     line-height: 1.5em;
-    width: 100%; /* Or a fixed pixel value */
+    min-width: 300px;
     white-space: nowrap;
     overflow: hidden;
     text-align: center;
 }
 
-.main_content {
-    padding-top: 70px;
-    padding-bottom: 70px;
-    min-height: calc(100vh - 140px);
-    text-align: center;
-    overflow: hidden;
+.footer_list {
+    display: flex;
+    width: 100vh;
 }
 
-@media(max-width: 850px) {
-    
-    .main_content {
-        height: auto; 
-        display: block; 
-        overflow: visible; 
+#footer {
+    padding-top: 0.5rem;
+    height: 2.2rem;
+    justify-content: center;
+}
+
+@media (max-width: 850px) {
+    main {
+        padding: 50px 0;
     }
 
-    .info {
-        padding: 2rem 1rem; 
-        text-align: center; 
+    .slider {
+        height: 300px;
     }
 
-    .info .image {
-        width: 100%;  
-        max-width: 100%;  
-        height: auto;
+    .slide {
+        height: 300px;
     }
+
+    .slide__text {
+        font-size: 1.5rem;
+    }
+
     .container {
-        width: 400px; /* Container size */
-        height: 80px;
-        position: relative;
-        margin: 0 auto; /* Center horizontally */
-        display: flex;
-        justify-content: center;
-        align-items: center; /* Center both horizontally and vertically */
+        width: 300px;
     }
-    
+
     .outer {
-        width: 350px; /* Outer circle size */
-        height: 350px;
-        position: absolute;
-        animation: rotate 60s linear infinite;
-        opacity: 0.2;
+        width: 250px;
+        height: 250px;
     }
-    
+
     .inner {
-        position: absolute;
-        top: 50%; /* Center vertically */
-        left: 50%; /* Center horizontally */
-        transform: translate(-50%, -50%); /* Adjust for the circle's size */
-        width: 120px; /* Inner circle size */
-        height: 120px;
-        opacity: 0.2;
-    }
-}
-@keyframes rotate {
-    from {
-        transform: rotate(0deg);
-    }
-    to {
-        transform: rotate(360deg);
+        width: 100px;
+        height: 100px;
     }
 }
