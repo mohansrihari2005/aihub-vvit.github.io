@@ -86,6 +86,21 @@
             setTimeout(typeEffect, nextSpeed);
         }
         document.addEventListener("DOMContentLoaded", () => setTimeout(typeEffect, 300));
+        
+        document.addEventListener("DOMContentLoaded", () => {
+            const slides = document.querySelector(".slides");
+            const slideCount = document.querySelectorAll(".slide").length;
+            let currentIndex = 0;
+            function moveSlides() {
+                currentIndex = (currentIndex + 1) % slideCount;
+                const slideWidth = slides.offsetWidth;
+                slides.scrollTo({
+                    left: currentIndex * slideWidth,
+                    behavior: "smooth",
+                });
+            }
+            setInterval(moveSlides, 5000);
+        });
     </script>
     <nav class="navbar navbar-expand-lg fixed-bottom bg-body-tertiary">
         <div class="container-fluid" id="footer">
