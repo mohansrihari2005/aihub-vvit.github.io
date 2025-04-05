@@ -234,8 +234,6 @@ main {
         max-width: 40%;
     }
     .slider__nav {
-        bottom: -1%;
+        bottom: -5%;
     }
 }
-
-make it mobile friendlly
