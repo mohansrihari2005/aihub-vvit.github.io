@@ -1,5 +1,5 @@
 body {
-    font-family: 'Lora', serif;
+    font-family: 'Lora';
     margin: 10px;
     display: flex;
     flex-direction: column;
@@ -7,22 +7,20 @@ body {
 }
 
 main {
-    padding: 4rem 1rem;
+    padding: 70px 0;
     flex: 1;
     text-align: center;
 }
 
 .welcome-text {
     font-weight: bold;
-    margin-top: 1.5rem;
-    font-size: 1.2rem;
+    margin-top: 20px;
 }
 
 .slider {
     width: 100%;
     max-width: 600px;
-    height: 60vw;
-    max-height: 400px;
+    height: 400px; /* Reduced height */
     margin: 20px auto;
     border-radius: 20px;
     overflow: hidden;
@@ -48,16 +46,17 @@ main {
     scroll-snap-align: center;
 }
 
+/* Updated styling for slide 1 */
 #slides__1 .slide__text {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     height: 100%;
-    font-size: 1.2rem;
+    font-size: 1.5rem;
     margin: 0;
     padding: 0;
-    gap: 10px;
+    gap: 10px; /* Controlled vertical spacing */
 }
 
 #slides__1 .slide__text h6 {
@@ -67,22 +66,21 @@ main {
 }
 
 #slides__1 .slide__text .container {
-    margin: 0;
+    margin: 0; /* Removed negative margin */
     padding: 0;
 }
 
 .image {
-    max-width: 60%;
+    max-width: 40%;
     height: auto;
     display: block;
     margin: 0 auto;
+    padding: 0;
 }
 
 .container {
-    width: 90%;
-    max-width: 400px;
-    height: auto;
-    aspect-ratio: 1 / 1;
+    width: 400px;
+    height: 350px;
     position: relative;
     margin: 0 auto;
     display: flex;
@@ -91,8 +89,8 @@ main {
 }
 
 .outer {
-    width: 100%;
-    height: 100%;
+    width: 350px;
+    height: 350px;
     position: absolute;
     animation: rotate 60s linear infinite;
     opacity: 0.2;
@@ -103,8 +101,8 @@ main {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 30%;
-    height: 30%;
+    width: 120px;
+    height: 120px;
     opacity: 0.2;
 }
 
@@ -113,16 +111,18 @@ main {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    font-size: 1.2rem;
+    font-size: 1.5rem;
     font-weight: bold;
     color: #333;
     text-align: center;
     z-index: 1;
+    margin: 0;
+    padding: 0;
     width: 80%;
 }
 
 .slide__text {
-    font-size: 1.2rem;
+    font-size: 1.5rem;
     font-weight: bold;
     font-family: sans-serif;
     color: #333;
@@ -142,7 +142,7 @@ main {
 
 .slider__nav {
     position: absolute;
-    bottom: 5%;
+    bottom: -1%;
     left: 50%;
     transform: translateX(-50%);
     width: 200px;
@@ -160,18 +160,23 @@ main {
     transition: all 0.3s ease;
 }
 
-.slider__navlink:hover,
-.slider__navlink.active {
+.slider__navlink:hover {
+    border: solid rgb(212, 175, 55);
     opacity: 1;
     transform: scale(1.2);
+}
+
+.slider__navlink.active {
     background-color: rgb(212, 175, 55);
+    opacity: 0.8;
+    transform: scale(1.2);
 }
 
 #typed-text {
     display: inline-block;
     height: 1.5em;
     line-height: 1.5em;
-    min-width: 200px;
+    min-width: 300px;
     white-space: nowrap;
     overflow: hidden;
     text-align: center;
@@ -179,53 +184,45 @@ main {
 
 .footer_list {
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
-    width: 100%;
+    width: 100vh;
 }
 
 #footer {
     padding-top: 0.5rem;
-    height: auto;
-    text-align: center;
+    height: 2.2rem;
+    justify-content: center;
 }
 
-/* Enhanced media queries for mobile */
-@media (max-width: 768px) {
+@media (max-width: 850px) {
     main {
-        padding: 3rem 1rem;
+        padding: 50px 0;
     }
 
     .slider {
-        height: 60vw;
-        max-height: 300px;
+        height: 300px;
     }
 
     .slide {
-        height: 100%;
+        height: 300px;
     }
 
     .slide__text {
-        font-size: 1rem;
-        padding: 0 1rem;
+        font-size: 1.5rem;
     }
-
     .container {
-        width: 90%;
-        height: auto;
-        aspect-ratio: 1 / 1;
-        padding: 1rem;
+        padding: 30px;
+        width: 250px;
+        height: 350px;
     }
 
     .outer {
-        width: 100%;
-        height: 100%;
+        width: 350px;
+        height: 350px;
     }
 
     .inner {
-        width: 50%;
-        height: 50%;
+        width: 120px;
+        height: 120px;
     }
 
     .wheel-text {
@@ -234,10 +231,11 @@ main {
     }
 
     .image {
-        max-width: 80%;
+        max-width: 40%;
     }
-
     .slider__nav {
-        bottom: 3%;
+        bottom: -1%;
     }
 }
+
+make it mobile friendlly
