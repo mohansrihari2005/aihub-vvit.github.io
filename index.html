@@ -13,12 +13,12 @@
     <special-header></special-header>
     <main>
         <div class="welcome-text">
-            <h6>Welcome all</h6>
+            <h5>Welcome all</h5>
         </div>
         <div class="slider-container">
             <div class="slider" role="region" aria-label="Featured Content Slider">
                 <div class="slides" role="list">
-                    <div id="slides__1" class="slide" role="listitem" aria-label="Slide 1">
+                        <div id="slides__1" class="slide" role="listitem" aria-label="Slide 1">
                         <span class="slide__text">
                             <img src="./images/index1.png" alt="Decorative Design" class="image">
                             <h6>Inspiration is not tangible unless you</h6>
@@ -32,17 +32,29 @@
                     </div>
                     <div id="slides__2" class="slide" role="listitem" aria-label="Slide 2">
                         <span class="slide__text">
-                            <h5>GPU Server</h5>
+                            <h5>High Performance Computing Facilities</h5>
+                            <div class="container">
+                                <img src="./images/vvit1.png" class="outer" alt="Rotating Outer Image">
+                                <img src="./images/circular_cen.png" class="inner" alt="Static Inner Image">
+                            </div>
                         </span>
                     </div>
                     <div id="slides__3" class="slide" role="listitem" aria-label="Slide 3">
                         <span class="slide__text">
-                            <h5>Jetson Nano Kit</h5>
+                            <h5>NVIDIA Jetson Edge Computing Facility</h5>
+                            <div class="container">
+                                <img src="./images/vvit1.png" class="outer" alt="Rotating Outer Image">
+                                <img src="./images/circular_cen.png" class="inner" alt="Static Inner Image">
+                            </div>
                         </span>
                     </div>
                     <div id="slides__4" class="slide" role="listitem" aria-label="Slide 4">
                         <span class="slide__text">
-                            <h5>AI research and development</h5>
+                            <h5>AI Research & Development</h5>
+                            <div class="container">
+                                <img src="./images/vvit1.png" class="outer" alt="Rotating Outer Image">
+                                <img src="./images/circular_cen.png" class="inner" alt="Static Inner Image">
+                            </div>
                         </span>
                     </div>
                 </div>
@@ -70,7 +82,7 @@
             let currentWord = words[i];
 
             j = isDeleting ? j - 1 : j + 1;
-            typedText.innerHTML = currentWord.substring(0, j);
+            typedText.innerHTML = `<h6>${currentWord.substring(0, j)}</h6>`; // Wrap the text in <b> for bold
 
             let nextSpeed = isDeleting ? deletingSpeed : typingSpeed;
 
@@ -86,20 +98,54 @@
             setTimeout(typeEffect, nextSpeed);
         }
         document.addEventListener("DOMContentLoaded", () => setTimeout(typeEffect, 300));
-        
+
         document.addEventListener("DOMContentLoaded", () => {
             const slides = document.querySelector(".slides");
             const slideCount = document.querySelectorAll(".slide").length;
+            const navLinks = document.querySelectorAll(".slider__navlink");
             let currentIndex = 0;
-            function moveSlides() {
-                currentIndex = (currentIndex + 1) % slideCount;
+
+            function updateActiveNavLink() {
+                navLinks.forEach((link, index) => {
+                    if (index === currentIndex) {
+                        link.classList.add("active");
+                    } else {
+                        link.classList.remove("active");
+                    }
+                });
+            }
+
+            function moveToSlide(index) {
+                currentIndex = index;
                 const slideWidth = slides.offsetWidth;
                 slides.scrollTo({
                     left: currentIndex * slideWidth,
                     behavior: "smooth",
                 });
+                updateActiveNavLink();
             }
-            setInterval(moveSlides, 5000);
+
+            // Add mouseover event to navigation dots
+            navLinks.forEach((link, index) => {
+                link.addEventListener("mouseover", () => {
+                    moveToSlide(index); // Move to the corresponding slide on hover
+                });
+            });
+            updateActiveNavLink();
+        });
+
+        document.addEventListener("DOMContentLoaded", () => {
+            const slides = document.querySelectorAll(".slide");
+            let maxHeight = 0;
+            slides.forEach(slide => {
+                const slideHeight = slide.offsetHeight;
+                if (slideHeight > maxHeight) {
+                    maxHeight = slideHeight;
+                }
+            });
+            slides.forEach(slide => {
+                slide.style.height = `${maxHeight}px`;
+            });
         });
     </script>
     <nav class="navbar navbar-expand-lg fixed-bottom bg-body-tertiary">
