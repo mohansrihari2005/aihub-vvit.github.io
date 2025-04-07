@@ -244,11 +244,6 @@ main {
         position: relative;
         overflow: hidden;
     }
-
-    .outer {
-        animation: none;
-    }
-
     .slides {
         scroll-behavior: smooth;
     }
