@@ -266,29 +266,30 @@ class SpecialFooter extends HTMLElement {
             }
             
             @media (max-width: 768px) {
-                .desc_item {
-                    margin: 0 8px;
-                    font-size: 0.9em;
-                }
-                
-                .wheel-container {
-                    width: 60vw;
-                    height: 60vw;
-                    bottom: 0;
-                    right: 0;
-                    transform: translate(30%, 30%);
-                }
-                
-                #footer {
-                    padding: 8px 0;
-                }
-                
-                @supports not (backdrop-filter: blur(5px)) {
-                    #footer {
-                        background-color: rgba(248, 249, 250, 0.95);
-                    }
-                }
-            }
+    .desc_item {
+        margin: 0 8px;
+        font-size: 0.9em;
+    }
+    
+    .wheel-container {
+        width: 48vh; /* Keep the same size as desktop */
+        height: 48vh; /* Keep the same size as desktop */
+        bottom: 0;
+        right: 0;
+        transform: translate(20%, 15.5%); /* Keep the same transform as desktop */
+        position: fixed; /* Add fixed positioning to ensure consistent placement */
+    }
+    
+    #footer {
+        padding: 8px 0;
+    }
+    
+    @supports not (backdrop-filter: blur(5px)) {
+        #footer {
+            background-color: rgba(248, 249, 250, 0.95);
+        }
+    }
+}
         </style>
         
         <script>
