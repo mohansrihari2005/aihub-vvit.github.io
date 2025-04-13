@@ -65,8 +65,7 @@ class SpecialHeader extends HTMLElement {
                                 <li><a class="dropdown-item" href="Career.html">Web Dev</a></li>
                             </ul>
                         </li>
-                                                    <a class="nav-link" href="News.html">News</a>
-
+                        
                         <li class="nav-item">
                             <a class="nav-link" href="About.html">People</a>
                         </li>
@@ -154,11 +153,14 @@ class SpecialFooter extends HTMLElement {
     connectedCallback() {
         this.innerHTML = `
         <div class="bg-circle-container">
-            <div class="bg-circle"></div>
+            <div class="wheel-container">
+                <img src="./images/vvit1.png" alt="Outer Wheel" class="outer">
+                <img src="./images/circular_cen.png" alt="Center" class="center">
+            </div>
         </div>
         <nav class="navbar navbar-expand-lg fixed-bottom bg-body-tertiary">
             <div class="container-fluid" id="footer">
-                <ul style="list-style: none;display:flex; justify-content: center;">
+                <ul style="list-style: none; display: flex; justify-content: center;">
                     <div><li class="desc_item"><i class="fa-solid fa-building-columns"></i><a href="https://www.vvitguntur.com/">VVIT</a></li></div>
                     <div><li class="desc_item"><i class="fa-solid fa-location-dot"></i><a href="https://www.google.com/maps/place/Vasireddy+Venkatadri+Institute+of+Technology/data=!4m2!3m1!1s0x0:0x8c86e4f36490336b?sa=X&ved=1t:2428&ictx=111">Guntur</a></li></div>
                     <div><li class="desc_item"><i class="fas fa-envelope"></i><a href="mailto:">Mail</a></li></div>
@@ -186,7 +188,7 @@ class SpecialFooter extends HTMLElement {
             }
             
             .desc_item a:hover {
-                color:rgb(214, 219, 228);
+                color: rgb(214, 219, 228);
             }
             
             #footer {
@@ -207,63 +209,80 @@ class SpecialFooter extends HTMLElement {
                 height: 100%;
                 pointer-events: none;
                 z-index: -1;
+                background: transparent;
                 overflow: hidden;
             }
             
-            .bg-circle {
+            .wheel-container {
                 position: absolute;
-                bottom: -21.45%;
-                right: -12%;
-                width: 41.5vw;
-                height: 45vw;
-                border-radius: 50%;
-                background-image: url('./images/ch.jpg');
-                background-size: cover;
-                background-position: center;
-                opacity: 0.15;
-                z-index: -1;
-                box-shadow: 0 0 30px rgba(255, 255, 255, 0.15), inset 0 0 60px rgba(0, 0, 0, 0.1);
-                filter: saturate(1.2);
-                /* Animation removed */
-                transform: none;
+                bottom: 0;
+                right: 0;
+                width: 70vh;
+                height: 70vh;
+                background: transparent;
+                overflow: visible;
+                transform: translate(20%, 18.95%);
             }
             
-            /* Interactive states */
-            .navbar.fixed-bottom:hover ~ .bg-circle-container .bg-circle {
-                opacity: 0.25;
-                filter: saturate(1.5) brightness(1.1);
+            .wheel-container img {
+                position: absolute;
+                background: transparent;
             }
             
-            /* Ensure content overlays background */
+            .outer {
+                width: 100%;
+                height: 100%;
+                animation:rotate 60s linear infinite;
+                opacity: 0.2;
+            }
+            
+            .center {
+                width: 34.21%; /* Adjusted size to fit better within the outer wheel */
+                height: auto; /* Maintain aspect ratio */
+                top: 50%; /* Center vertically */
+                left: 50%; /* Center horizontally */
+                transform: translate(-50%, -50%); /* Offset to truly center */
+                z-index: 1;
+                opacity: 0.2;
+                object-fit: contain; /* Ensure the image scales proportionally */
+            }
+            
+            @keyframes rotate {
+                from {
+                    transform: rotate(0deg);
+                }
+                to {
+                    transform: rotate(360deg);
+                }
+            }
+            
+            .navbar.fixed-bottom:hover ~ .bg-circle-container .wheel-container {
+                opacity: 0.5;
+            }
+            
             .card, .container, .project-card, .app-card, .blog-card, section, article, main {
                 position: relative !important;
                 z-index: 5 !important;
             }
             
-            /* Mobile optimization */
             @media (max-width: 768px) {
                 .desc_item {
                     margin: 0 8px;
                     font-size: 0.9em;
                 }
                 
-                .bg-circle {
-                    width: 100vw;
-                    height: 100vw;
-                    bottom: -11.15%;  /* Changed from -40% */
-                    right: -27.25%;   /* Changed from -30% */
-                    opacity: 0.15; /* Changed from 0.09 */
-                    display: block !important; /* Force display */
-                    visibility: visible !important; /* Ensure visibility */
-                    transform: none;
+                .wheel-container {
+                    width: 60vw;
+                    height: 60vw;
+                    bottom: 0;
+                    right: 0;
+                    transform: translate(30%, 30%);
                 }
                 
-                /* Ensure footer is visible on mobile */
                 #footer {
                     padding: 8px 0;
                 }
                 
-                /* Fix for mobile browsers that don't support backdrop-filter */
                 @supports not (backdrop-filter: blur(5px)) {
                     #footer {
                         background-color: rgba(248, 249, 250, 0.95);
@@ -273,9 +292,7 @@ class SpecialFooter extends HTMLElement {
         </style>
         
         <script>
-            // Enhanced interactive background
             document.addEventListener('DOMContentLoaded', function() {
-                // Fix z-index for content elements to ensure they overlay the background
                 const contentElements = document.querySelectorAll('.card, .container, .row, section, article, main, .blog-card, .project-card');
                 contentElements.forEach(element => {
                     if (getComputedStyle(element).position === 'static') {
@@ -284,80 +301,82 @@ class SpecialFooter extends HTMLElement {
                     element.style.zIndex = '5';
                 });
                 
-                // Add a global style to ensure proper content overlay
                 const globalStyle = document.createElement('style');
                 globalStyle.textContent = \`
                     body {
                         position: relative;
                         z-index: 1;
+                        background: transparent;
                     }
-                    
                     .container, .row, .col, .card, section, article, main {
                         position: relative;
                         z-index: 5;
                     }
-                    
                     .bg-circle-container {
                         z-index: -1;
                     }
                     
-                    /* Force no animation on background circles */
-                    .bg-circle {
-                        animation: none !important;
-                        transition: none !important;
-                        transform: none !important;
+                    /* Ensure only one instance exists */
+                    special-footer:not(:last-of-type) .bg-circle-container {
+                        display: none !important;
                     }
                 \`;
                 document.head.appendChild(globalStyle);
                 
-                // Image loading verification
-                const bgImage = new Image();
-                bgImage.onload = function() {
-                    console.log('Background image loaded successfully');
-                    document.querySelectorAll('.bg-circle').forEach(circle => {
-                        circle.style.backgroundImage = \`url('./images/ch.jpg')\`;
-                        circle.style.display = 'block';
-                        // Force higher opacity on mobile
-                        if (window.innerWidth <= 768) {
-                            circle.style.opacity = '0.15';
-                            circle.style.visibility = 'visible';
-                        }
+                const outerImage = new Image();
+                outerImage.onload = function() {
+                    console.log('Outer wheel image loaded successfully');
+                    document.querySelectorAll('.outer').forEach(img => {
+                        img.style.display = 'block';
+                        img.style.backgroundColor = 'transparent';
                     });
                 };
-                bgImage.onerror = function() {
-                    console.error('Background image failed to load');
-                    // Fallback to a color if image fails
-                    document.querySelectorAll('.bg-circle').forEach(circle => {
-                        circle.style.backgroundColor = 'rgba(0, 0, 128, 0.1)';
-                        circle.style.backgroundImage = 'none';
-                        circle.style.display = 'block';
-                        circle.style.visibility = 'visible';
+                outerImage.onerror = function() {
+                    console.error('Outer wheel image failed to load');
+                    document.querySelectorAll('.outer').forEach(img => {
+                        img.style.display = 'none';
                     });
                 };
-                bgImage.src = './images/ch.jpg';
+                outerImage.src = './images/vvit1.png';
                 
-                // Make sure all circles have no animation but are visible
-                const bgCircles = document.querySelectorAll('.bg-circle');
-                bgCircles.forEach(circle => {
-                    circle.style.animation = 'none';
-                    circle.style.transform = 'none';
-                    circle.style.transition = 'none';
-                    circle.style.display = 'block';
-                    
-                    // Force visibility especially on mobile
-                    if (window.innerWidth <= 768) {
-                        circle.style.opacity = '0.15';
-                        circle.style.visibility = 'visible';
+                const centerImage = new Image();
+                centerImage.onload = function() {
+                    console.log('Center image loaded successfully');
+                    document.querySelectorAll('.center').forEach(img => {
+                        img.style.display = 'block';
+                        img.style.backgroundColor = 'transparent';
+                    });
+                };
+                centerImage.onerror = function() {
+                    console.error('Center image failed to load');
+                    document.querySelectorAll('.center').forEach(img => {
+                        img.style.display = 'none';
+                    });
+                };
+                centerImage.src = './images/circular_cen.png';
+                
+                // Remove any duplicate elements
+                setTimeout(() => {
+                    const containers = document.querySelectorAll('.bg-circle-container');
+                    if (containers.length > 1) {
+                        for (let i = 1; i < containers.length; i++) {
+                            containers[i].remove();
+                        }
                     }
-                });
+                    
+                    // Ensure transparency
+                    document.querySelectorAll('.wheel-container, .wheel-container img').forEach(el => {
+                        el.style.backgroundColor = 'transparent';
+                    });
+                }, 300);
             });
-        </script>`
+        </script>`;
     }
 }
 // Define custom elements
-customElements.define('special-header', SpecialHeader);
-customElements.define('required-links', Links);
 customElements.define('special-footer', SpecialFooter);
+customElements.define('required-links', Links);
+customElements.define('special-header', SpecialHeader);
 
 // Dropdown handling script
 document.addEventListener('DOMContentLoaded', function() {
