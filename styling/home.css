@@ -1,64 +1,91 @@
-/* Make sure these styles don't conflict with the background */
 body {
-    font-family: 'Lora', serif;
+    font-family: 'Lora';
+    margin: 10px;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+main {
+    padding: 70px 0;
+    flex: 1;
+    text-align: center;
+}
+
+.welcome-text {
+    font-weight: bold;
+    margin-top: 20px;
+}
+.slider {
+    width: 100%;
+    max-width: 600px;
+    height: 400px;
+    margin: 20px auto;
+    border-radius: 20px;
+    overflow: hidden;
+    position: relative;
+}
+
+.slides {
+    display: flex;
+    overflow: hidden;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    width: 100%;
+    height: 100%;
+}
+
+.slide {
+    flex-shrink: 0;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    scroll-snap-align: center;
+}
+
+#slides__1 .slide__text {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 100vh;
-    background-color: #f0f0f0;
-        margin: 0;
+    height: 100%;
+    font-size: 1.5rem;
+    margin: 0;
+    padding: 0;
+    gap: 10px;
 }
 
-.main_content {
-    padding-top: 70px; /* Space for fixed header */
-    padding-bottom: 70px; /* Space for fixed footer */
-    text-align: center;
-    z-index: 5; /* Make sure content is above background */
+#slides__1 .slide__text h6 {
+    margin: 0;
+    padding: 0;
+    line-height: 1.2;
 }
 
-/* Maintain existing styles */
-.info {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
-    position: relative; /* Important for z-index */
-    z-index: 5; /* Above background */
-}
-.info .image {
-    display: block;
-    margin: auto;
-    width: 40ch; 
-    max-width: 100%; 
-    height: auto;
+#slides__1 .slide__text .container {
+    margin: 0;
+    padding: 0;
 }
 
 .image {
-    max-width: 50%; /* Reduce the size to 50% of its original width */
+    max-width: 40%;
     height: auto;
     display: block;
     margin: 0 auto;
-    position: relative; /* For proper stacking context */
-}
-.welcome-text {
-    text-align: center;
-    font-weight: bold;
-    margin-top: 20px; /* Add some spacing from the top */
+    padding: 0;
 }
 
-/* Center the inner and outer circles */
 .container {
-    width: 400px; /* Container size */
-    height: 80px;
+    width: 400px;
+    height: 350px;
     position: relative;
-    margin: 0 auto; /* Center horizontally */
+    margin: 0 auto;
     display: flex;
     justify-content: center;
-    align-items: center; /* Center both horizontally and vertically */
+    align-items: center;
 }
 
 .outer {
-    width: 350px; /* Outer circle size */
+    width: 350px;
     height: 350px;
     position: absolute;
     animation: rotate 60s linear infinite;
@@ -67,89 +94,157 @@ body {
 
 .inner {
     position: absolute;
-    top: 50%; /* Center vertically */
-    left: 50%; /* Center horizontally */
-    transform: translate(-50%, -50%); /* Adjust for the circle's size */
-    width: 120px; /* Inner circle size */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 120px;
     height: 120px;
     opacity: 0.2;
 }
-/* Override any problematic styles */
-.footer_list {
-    position: relative;
-    z-index: 10;
+
+.wheel-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 1.5rem;
+    color: #333;
+    text-align: center;
+    z-index: 1;
+    margin: 0;
+    padding: 0;
+    width: 80%;
 }
 
-/* Fix for the shaking issue caused by dynamic text */
+.slide__text {
+    font-size: 1.5rem;
+    font-family: sans-serif;
+    color: #333;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+@keyframes rotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.slider__nav {
+    position: absolute;
+    bottom: -1%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 200px;
+    text-align: center;
+}
+
+.slider__navlink {
+    display: inline-block;
+    height: 15px;
+    width: 15px;
+    border-radius: 50%;
+    border: solid rgb(212, 175, 55);
+    opacity: 0.5;
+    margin: 0 10px;
+    transition: all 0.3s ease;
+}
+
+.slider__navlink:hover {
+    border: solid rgb(212, 175, 55);
+    opacity: 1;
+    transform: scale(1.2);
+}
+
+.slider__navlink.active {
+    background-color: rgb(212, 175, 55);
+    opacity: 0.8;
+    transform: scale(1.2);
+}
+
 #typed-text {
     display: inline-block;
     height: 1.5em;
     line-height: 1.5em;
-    width: 100%; /* Or a fixed pixel value */
+    min-width: 300px;
     white-space: nowrap;
     overflow: hidden;
     text-align: center;
 }
-
-.main_content {
-    padding-top: 70px;
-    padding-bottom: 70px;
-    min-height: calc(100vh - 140px);
-    text-align: center;
-    overflow: hidden;
-}
-
-@media(max-width: 850px) {
-    
-    .main_content {
-        height: auto; 
-        display: block; 
-        overflow: visible; 
+@media (max-width: 768px) {
+    body {
+        margin: 5px;
     }
 
-    .info {
-        padding: 2rem 1rem; 
-        text-align: center; 
+    .welcome-text {
+        font-size: 1.2rem;
+        margin-top: 10px;
     }
 
-    .info .image {
-        width: 100%;  
-        max-width: 100%;  
-        height: auto;
+    .container {
+        width: 100%;
+        max-width: 300px;
+        height: 300px;
+    }
+
+    .outer {
+        width: 250px;
+        height: 250px;
+    }
+
+    .inner {
+        width: 80px;
+        height: 80px;
+    }
+
+    .slider {
+        max-width: 300px;
+        height: 300px;
+        border-radius: 10px;
+    }
+
+    #slides__1 .slide__text {
+        font-size: 1rem;
+        gap: 5px;
+    }
+
+    .image {
+        max-width: 80%;
+    }
+
+    .wheel-text {
+        font-size: 1rem;
+    }
+
+    .slide__text {
+        font-size: 1rem;
+    }
+
+    .slider__nav {
+        bottom: -1%;
+        width: 100px;
+    }
+
+    .slider__navlink {
+        height: 10px;
+        width: 10px;
+        margin: 0 5px;
+    }
+
+    #typed-text {
+        height: 1em;
+        line-height: 1em;
+        min-width: 200px;
     }
     .container {
-        width: 400px; /* Container size */
-        height: 80px;
         position: relative;
-        margin: 0 auto; /* Center horizontally */
-        display: flex;
-        justify-content: center;
-        align-items: center; /* Center both horizontally and vertically */
+        overflow: hidden;
     }
-    
-    .outer {
-        width: 350px; /* Outer circle size */
-        height: 350px;
-        position: absolute;
-        animation: rotate 60s linear infinite;
-        opacity: 0.2;
-    }
-    
-    .inner {
-        position: absolute;
-        top: 50%; /* Center vertically */
-        left: 50%; /* Center horizontally */
-        transform: translate(-50%, -50%); /* Adjust for the circle's size */
-        width: 120px; /* Inner circle size */
-        height: 120px;
-        opacity: 0.2;
-    }
-}
-@keyframes rotate {
-    from {
-        transform: rotate(0deg);
-    }
-    to {
-        transform: rotate(360deg);
+    .slides {
+        scroll-behavior: smooth;
     }
 }
