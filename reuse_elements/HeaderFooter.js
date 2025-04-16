@@ -67,6 +67,10 @@ class SpecialHeader extends HTMLElement {
                         </li>
                         
                         <li class="nav-item">
+                            <a class="nav-link" href="News.html">News</a>
+                        </li>
+
+                        <li class="nav-item">
                             <a class="nav-link" href="About.html">People</a>
                         </li>
                     </ul>
